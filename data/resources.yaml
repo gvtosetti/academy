@@ -1,0 +1,1725 @@
+# Catalogo curado da Academy — fonte de verdade da aplicacao.
+# Campos em `verified` foram conferidos na fonte original em 2026-11-19.
+# Textos explicativos sao autorais da curadoria (nao sao traducoes de README).
+# Pesquisa de fontes: READMEs e arvores via GitHub API/raw; paginas oficiais;
+# YouTube via oEmbed e pagina publica da playlist (titulo, descricao, lista de videos).
+
+# =====================================================================
+# CATEGORIA A — AI Foundations & Understanding LLMs
+# =====================================================================
+- id: llms-por-dentro
+  title: LLMs por Dentro
+  url: https://github.com/glaucia86/llms-por-dentro
+  provider: Glaucia Lemos
+  type: github
+  category: llms
+  difficulty: beginner
+  language: pt
+  sequence: 10
+  added_on: 2026-11-19
+  github_repo: glaucia86/llms-por-dentro
+  featured: [start_here, beginners]
+  tags: [llm, tokens, embeddings, transformer, atencao, inferencia, kv cache, latencia, portugues, slides]
+  short_description: >-
+    Série visual em português, em quatro encontros, que mostra o caminho do texto até a resposta
+    dentro de um LLM — sem exigir conhecimento prévio de machine learning.
+  plain_language_explanation: >-
+    Quando você escreve uma pergunta para um assistente de IA, o modelo não "lê" palavras como nós:
+    ele quebra o texto em pedaços (tokens), transforma cada pedaço em uma lista de números
+    (embeddings), relaciona esses pedaços entre si e escolhe, um de cada vez, o próximo pedaço da
+    resposta. Este material explica cada uma dessas etapas com desenhos e analogias do dia a dia,
+    apresentando o termo técnico só depois de a ideia estar clara. É um ótimo primeiro contato para
+    quem usa IA e quer entender o que acontece "por baixo do capô".
+  technical_explanation: >-
+    O foco declarado é a inferência de LLMs de texto causais (autoregressivos). Os quatro episódios
+    cobrem: (1) tokenização por subwords, IDs e embeddings de tokens; (2) Transformer, hidden states,
+    self-attention com Q/K/V e máscara causal; (3) logits, softmax, estratégias de seleção e geração
+    autoregressiva; (4) prefill, decode, KV cache, TTFT e métricas de serving. O repositório é um
+    pequeno motor de slides em HTML/JS nativo, com roteiro da apresentadora e build em Python puro.
+  why_it_matters: >-
+    Entender o mecanismo ajuda a usar IA melhor: explica por que o tamanho do texto importa (tokens e
+    janela de contexto), por que respostas podem soar confiantes e estar erradas (geração
+    probabilística) e por que algumas respostas demoram (prefill, decode e cache). É a base para
+    conversar com times técnicos e para avançar a temas como RAG, agentes e custo de inferência.
+  learning_outcomes:
+    - Explicar o que é um token e por que modelos trabalham com subwords.
+    - Descrever como embeddings transformam tokens em vetores numéricos.
+    - Entender, em alto nível, o papel do Transformer e da self-attention.
+    - Compreender como o modelo escolhe o próximo token (logits, softmax e estratégias de seleção).
+    - Reconhecer as fases prefill e decode e o que é o KV cache na latência de resposta.
+  audience:
+    - Pessoas começando em IA que usam assistentes no dia a dia.
+    - Profissionais de produto, gestão e negócios que querem vocabulário técnico correto.
+    - Desenvolvedores que nunca estudaram o funcionamento interno de um LLM.
+  prerequisites:
+    required: []
+    helpful:
+      - "Familiaridade com o uso de algum assistente de IA (ex.: chat com LLM)."
+  key_concepts: [llm, tokens, tokenization, embeddings, transformer, attention, inference, context-window]
+  practical_applications:
+    - Estimar o impacto do tamanho de prompts e documentos no custo e na latência de uma aplicação.
+    - Explicar a stakeholders não técnicos por que um LLM pode "alucinar".
+    - Usar o material como roteiro para uma apresentação interna sobre como LLMs funcionam.
+  study_guide:
+    - Abra o portal da série (GitHub Pages) e assista/percorra o episódio 01 — é o que está com apresentação pronta.
+    - Após cada episódio, consulte na Base de Conhecimento os termos apresentados (tokens, embeddings, attention).
+    - Leia os planos de aula dos episódios 02–04 na pasta episodes/ para antecipar os próximos temas.
+    - Consulte references/README.md para as fontes públicas e os limites didáticos assumidos.
+    - Faça o quiz rápido de Tokens e Embeddings aqui na Academy para fixar.
+  related_resources: [stanford-cme295-2025, dair-transformers-recipe, train-llm-from-scratch]
+  learning_paths: [t1-fundamentos-ia-llms, t4-llmops-producao]
+  github_highlights:
+    - {path: episodes/01-texto-aos-numeros/, why: "Slides, plano e roteiro completo do primeiro encontro."}
+    - {path: episodes/04-latencia-inferencia/, why: "Plano do encontro sobre prefill, decode, KV cache e TTFT."}
+    - {path: references/README.md, why: Fontes públicas e limites didáticos da série.}
+    - {path: dist/episodio-01.html, why: Versão autocontida para apresentar offline.}
+  links:
+    - {label: Abrir portal da série, url: "https://glaucia86.github.io/llms-por-dentro/"}
+  verified:
+    verified_on: 2026-11-19
+    source_title: LLMs por Dentro
+    license: MIT
+    primary_language: HTML
+    duration: "4 encontros planejados (45 min de conteúdo + 5 min de perguntas cada), segundo o README"
+    source_description: Uma série visual em português para entender o funcionamento dos LLMs, do texto à resposta, em quatro encontros.
+  metadata_status: verified
+  metadata_notes: "Segundo o README (nov/2026), apenas o episódio 01 tem apresentação e roteiro prontos; 02–04 têm plano de aula definido."
+
+- id: train-llm-from-scratch
+  title: Train LLM From Scratch
+  url: https://github.com/FareedKhan-dev/train-llm-from-scratch
+  provider: Fareed Khan
+  type: github
+  category: llms
+  difficulty: advanced
+  language: en
+  sequence: 60
+  added_on: 2026-11-19
+  github_repo: FareedKhan-dev/train-llm-from-scratch
+  featured: [hands_on, advanced]
+  tags: [pytorch, pretraining, sft, rlhf, dpo, ppo, grpo, lora, moe, kv cache, transformer]
+  short_description: >-
+    Implementação em PyTorch puro de todo o ciclo de um LLM: dados, tokenização, Transformer,
+    pré-treino, geração de texto, pós-treino (SFT, DPO, PPO, GRPO) e avaliação.
+  plain_language_explanation: >-
+    Existem três formas de "ter" um modelo de linguagem: usar um modelo pronto (via API ou download),
+    ajustar um modelo existente aos seus dados (fine-tuning) ou treinar um do zero. Treinar do zero
+    significa começar com um modelo que não sabe nada e ensiná-lo a prever a próxima palavra lendo
+    muito texto — é caro e raramente necessário em produção, mas é a melhor forma de entender o que
+    realmente acontece dentro de um LLM. Este repositório percorre esse caminho inteiro, em escala
+    pequena, com código escrito à mão e explicações antes de cada bloco.
+  technical_explanation: >-
+    O autor implementa o Transformer de "Attention is All You Need" em PyTorch e, ao lado, uma versão
+    moderna (rotary positions, RMSNorm, SwiGLU, grouped-query e latent attention, Mixture of Experts,
+    KV cache). O README declara que os algoritmos são escritos sem trl, peft ou transformers: pré-treino
+    com next-token loss, SFT com loss mask, reward model Bradley-Terry, PPO com GAE, DPO/ORPO/KTO,
+    GRPO/RLVR, além de Muon, LoRA, speculative decoding e pesos int8. Há uma trilha para CPU (modelo
+    pequeno) e orientações de GPU para modelos maiores; inclui painel Streamlit e site de documentação.
+  why_it_matters: >-
+    Quem trabalha com LLMs toma decisões como "usar API, fazer fine-tuning ou treinar?" e "por que
+    este modelo se comporta assim após alinhamento?". Ver cada etapa implementada torna conceitos
+    abstratos (loss, alinhamento, RLHF, KV cache) concretos e ajuda a avaliar trade-offs de custo e
+    qualidade com mais segurança.
+  learning_outcomes:
+    - Diferenciar uso de modelo pronto, fine-tuning e treino do zero, com seus custos e motivações.
+    - Construir um Transformer a partir de MLP, single-head e multi-head attention.
+    - Executar um pré-treino pequeno e interpretar a curva de loss.
+    - Entender o pós-treino que transforma um modelo base em assistente (SFT, reward model, DPO, PPO, GRPO).
+    - Comparar a arquitetura original com componentes de modelos modernos (RoPE, RMSNorm, MoE, KV cache).
+  audience:
+    - Data Scientists e engenheiros de ML que querem entender LLMs em profundidade.
+    - Estudantes de pós-graduação e pesquisadores interessados em pós-treino e alinhamento.
+    - Desenvolvedores Python confortáveis com redes neurais.
+  prerequisites:
+    required:
+      - Programação orientada a objetos em Python (citado no README).
+      - Noções de redes neurais (citado no README).
+      - PyTorch básico (citado no README).
+    helpful:
+      - Álgebra linear e cálculo básicos.
+      - Ter estudado antes um material conceitual como "LLMs por Dentro".
+      - Acesso a GPU para os modelos maiores (o README indica que o modelo pequeno roda em CPU).
+  key_concepts: [training, fine-tuning, transformer, attention, tokenization, inference, neural-networks, evaluation]
+  practical_applications:
+    - Fundamentar a decisão técnica entre API, fine-tuning e treino próprio em um projeto.
+    - Prototipar e comparar técnicas de alinhamento em pequena escala antes de usar bibliotecas prontas.
+    - Criar material didático interno sobre pós-treino e RLHF.
+  study_guide:
+    - Leia as seções "Who this is for" e "Prerequisites and Training Time" do README para escolher sua trilha (CPU ou GPU).
+    - Comece pela trilha "No GPU? Train on Your Laptop" para ver o ciclo completo funcionando rápido.
+    - Siga os Steps 1–4 (dados, modelo, pré-treino, geração) lendo o código referenciado em src/.
+    - Só depois avance ao Step 5 (pós-treino) — é a parte mais densa.
+    - Execute o código apenas em um ambiente isolado (virtualenv ou container), nunca automaticamente.
+  related_resources: [stanford-cs336-2026, llms-por-dentro, stanford-cme295-2025]
+  learning_paths: [t1-fundamentos-ia-llms]
+  github_highlights:
+    - {path: README.md, why: "Tutorial completo, do dado bruto ao modelo alinhado (Steps 1–7)."}
+    - {path: src/, why: Código-fonte dos modelos e algoritmos de treino.}
+    - {path: POST_TRAINING.md, why: Detalhes do pós-treino.}
+    - {path: sft_rlhf_guide.ipynb, why: Notebook guiado de SFT e RLHF.}
+    - {path: configs/, why: Configurações de treino.}
+  links:
+    - {label: Ver documentação, url: "https://fareedkhan-dev.github.io/train-llm-from-scratch/"}
+  verified:
+    verified_on: 2026-11-19
+    source_title: Train LLM From Scratch
+    license: MIT
+    primary_language: Python
+    source_description: A straightforward method for training your LLM, from downloading data to generating text.
+  metadata_status: verified
+
+- id: stanford-online-playlists
+  title: Stanford Online — Playlists
+  url: https://www.youtube.com/@stanfordonline/playlists
+  provider: Stanford Online
+  type: collection
+  category: ai-foundations
+  difficulty: intermediate
+  language: en
+  sequence: 5
+  added_on: 2026-11-19
+  tags: [stanford, youtube, cursos, aulas, playlists]
+  short_description: >-
+    Canal oficial da Stanford Online no YouTube, com dezenas de playlists de cursos e seminários —
+    de fundamentos de IA a LLMs, agentes, robótica e visão computacional.
+  plain_language_explanation: >-
+    Este não é um curso único: é uma coleção. Cada playlist corresponde a uma disciplina ou série de
+    palestras gravada em Stanford, com assunto, nível e formato próprios. A Academy selecionou as
+    séries mais ligadas a IA, LLMs e agentes e criou uma página explicativa para cada uma — veja a
+    lista abaixo e escolha pelo seu objetivo.
+  technical_explanation: >-
+    Na data da curadoria, a aba Playlists do canal listava séries como CS221, CS229, CS230, CS231N,
+    CME295, CS336, CS329A, CS329H, CS224R e seminários como EE292R. As aulas de graduação e
+    pós-graduação costumam exigir matemática (álgebra linear, probabilidade, cálculo) e programação;
+    seminários são mais heterogêneos. Nível e pré-requisitos variam por playlist — consulte cada uma.
+  why_it_matters: >-
+    Aulas universitárias completas e gratuitas oferecem profundidade difícil de encontrar em tutoriais
+    curtos, com edições recentes que acompanham a evolução da área (ex.: CS336 Spring 2026).
+  learning_outcomes:
+    - Identificar qual disciplina de Stanford corresponde ao seu objetivo de estudo.
+    - Planejar uma sequência de estudo entre fundamentos (CS221, CS229, CS230) e LLMs (CME295, CS336).
+    - Acessar séries sobre agentes e IA aplicada à ciência (CS329A, EE292R).
+  audience:
+    - Estudantes e profissionais que buscam profundidade acadêmica.
+    - Data Scientists consolidando fundamentos.
+    - Engenheiros de IA acompanhando o estado da arte.
+  prerequisites:
+    required: []
+    helpful:
+      - Inglês para acompanhar aulas (legendas automáticas podem estar disponíveis no YouTube).
+  key_concepts: [artificial-intelligence, machine-learning, deep-learning, llm]
+  practical_applications:
+    - Montar um plano de estudos semestral com aulas gratuitas de referência.
+  study_guide:
+    - Não tente assistir tudo. Escolha uma playlist pela trilha da Academy que você está seguindo.
+    - Para fundamentos, comece por CS229 ou CS230; para LLMs, por CME295; para ir fundo, CS336.
+    - Assista com pausas e anote dúvidas; consulte a Base de Conhecimento para os termos.
+  related_resources: [stanford-cme295-2025, stanford-cs229-2026]
+  verified:
+    verified_on: 2026-11-19
+    source_title: Stanford Online (canal do YouTube)
+  metadata_status: partial
+  metadata_notes: "Coleção: o conjunto de playlists do canal muda com o tempo; apenas as playlists listadas como itens filhos foram verificadas individualmente."
+
+- id: stanford-cs221-2025
+  title: "Stanford CS221: Artificial Intelligence: Principles and Techniques | Autumn 2025"
+  url: https://www.youtube.com/playlist?list=PLoROMvodv4rMeDqwS1yFl3j3sR_-MQNEN
+  provider: Stanford Online
+  type: playlist
+  category: ai-foundations
+  difficulty: intermediate
+  language: en
+  parent: stanford-online-playlists
+  sequence: 30
+  added_on: 2026-11-19
+  tags: [stanford, cs221, busca, mdp, aprendizado por reforco, redes bayesianas, logica, jogos]
+  short_description: >-
+    Disciplina de Stanford que apresenta a IA como um conjunto de técnicas matemáticas para resolver
+    problemas reais: aprendizado, busca, decisão sob incerteza, jogos, redes bayesianas e lógica.
+  plain_language_explanation: >-
+    Antes dos LLMs, "inteligência artificial" já englobava muitas ideias: como um programa aprende com
+    exemplos, como encontra o melhor caminho entre muitas opções, como decide quando o futuro é incerto,
+    como joga contra um adversário e como raciocina com regras lógicas. Este curso apresenta esse mapa
+    completo da IA e termina conectando-o aos modelos de linguagem e ao impacto da IA na sociedade.
+  technical_explanation: >-
+    Pelos títulos das 20 aulas: Learning I–III, Search I–II, Markov Decision Processes, Reinforcement
+    Learning, Policy Gradient, Games I–II, Bayesian Networks (incluindo Gibbs sampling e aprendizado),
+    Logic I–II, Language Models, AI & Society e AI Supply Chains. A descrição oficial enfatiza o uso de
+    ferramentas matemáticas rigorosas para problemas do mundo real.
+  why_it_matters: >-
+    Muitos sistemas modernos (agentes que planejam, modelos treinados com reforço, avaliação
+    probabilística) reutilizam ideias clássicas de busca, MDPs e inferência. Conhecê-las dá vocabulário
+    e intuição para entender por que agentes e RLHF funcionam como funcionam.
+  learning_outcomes:
+    - Formular problemas como busca, MDP ou jogo e escolher a técnica adequada.
+    - Entender os fundamentos de aprendizado supervisionado e de reforço (incluindo policy gradient).
+    - Modelar incerteza com redes bayesianas e amostragem.
+    - Relacionar técnicas clássicas de IA aos modelos de linguagem atuais.
+  audience:
+    - Estudantes de computação e profissionais que querem uma base ampla de IA.
+    - Data Scientists que conhecem ML, mas não busca, planejamento e raciocínio probabilístico.
+  prerequisites:
+    required: []
+    helpful:
+      - Programação (Python), probabilidade, álgebra linear e cálculo básicos (recomendação da curadoria; não listados na playlist).
+  key_concepts: [artificial-intelligence, machine-learning, llm]
+  practical_applications:
+    - Modelar problemas de planejamento e decisão (rotas, alocação, políticas) antes de recorrer a LLMs.
+    - Entender a base teórica de agentes que planejam e de treinamento por reforço.
+  study_guide:
+    - Assista à aula 1 para entender a organização do curso.
+    - Siga a ordem das aulas — os blocos (Learning, Search, MDP/RL, Games, Bayes, Logic) se apoiam uns nos outros.
+    - Se o foco é LLMs, assista à aula 17 (Language Models) depois do bloco de Learning.
+  related_resources: [stanford-cs229-2026, stanford-cs329a]
+  learning_paths: [t1-fundamentos-ia-llms]
+  verified:
+    verified_on: 2026-11-19
+    source_title: "Stanford CS221: Artificial Intelligence: Principles and Techniques | Autumn 2025"
+    video_count: 20
+    video_count_note: contagem observada na página da playlist em 19/11/2026
+    source_description: "The goal of artificial intelligence (AI) is to tackle complex real-world problems with rigorous mathematical tools. (trecho da descrição oficial)"
+    episodes:
+      - "Lecture 1: Course Overview and AI Foundations"
+      - "Lecture 2: Learning I"
+      - "Lecture 3: Learning II"
+      - "Lecture 4: Learning III"
+      - "Lecture 5: Search I"
+      - "Lecture 6: Search II"
+      - "Lecture 7: Markov Decision Processes"
+      - "Lecture 8: Reinforcement Learning"
+      - "Lecture 9: Policy Gradient"
+      - "Lecture 10: Games I"
+      - "Lecture 11: Games II"
+      - "Lecture 12: Bayesian Networks I"
+      - "Lecture 13: Bayesian Networks and Gibbs Sampling"
+      - "Lecture 14: Bayesian Networks and Learning"
+      - "Lecture 15: Logic I"
+      - "Lecture 16: Logic II"
+      - "Lecture 17: Language Models"
+      - "Lecture 18: AI & Society"
+      - "Lecture 19: AI Supply Chains"
+      - "Lecture 20: Fireside Chat, Conclusion"
+  metadata_status: verified
+
+- id: stanford-cs229-2026
+  title: "Stanford CS229 Machine Learning | Spring 2026"
+  url: https://www.youtube.com/playlist?list=PLaqpC4kq8Gpw
+  provider: Stanford Online
+  type: playlist
+  category: ai-foundations
+  difficulty: intermediate
+  language: en
+  parent: stanford-online-playlists
+  sequence: 32
+  added_on: 2026-11-19
+  featured: [recent]
+  tags: [stanford, cs229, machine learning, regressao, classificacao, redes neurais, pca, diffusion]
+  short_description: >-
+    Aulas da disciplina de pós-graduação CS229, uma introdução ampla e matemática ao machine learning —
+    de mínimos quadrados a redes neurais, clustering, diffusion models e LLMs.
+  plain_language_explanation: >-
+    Machine learning é ensinar o computador a encontrar padrões a partir de exemplos, em vez de programar
+    cada regra. Este curso mostra as famílias clássicas de algoritmos (prever números, classificar,
+    agrupar), explica como redes neurais aprendem e chega a tópicos atuais como modelos de difusão,
+    aprendizado de representações e LLMs.
+  technical_explanation: >-
+    Pelos títulos das aulas: supervised learning setup, weighted least squares, família exponencial e GLMs,
+    Gaussian Discriminant Analysis, divisão de dados e conselhos práticos, redes neurais (arquitetura e
+    backprop), K-Means e GMM, EM e PCA, diffusion models, representation learning, LLMs e next-word
+    prediction loss, Transformers e in-context learning, conceitos básicos de RL e policy gradient.
+  why_it_matters: >-
+    É a base matemática que explica por que modelos generalizam (ou não), como são treinados e como
+    avaliá-los — conhecimento que continua essencial mesmo para quem trabalha só com LLMs.
+  learning_outcomes:
+    - Formular problemas de aprendizado supervisionado e escolher modelos adequados.
+    - Entender treino de redes neurais via backpropagation.
+    - Aplicar técnicas não supervisionadas (K-Means, GMM/EM, PCA).
+    - Conectar a next-word prediction loss ao funcionamento de LLMs.
+  audience:
+    - Data Scientists consolidando fundamentos teóricos.
+    - Engenheiros migrando para ML com base matemática.
+  prerequisites:
+    required: []
+    helpful:
+      - Álgebra linear, probabilidade e cálculo multivariável (recomendação da curadoria para um curso de pós-graduação).
+      - Programação em Python.
+  key_concepts: [machine-learning, neural-networks, training, llm, transformer]
+  practical_applications:
+    - Escolher e avaliar modelos clássicos para problemas tabulares de negócio.
+    - Diagnosticar overfitting com boas práticas de divisão de dados.
+  study_guide:
+    - Siga a ordem das aulas; a aula 6 (Dataset Split, ML Advice) é útil para qualquer projeto.
+    - Pratique implementando os algoritmos em um notebook após cada bloco.
+    - "Observe que a playlist pode não conter todas as aulas numeradas (ex.: algumas numerações não aparecem)."
+  related_resources: [stanford-cs230-2025, stanford-cs221-2025]
+  learning_paths: [t1-fundamentos-ia-llms]
+  verified:
+    verified_on: 2026-11-19
+    source_title: "Stanford CS229 Machine Learning | Spring 2026"
+    video_count: 17
+    video_count_note: contagem observada na página da playlist em 19/11/2026
+    source_description: "This playlist features lectures from the Stanford graduate course CS229 Machine Learning. (trecho da descrição oficial)"
+    episodes:
+      - "Lecture 1: Introduction"
+      - "Lecture 2: Supervised Learning Setup"
+      - "Lecture 3: Weighted Least Squares"
+      - "Lecture 4: Exponential Family, GLMs Classification"
+      - "Lecture 5: Gaussian Discriminant Analysis"
+      - "Lecture 6: Dataset Split, ML Advice"
+      - "Lecture 7: Neural Networks 1 (Architecture)"
+      - "Lecture 8: Neural Networks 2 (Backprop)"
+      - "Lecture 9: K-Means and GMM (non-EM)"
+      - "Lecture 10: GMM (EM), PCA"
+      - "Lecture 11: Diffusion Models"
+      - "Lecture 12: Representation Learning"
+      - "Lecture 13: LLMs, Next-Word Prediction Loss"
+      - "Lecture 14: Transformers, In-Context Learning"
+      - "Lecture 16: Basic Concept in RL, Policy Gradient"
+      - "Lecture 18: GMM (EM), PCA"
+      - "Lecture 20: GMM (EM), PCA"
+  metadata_status: verified
+  metadata_notes: "Os títulos das aulas 18 e 20 aparecem na playlist exatamente como 'GMM (EM), PCA' (iguais à aula 10)."
+
+- id: stanford-cs230-2025
+  title: "Stanford CS230: Deep Learning I Autumn 2025"
+  url: https://www.youtube.com/playlist?list=PLoROMvodv4rNRRGdS0rBbXOUGA0wjdh1X
+  provider: Stanford Online
+  type: playlist
+  category: ai-foundations
+  difficulty: intermediate
+  language: en
+  parent: stanford-online-playlists
+  sequence: 34
+  added_on: 2026-11-19
+  tags: [stanford, cs230, deep learning, projetos, agentes, rag, robustez]
+  short_description: >-
+    Disciplina de deep learning com foco em construir e conduzir projetos: aprendizado supervisionado e
+    auto-supervisionado, ciclo de um projeto de DL, modelos generativos, agentes, prompts e RAG.
+  plain_language_explanation: >-
+    Deep learning é a parte do machine learning que usa redes neurais com muitas camadas — a tecnologia
+    por trás de reconhecimento de imagem, voz e dos LLMs. Este curso não fica só na teoria: discute como
+    planejar um projeto, como lidar com robustez e como as ideias se conectam a agentes e RAG.
+  technical_explanation: >-
+    Pelos títulos das aulas: introdução a DL; aprendizado supervisionado, auto-supervisionado e fracamente
+    supervisionado; ciclo completo de um projeto de DL; robustez adversarial e modelos generativos; deep
+    reinforcement learning; estratégia de projetos de IA; agentes, prompts e RAG; carreira em IA;
+    interpretabilidade ("What's Going On Inside My Model?").
+  why_it_matters: >-
+    Faz a ponte entre fundamentos de redes neurais e decisões práticas de projeto — exatamente o que
+    separa um experimento de um sistema que funciona.
+  learning_outcomes:
+    - Entender diferentes regimes de supervisão e quando usá-los.
+    - Planejar o ciclo completo de um projeto de deep learning.
+    - Reconhecer riscos de robustez adversarial.
+    - Relacionar deep learning a agentes, prompting e RAG.
+  audience:
+    - Profissionais com noções de ML que querem entrar em deep learning.
+    - Líderes técnicos que conduzem projetos de IA.
+  prerequisites:
+    required: []
+    helpful:
+      - "Noções de machine learning (ex.: CS229) e Python."
+  key_concepts: [deep-learning, neural-networks, ai-agents, rag, prompt-engineering]
+  practical_applications:
+    - Estruturar um projeto de deep learning com estratégia clara de dados e avaliação.
+  study_guide:
+    - Comece pelas aulas 1–3 (fundamentos e ciclo de projeto).
+    - As aulas 6 (estratégia) e 8 (agentes, prompts e RAG) são boas para líderes técnicos.
+    - Note que a playlist não inclui uma aula 7 na data da curadoria.
+  related_resources: [stanford-cs229-2026, stanford-cme295-2025]
+  learning_paths: [t1-fundamentos-ia-llms]
+  verified:
+    verified_on: 2026-11-19
+    source_title: "Stanford CS230: Deep Learning I Autumn 2025"
+    video_count: 9
+    video_count_note: contagem observada na página da playlist em 19/11/2026
+    source_description: "Deep Learning is one of the most highly sought after skills in AI. In this course, you will learn the foundations of Deep Learning... (trecho da descrição oficial)"
+    episodes:
+      - "Lecture 1: Introduction to Deep Learning"
+      - "Lecture 2: Supervised, Self-Supervised, & Weakly Supervised Learning"
+      - "Lecture 3: Full Cycle of a DL project"
+      - "Lecture 4: Adversarial Robustness and Generative Models"
+      - "Lecture 5: Deep Reinforcement Learning"
+      - "Lecture 6: AI Project Strategy"
+      - "Lecture 8: Agents, Prompts, and RAG"
+      - "Lecture 9: Career Advice in AI"
+      - "Lecture 10: What’s Going On Inside My Model?"
+  metadata_status: verified
+
+- id: stanford-cme295-2025
+  title: "Stanford CME295: Transformers and Large Language Models I Autumn 2025"
+  url: https://www.youtube.com/playlist?list=PLoROMvodv4rOCXd21gf0CF4xr35yINeOy
+  provider: Stanford Online
+  type: playlist
+  category: llms
+  difficulty: intermediate
+  language: en
+  parent: stanford-online-playlists
+  sequence: 20
+  added_on: 2026-11-19
+  featured: [start_here, deep_dives]
+  tags: [stanford, cme295, transformer, llm, treinamento, tuning, raciocinio, agentes, avaliacao]
+  short_description: >-
+    Curso compacto (9 aulas) sobre Transformers e LLMs: arquitetura, modelos derivados, treinamento,
+    tuning, raciocínio, LLMs agênticos, avaliação e tendências.
+  plain_language_explanation: >-
+    O Transformer é a arquitetura que tornou os LLMs possíveis. Este curso explica de onde ela veio
+    (a evolução do processamento de linguagem), como suas peças funcionam e como, a partir dela, se
+    constroem, treinam, ajustam e avaliam os modelos de linguagem atuais — inclusive os que agem como
+    agentes. É uma excelente ponte entre a explicação visual e os cursos mais pesados.
+  technical_explanation: >-
+    Pelos títulos: (1) Transformer; (2) modelos baseados em Transformer e truques; (3) Transformers e
+    LLMs; (4) treinamento de LLMs; (5) tuning; (6) raciocínio; (7) LLMs agênticos; (8) avaliação;
+    (9) recapitulação e tendências. A descrição oficial menciona a evolução de métodos de NLP e os
+    componentes centrais do Transformer.
+  why_it_matters: >-
+    Cobre, em poucas aulas, o vocabulário técnico que aparece em qualquer discussão séria sobre LLMs
+    (pré-treino, tuning, raciocínio, avaliação), sem exigir que você implemente tudo do zero.
+  learning_outcomes:
+    - Explicar os componentes centrais do Transformer.
+    - Entender as etapas de treinamento e tuning de um LLM.
+    - Discutir técnicas de raciocínio e o que torna um LLM "agêntico".
+    - Conhecer abordagens de avaliação de LLMs.
+  audience:
+    - Data Scientists explorando LLMs.
+    - Engenheiros de software que querem base conceitual sólida antes de construir aplicações.
+  prerequisites:
+    required: []
+    helpful:
+      - Noções de machine learning e redes neurais.
+      - Ter visto um material introdutório como "LLMs por Dentro".
+  key_concepts: [transformer, attention, llm, training, fine-tuning, evaluation, ai-agents]
+  practical_applications:
+    - Embasar escolhas entre modelos e técnicas de tuning em projetos.
+    - Preparar-se para ler papers e documentação técnica de LLMs.
+  study_guide:
+    - Assista na ordem; as aulas 1–3 são a base para o resto.
+    - Após a aula 1, revise Transformer e Attention na Base de Conhecimento.
+    - As aulas 7 (agentes) e 8 (avaliação) conectam-se diretamente às trilhas 3 e 4.
+  related_resources: [llms-por-dentro, stanford-cs336-2026, dair-transformers-recipe]
+  learning_paths: [t1-fundamentos-ia-llms]
+  verified:
+    verified_on: 2026-11-19
+    source_title: "Stanford CME295: Transformers and Large Language Models I Autumn 2025"
+    video_count: 9
+    video_count_note: contagem observada na página da playlist em 19/11/2026
+    source_description: "This course explores the world of Transformers and Large Language Models (LLMs). (trecho da descrição oficial)"
+    episodes:
+      - "Lecture 1 - Transformer"
+      - "Lecture 2 - Transformer-Based Models & Tricks"
+      - "Lecture 3 - Tranformers & Large Language Models"
+      - "Lecture 4 - LLM Training"
+      - "Lecture 5 - LLM tuning"
+      - "Lecture 6 - LLM Reasoning"
+      - "Lecture 7 - Agentic LLMs"
+      - "Lecture 8 - LLM Evaluation"
+      - "Lecture 9 - Recap & Current Trends"
+  metadata_status: verified
+
+- id: stanford-cs336-2026
+  title: "Stanford CS336: Language Modeling from Scratch | Spring 2026"
+  url: https://www.youtube.com/playlist?list=PLoROMvodv4rMqXOcazWaTUHhq-yembLCV
+  provider: Stanford Online
+  type: playlist
+  category: llms
+  difficulty: advanced
+  language: en
+  parent: stanford-online-playlists
+  sequence: 50
+  added_on: 2026-11-19
+  featured: [deep_dives, recent]
+  tags: [stanford, cs336, tokenizacao, gpu, kernels, paralelismo, scaling laws, inferencia, dados, post-training, rlvr]
+  short_description: >-
+    Curso avançado que percorre todo o processo de desenvolvimento de um modelo de linguagem: tokenização,
+    arquiteturas, GPUs e kernels, paralelismo, scaling laws, inferência, dados, avaliação e pós-treino.
+  plain_language_explanation: >-
+    Se "LLMs por Dentro" mostra o que acontece dentro de um modelo, este curso mostra o que é preciso
+    para construir um: preparar dados em grande escala, escolher a arquitetura, fazer o treino caber em
+    muitos chips, prever quanto o modelo melhora com mais recursos e, no fim, servir e alinhar o modelo.
+    É conteúdo de engenharia de ponta, voltado a quem quer ir realmente fundo.
+  technical_explanation: >-
+    Pelos títulos: overview e tokenização; PyTorch (einops); arquiteturas; alternativas à atenção;
+    GPUs e TPUs; kernels, Triton e XLA; paralelismo (2 aulas); scaling laws (2 aulas); inferência;
+    avaliação; dados (fontes, datasets); mid/post-training; post-training com RLVR; alinhamento e
+    multimodalidade; aula convidada. A descrição oficial fala em percorrer todo o processo de
+    desenvolvimento de um modelo de linguagem.
+  why_it_matters: >-
+    Decisões de custo, latência e qualidade em produção dependem de entender hardware, paralelismo,
+    inferência e dados. Este é um dos materiais abertos mais completos sobre o "como se faz" de LLMs.
+  learning_outcomes:
+    - Entender o pipeline completo de desenvolvimento de um LM, do tokenizer ao pós-treino.
+    - Raciocinar sobre desempenho em GPU/TPU, kernels e estratégias de paralelismo.
+    - Usar scaling laws para pensar em orçamento de computação.
+    - Discutir otimizações de inferência e o papel dos dados na qualidade final.
+  audience:
+    - Engenheiros de ML e pesquisadores.
+    - Engenheiros de infraestrutura de IA e de serving.
+  prerequisites:
+    required: []
+    helpful:
+      - PyTorch, deep learning e álgebra linear sólidos (recomendação da curadoria).
+      - "Ter estudado Transformers (ex.: CME295)."
+  key_concepts: [training, tokenization, transformer, inference, evaluation, model-serving, llm]
+  practical_applications:
+    - Dimensionar infraestrutura de treino ou serving de modelos.
+    - Otimizar inferência (latência e custo) de modelos em produção.
+  study_guide:
+    - Assista à aula 1 e decida seu foco; o curso é longo (18 vídeos).
+    - Para foco em produção, priorize Inference (aula 10) e Evaluation (aula 12).
+    - Combine com o repositório Train LLM From Scratch para praticar em pequena escala.
+  related_resources: [train-llm-from-scratch, stanford-cme295-2025]
+  learning_paths: [t1-fundamentos-ia-llms, t4-llmops-producao]
+  verified:
+    verified_on: 2026-11-19
+    source_title: "Stanford CS336: Language Modeling from Scratch | Spring 2026"
+    video_count: 18
+    video_count_note: contagem observada na página da playlist em 19/11/2026
+    source_description: "This course is designed to provide students with a comprehensive understanding of language models by walking them through the entire process of developing them. (trecho da descrição oficial)"
+    episodes:
+      - "Lecture 1: Overview, Tokenization"
+      - "Lecture 2: PyTorch (einops)"
+      - "Lecture 3: Architectures"
+      - "Lecture 4: Attention Alternatives"
+      - "Lecture 5: GPUs, TPUs"
+      - "Lecture 6: Kernels, Triton, XLA"
+      - "Lecture 7: Parallelism"
+      - "Lecture 8: Parallelism"
+      - "Lecture 9: Scaling Laws"
+      - "Lecture 10: Inference"
+      - "Lecture 11: Scaling Laws"
+      - "Lecture 12: Evaluation"
+      - "Lecture 13: Data (Sources, Datasets)"
+      - "Lecture 14: Data"
+      - "Lecture 15: Mid/Post-Training"
+      - "Lecture 16: Post-Training - RLVR"
+      - "Lecture 17: Alignment - Multimodality"
+      - "Guest Lecture: Dan Fu"
+  metadata_status: verified
+
+- id: stanford-cs329a
+  title: CS329A Self-Improving AI Agents
+  url: https://www.youtube.com/playlist?list=PLangBM27OtEA
+  provider: Stanford Online
+  type: playlist
+  category: agents
+  difficulty: advanced
+  language: en
+  parent: stanford-online-playlists
+  sequence: 70
+  added_on: 2026-11-19
+  featured: [deep_dives, advanced]
+  tags: [stanford, cs329a, agentes, test-time compute, verificacao, planejamento, rl, deep research, avaliacao]
+  short_description: >-
+    Disciplina de pós-graduação de Stanford sobre agentes de IA capazes de se aprimorar: computação em
+    tempo de teste, verificação robusta, aprendizado com feedback, planejamento e avaliação agêntica.
+  plain_language_explanation: >-
+    Um agente de IA não apenas responde: ele tenta, verifica se acertou, usa ferramentas, aprende com
+    o resultado e tenta de novo. Este curso estuda como fazer agentes melhorarem — gastando mais
+    "esforço de pensamento" quando necessário, checando as próprias respostas e aprendendo com
+    feedback — e como avaliar agentes em tarefas longas.
+  technical_explanation: >-
+    Organizado em 9 partes: visão geral; test-time compute scaling; robust verification; learning from
+    feedback with tools/code; planning and multi-step reasoning; train-time scaling / scaling RL;
+    self-improvement e deep research agents; agentic evaluations e long-horizon tasks; áreas futuras de
+    pesquisa. A descrição oficial informa tratar-se de gravações do curso de pós-graduação CS329A.
+  why_it_matters: >-
+    As fronteiras atuais de agentes (raciocínio estendido, verificadores, RL em tarefas agênticas) vêm
+    dessas linhas de pesquisa. Entendê-las ajuda a projetar agentes mais confiáveis e a avaliar
+    criticamente promessas de "agentes autônomos".
+  learning_outcomes:
+    - Entender como computação em tempo de teste melhora respostas de modelos.
+    - Discutir técnicas de verificação e aprendizado com feedback de ferramentas e código.
+    - Conhecer abordagens de planejamento e raciocínio multi-etapas.
+    - Avaliar agentes em tarefas de longo horizonte.
+  audience:
+    - Engenheiros desenvolvendo agentes em produção.
+    - Pesquisadores e estudantes de pós-graduação.
+  prerequisites:
+    required: []
+    helpful:
+      - "Bom entendimento de LLMs (ex.: CME295) e noções de aprendizado por reforço."
+  key_concepts: [ai-agents, evaluation, tool-calling, agent-orchestration]
+  practical_applications:
+    - Projetar etapas de verificação e autocrítica em agentes.
+    - Definir avaliações para agentes que executam tarefas longas.
+  study_guide:
+    - Assista à Part 1 para o mapa do curso.
+    - Parts 2–5 formam o núcleo técnico; Parts 7–8 conectam com produtos e avaliação.
+    - Combine com o repositório All Agentic Architectures para ver padrões implementados.
+  related_resources: [all-agentic-architectures, stanford-cme295-2025]
+  learning_paths: [t3-agentes-agentic-rag]
+  verified:
+    verified_on: 2026-11-19
+    source_title: CS329A Self-Improving AI Agents
+    video_count: 9
+    video_count_note: contagem observada na página da playlist em 19/11/2026
+    source_description: "This playlist contains video recordings of Stanford's graduate-level CS329A course. It covers the latest techniques and applications of AI agents... (trecho da descrição oficial)"
+    episodes:
+      - "Part 1 | Course Overview"
+      - "Part 2 | Test-Time Compute Scaling"
+      - "Part 3 | Robust Verification"
+      - "Part 4 | Learning from Feedback with Tools/Code"
+      - "Part 5 | Planning and Multi-Step Reasoning"
+      - "Part 6 | Train Time Scaling/Scaling RL"
+      - "Part 7 | Self-Improvement and Deep Research Agents"
+      - "Part 8 | Agentic Evaluations and Long Horizon Tasks"
+      - "Part 9 | Future Research Areas"
+  metadata_status: verified
+
+- id: stanford-ee292r
+  title: Stanford EE292R AI and Data for Science
+  url: https://www.youtube.com/playlist?list=PLYiycvG2rxJ0
+  provider: Stanford Online
+  type: playlist
+  category: ai-foundations
+  difficulty: intermediate
+  language: en
+  parent: stanford-online-playlists
+  sequence: 80
+  added_on: 2026-11-19
+  featured: [recent]
+  tags: [stanford, ee292r, ia para ciencia, world models, medicina, seminario]
+  short_description: >-
+    Série de seminários de Stanford sobre IA e dados aplicados à ciência — de modelos computacionais da
+    retina a world models e modelagem multimodal para medicina de precisão.
+  plain_language_explanation: >-
+    Além de chatbots, a IA está mudando a forma de fazer ciência: ajuda a modelar o cérebro, simular o
+    mundo físico e combinar diferentes tipos de dados médicos. Este é um ciclo de palestras (não um
+    curso sequencial), ótimo para ampliar a visão sobre aplicações de IA fora do software tradicional.
+  technical_explanation: >-
+    Seminários da edição Autumn 2026 disponíveis na curadoria: "Models of Computation in the Retina",
+    "From World Models to World Agents" e "Multimodal Modeling for Precision Medicine". A descrição
+    oficial apresenta a série como um seminário que reúne pessoas para discutir trabalhos inovadores.
+  why_it_matters: >-
+    Amplia o repertório de aplicações de IA e mostra problemas em que dados e modelos encontram
+    restrições científicas reais.
+  learning_outcomes:
+    - Conhecer aplicações de IA em neurociência, world models e medicina.
+    - Identificar diferenças entre problemas científicos e problemas típicos de produto.
+  audience:
+    - Data Scientists curiosos sobre IA aplicada à ciência.
+    - Pesquisadores de outras áreas interessados em IA.
+  prerequisites:
+    required: []
+    helpful:
+      - Noções gerais de machine learning.
+  key_concepts: [artificial-intelligence, machine-learning, deep-learning]
+  practical_applications:
+    - Inspirar projetos de IA aplicada em saúde, ciência e simulação.
+  study_guide:
+    - Os seminários são independentes; escolha pelo tema.
+    - Use como complemento, não como primeira fonte de estudo.
+  related_resources: [stanford-cs230-2025]
+  verified:
+    verified_on: 2026-11-19
+    source_title: Stanford EE292R AI and Data for Science
+    video_count: 4
+    video_count_note: "a página listava 4 vídeos, dos quais 3 estavam disponíveis em 19/11/2026"
+    source_description: "These lectures are from Stanford EE292R AI and Data for Science, a Stanford seminar series... (trecho da descrição oficial)"
+    episodes:
+      - "Autumn 2026 | Models of Computation in the Retina"
+      - "Autumn 2026 | From World Models to World Agents"
+      - "Autumn 2026 | Multimodal Modeling for Precision Medicine"
+  metadata_status: verified
+
+# =====================================================================
+# CATEGORIA B — LLM Engineering & Production
+# =====================================================================
+- id: fsdl-llm-bootcamp-2023
+  title: LLM Bootcamp - Spring 2023
+  url: https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/
+  provider: The Full Stack (Full Stack Deep Learning)
+  type: course
+  category: llm-engineering
+  difficulty: intermediate
+  language: en
+  sequence: 40
+  added_on: 2026-11-19
+  tags: [bootcamp, prompt engineering, llmops, ux, augmented language models, agentes, askfsdl, "2023"]
+  short_description: >-
+    Bootcamp com aulas sobre como construir e colocar no ar aplicações com LLMs: fundamentos, prompting,
+    modelos aumentados (recuperação e ferramentas), UX, LLMOps e um projeto completo de referência.
+  plain_language_explanation: >-
+    Saber como um LLM funciona é diferente de saber construir um produto com ele. Este bootcamp trata da
+    parte de engenharia e produto: como prototipar rapidamente, escrever bons prompts, conectar o modelo
+    a documentos e ferramentas externas, desenhar a experiência do usuário e operar a aplicação depois
+    que ela está no ar. Atenção: o conteúdo é de 2023 — os princípios continuam valiosos, mas várias
+    ferramentas citadas evoluíram ou foram substituídas.
+  technical_explanation: >-
+    Aulas listadas na página oficial: Launch an LLM App in One Hour; LLM Foundations (speed-run de ML,
+    Transformer, LLMs notáveis e seus datasets); Learn to Spell: Prompt Engineering (decomposição,
+    chain-of-thought, autocrítica, ensembling, armadilhas de few-shot e tokenização); Augmented Language
+    Models (conhecimento externo, índices vetoriais e gestão de embeddings, ferramentas externas); Project
+    Walkthrough askFSDL (Q&A com fontes, ETL, deploy e monitoramento); UX for Language User Interfaces;
+    LLMOps (comparar e avaliar modelos, gestão de prompts, TDD e CI para LLMs); What's Next?. Palestras
+    convidadas: How To Train Your Own LLM (Reza Shabani), Agents (Harrison Chase) e Fireside Chat com
+    Peter Welinder.
+  why_it_matters: >-
+    Organiza o "mapa" de uma aplicação LLM de ponta a ponta — do protótipo ao monitoramento — e ensina
+    princípios duradouros (avaliar antes de trocar de modelo, versionar prompts, desenhar UX para
+    incerteza) que valem independentemente da ferramenta da moda.
+  learning_outcomes:
+    - Descrever a arquitetura típica de uma aplicação baseada em LLM.
+    - Aplicar técnicas de prompting como decomposição, chain-of-thought e autocrítica.
+    - Explicar como índices vetoriais e ferramentas externas aumentam um LLM (base do RAG e de agentes).
+    - Reconhecer práticas de LLMOps — avaliação, gestão de prompts, testes e CI.
+    - Aplicar princípios de UX para interfaces baseadas em linguagem.
+  audience:
+    - Desenvolvedores e Data Scientists que vão construir a primeira aplicação com LLM.
+    - Product managers e líderes técnicos que precisam de visão de ponta a ponta.
+  prerequisites:
+    required: []
+    helpful:
+      - Python e noções de APIs web.
+      - Vocabulário básico de LLMs (tokens, embeddings) — veja a Trilha 1.
+  key_concepts: [llm, prompt-engineering, rag, embeddings, vector-database, llmops, evaluation, tool-calling]
+  practical_applications:
+    - Estruturar o primeiro protótipo de assistente com respostas baseadas em documentos.
+    - Definir um processo de avaliação e versionamento de prompts para um time.
+  study_guide:
+    - Comece por "Launch an LLM App in One Hour" para a visão geral e depois "LLM Foundations" se precisar de base.
+    - Sequência sugerida para engenharia - Prompt Engineering, Augmented Language Models, Project Walkthrough askFSDL, LLMOps.
+    - Ao assistir, anote o princípio por trás de cada ferramenta e procure a alternativa atual equivalente.
+    - Depois, pratique RAG moderno com o Production Agentic RAG Course.
+  related_resources: [production-agentic-rag-course, dlai-evaluating-debugging-genai, dair-prompt-engineering-guide]
+  learning_paths: [t2-aplicacoes-llm, t4-llmops-producao]
+  verified:
+    verified_on: 2026-11-19
+    source_title: LLM Bootcamp - Spring 2023
+  metadata_status: verified
+  metadata_notes: "Conteúdo de 2023: ferramentas citadas (ex.: Modal, Gantry, LangChain da época) podem ter mudado. Duração não informada pela fonte."
+
+- id: dlai-evaluating-debugging-genai
+  title: Evaluating and Debugging Generative AI
+  url: https://www.deeplearning.ai/courses/evaluating-debugging-generative-ai
+  provider: DeepLearning.AI
+  type: course
+  category: llmops
+  difficulty: intermediate
+  language: en
+  sequence: 45
+  added_on: 2026-11-19
+  tags: [avaliacao, depuracao, experiment tracking, ia generativa, qualidade]
+  short_description: >-
+    Curso sobre avaliação, análise de resultados e depuração de aplicações de IA generativa.
+    (Descrição em validação — a página oficial não pôde ser consultada automaticamente.)
+  plain_language_explanation: >-
+    Em software tradicional, um teste diz se a resposta está certa ou errada. Em IA generativa, a mesma
+    pergunta pode gerar respostas diferentes, e "certo" muitas vezes é uma questão de grau. Avaliar é
+    definir critérios e medir a qualidade de forma sistemática; rastrear experimentos é registrar cada
+    tentativa (modelo, prompt, parâmetros, resultado) para comparar; depurar é investigar por que uma
+    resposta saiu ruim. Este curso trata dessas práticas.
+  technical_explanation: >-
+    Os temas acima refletem o título e a descrição inicial fornecida à curadoria. O currículo detalhado,
+    as ferramentas utilizadas e a duração NÃO foram verificados: a página oficial bloqueou o acesso
+    automatizado (proteção anti-bot) na data da curadoria. Consulte a página do curso para o conteúdo exato.
+  why_it_matters: >-
+    Sem avaliação, não há como saber se uma mudança de prompt, modelo ou recuperação melhorou ou piorou a
+    aplicação. Avaliação e rastreamento de experimentos são o que transforma tentativa-e-erro em engenharia.
+  learning_outcomes:
+    - Entender o que significa avaliar a qualidade de saídas de IA generativa.
+    - Reconhecer o papel do rastreamento de experimentos na comparação de versões.
+    - Aplicar uma postura sistemática de depuração em aplicações generativas.
+  audience:
+    - Data Scientists e engenheiros que já construíram um protótipo e precisam medir qualidade.
+  prerequisites:
+    required: []
+    helpful:
+      - Python e noções de machine learning (recomendação da curadoria; pré-requisitos oficiais não verificados).
+  key_concepts: [evaluation, observability, llmops, generative-ai]
+  practical_applications:
+    - Montar um conjunto de avaliação antes de trocar o modelo de uma aplicação.
+    - Registrar experimentos de prompts para decisões baseadas em evidência.
+  study_guide:
+    - Abra a página oficial e confira o currículo e a duração antes de começar.
+    - Revise antes os conceitos Evaluation e Observability na Base de Conhecimento.
+    - Aplique o que aprender em um projeto próprio, comparando pelo menos duas versões de prompt.
+  related_resources: [fsdl-llm-bootcamp-2023, production-agentic-rag-course]
+  learning_paths: [t2-aplicacoes-llm, t4-llmops-producao]
+  verified: {}
+  metadata_status: pending
+  metadata_notes: "Pending verification: deeplearning.ai retornou HTTP 403 (proteção anti-bot) em 19/11/2026. Currículo, lições, duração, instrutores e ferramentas não verificados."
+
+- id: production-agentic-rag-course
+  title: "The Mother of AI Project — Phase 1 RAG Systems: arXiv Paper Curator"
+  url: https://github.com/jamwithai/production-agentic-rag-course
+  provider: Jam With AI
+  type: github
+  category: llm-engineering
+  difficulty: advanced
+  language: en
+  sequence: 55
+  added_on: 2026-11-19
+  github_repo: jamwithai/production-agentic-rag-course
+  featured: [hands_on, advanced]
+  tags: [rag, agentic rag, bm25, busca hibrida, opensearch, fastapi, airflow, langgraph, langfuse, redis, docker]
+  short_description: >-
+    Curso prático semana a semana: construir um assistente de pesquisa sobre papers do arXiv, evoluindo de
+    busca por palavra-chave a busca híbrida, RAG completo, monitoramento e, por fim, Agentic RAG.
+  plain_language_explanation: >-
+    RAG (Retrieval-Augmented Generation) é dar ao LLM a capacidade de consultar documentos antes de
+    responder, como um aluno que pode abrir o livro na prova. "Agentic RAG" vai além: o sistema decide
+    quando buscar, avalia se o que encontrou é relevante e reformula a pergunta se necessário. Este
+    projeto ensina a construir isso como em uma empresa — primeiro uma busca tradicional sólida, depois
+    a camada semântica, a geração, o monitoramento e o agente — em vez de começar direto pelo vetor.
+  technical_explanation: >-
+    Conforme o README: semana 1 — infraestrutura com Docker, FastAPI, PostgreSQL, OpenSearch e Airflow;
+    semana 2 — pipeline de ingestão e parsing de papers do arXiv; semana 3 — busca BM25 com filtros;
+    semana 4 — chunking e busca híbrida (palavra-chave + semântica); semana 5 — pipeline RAG com LLM
+    local, streaming e interface Gradio; semana 6 — monitoramento com Langfuse e cache com Redis;
+    semana 7 — Agentic RAG com LangGraph (grading de documentos, reescrita de consulta, guardrails de
+    fora-de-domínio, rastreamento de raciocínio) e bot no Telegram. Cada semana tem notebook, blog post
+    e tag de código.
+  why_it_matters: >-
+    A maioria dos tutoriais de RAG pula a parte difícil (ingestão, qualidade de busca, observabilidade).
+    Este curso mostra a sequência profissional e ajuda a entender por que busca por palavra-chave
+    continua essencial em sistemas de produção.
+  learning_outcomes:
+    - Montar a infraestrutura de um sistema RAG com serviços containerizados.
+    - Construir um pipeline de ingestão e parsing de documentos.
+    - Implementar busca BM25 e evoluir para busca híbrida com chunking.
+    - Integrar um LLM local com streaming em um pipeline RAG completo.
+    - Adicionar observabilidade (tracing) e cache.
+    - Evoluir para Agentic RAG com grading de documentos, reescrita de consulta e guardrails.
+  audience:
+    - Engenheiros de IA e back-end que querem levar RAG para produção.
+    - Data Scientists com experiência em Python e Docker.
+  prerequisites:
+    required:
+      - Docker Desktop com Docker Compose (citado no README).
+      - Python 3.12+ e o gerenciador UV (citados no README).
+      - 8 GB+ de RAM e 20 GB+ de disco livre (citados no README).
+    helpful:
+      - Noções de APIs REST e bancos de dados.
+      - Conceitos de embeddings e busca semântica (veja a Base de Conhecimento).
+  key_concepts: [rag, semantic-search, embeddings, vector-database, reranking, ai-agents, observability, grounding]
+  practical_applications:
+    - Construir um assistente interno que responde com base em documentos da empresa.
+    - Avaliar quando busca híbrida supera busca puramente vetorial.
+    - Adicionar tracing a um pipeline RAG para depurar respostas ruins.
+  study_guide:
+    - Leia a seção "About This Course" e o diagrama de evolução da arquitetura.
+    - Siga as semanas em ordem, usando a tag de código de cada semana (week1.0, week2.0...).
+    - Leia o blog post de cada semana antes de executar o notebook correspondente.
+    - Execute em ambiente isolado (Docker), configurando chaves no .env — nunca exponha segredos.
+    - Ao chegar à semana 7, compare com os padrões de RAG do All Agentic Architectures.
+  related_resources: [all-agentic-architectures, fsdl-llm-bootcamp-2023, dlai-evaluating-debugging-genai]
+  learning_paths: [t2-aplicacoes-llm, t3-agentes-agentic-rag, t4-llmops-producao]
+  github_highlights:
+    - {path: notebooks/, why: Notebooks de cada semana do curso.}
+    - {path: src/, why: "Serviços da aplicação (API, busca, RAG, agente)."}
+    - {path: airflow/, why: Orquestração do pipeline de ingestão.}
+    - {path: compose.yml, why: "Definição dos serviços (OpenSearch, PostgreSQL, Airflow...)."}
+    - {path: .env.example, why: Variáveis de configuração necessárias.}
+  verified:
+    verified_on: 2026-11-19
+    source_title: "The Mother of AI Project — Phase 1 RAG Systems: arXiv Paper Curator"
+    license: MIT
+    primary_language: Python
+  metadata_status: verified
+  metadata_notes: "O repositório não possui descrição curta no GitHub; o título exibido vem do README."
+
+# =====================================================================
+# CATEGORIA C — Agentic AI & Architectures
+# =====================================================================
+- id: all-agentic-architectures
+  title: Agentic Architectures (all-agentic-architectures)
+  url: https://github.com/FareedKhan-dev/all-agentic-architectures
+  provider: Fareed Khan
+  type: github
+  category: agents
+  difficulty: advanced
+  language: en
+  sequence: 65
+  added_on: 2026-11-19
+  github_repo: FareedKhan-dev/all-agentic-architectures
+  featured: [deep_dives, advanced]
+  tags: [agentes, react, reflexion, tree of thoughts, lats, graphrag, memgpt, multi-agent, langgraph, benchmark]
+  short_description: >-
+    Biblioteca Python e "livro-texto executável" com dezenas de padrões de agentes — reflexão, busca,
+    RAG, memória, ferramentas, multiagentes e segurança — cada um com notebook executado e benchmark.
+  plain_language_explanation: >-
+    Vale separar quatro coisas. Um chatbot apenas conversa. Um LLM com ferramentas pode, por exemplo,
+    consultar uma busca ou uma calculadora quando pedido. Um agente decide sozinho, em ciclos, o que
+    fazer a seguir — planeja, age, observa o resultado e corrige o rumo até cumprir um objetivo. Um
+    sistema multiagente divide o trabalho entre vários agentes especializados que colaboram ou debatem.
+    Este repositório cataloga os padrões conhecidos para construir agentes e mostra cada um funcionando.
+  technical_explanation: >-
+    O README descreve 36 arquiteturas (a descrição curta do GitHub cita 35) com contrato uniforme
+    `.run(task)` sobre máquinas de estado LangGraph, suporte a vários provedores de LLM e notebooks
+    executados. Famílias: Reasoning & Reflection (Reflection, Reflexion, Chain-of-Verification,
+    Self-Discover, Constitutional AI); Sampling & Search (Self-Consistency, Tree of Thoughts, LATS...);
+    Retrieval (Agentic RAG, CRAG, Self-RAG, Adaptive RAG, GraphRAG); Memory (MemGPT, Voyager...); Tools &
+    Actions (Tool Use, ReAct, Planning, PEV, SWE-Agent, BrowserAgent); Multi-Agent (Blackboard, Debate,
+    STORM, Mixture of Agents...); Safety & Routing (Dry-Run, Computer Use...). Destaca o padrão
+    "deterministic-picker": o LLM decide atributos categóricos e o Python compõe a decisão final.
+  why_it_matters: >-
+    "Agente" virou um termo genérico. Conhecer os padrões nomeados, com referências acadêmicas e
+    comparação lado a lado, permite escolher a arquitetura adequada ao problema em vez de copiar a
+    última moda — e entender os custos (chamadas extras, latência) de cada escolha.
+  learning_outcomes:
+    - Distinguir chatbot, LLM com ferramentas, agente e sistema multiagente.
+    - Reconhecer as principais famílias de arquiteturas agênticas e seus trade-offs.
+    - Comparar variantes de RAG (Agentic, Corrective, Self, Adaptive, Graph).
+    - Entender padrões de memória e de orquestração multiagente.
+    - Aplicar gates determinísticos para tornar decisões de agentes mais confiáveis.
+  audience:
+    - Engenheiros desenvolvendo agentes em produção.
+    - Data Scientists e pesquisadores que comparam abordagens agênticas.
+  prerequisites:
+    required:
+      - Python intermediário.
+      - Saber chamar um LLM via API.
+    helpful:
+      - Noções de LangGraph/LangChain.
+      - Conceitos de RAG e tool calling (Trilhas 2 e 3).
+  key_concepts: [ai-agents, tool-calling, multi-agent-systems, agent-orchestration, rag, evaluation]
+  practical_applications:
+    - Escolher entre ReAct, Planning ou Plan-Execute-Verify para um assistente que executa tarefas.
+    - Prototipar um agente com autocrítica (Reflection) antes de investir em algo mais complexo.
+    - Avaliar variantes de RAG para uma base de conhecimento corporativa.
+  study_guide:
+    - Use os "Learning paths" do próprio README - Beginner (Reflection, Tool Use, ReAct, Planning, Self-Consistency).
+    - Depois siga o caminho RAG-focused ou Multi-agent conforme seu objetivo.
+    - Leia o notebook de cada arquitetura antes de rodar código; rode só em ambiente isolado e com suas próprias chaves.
+    - Consulte o leaderboard de benchmarks para comparar custo e desempenho entre padrões.
+  related_resources: [production-agentic-rag-course, stanford-cs329a]
+  learning_paths: [t3-agentes-agentic-rag, t4-llmops-producao]
+  github_highlights:
+    - {path: notebooks/, why: Notebook executado para cada arquitetura.}
+    - {path: src/, why: Biblioteca agentic_architectures com o contrato uniforme.}
+    - {path: benchmarks/, why: Tarefas de benchmark e leaderboard comparativo.}
+    - {path: docs/, why: Documentação das famílias de arquiteturas.}
+  links:
+    - {label: Ver documentação, url: "https://fareedkhan-dev.github.io/all-agentic-architectures/"}
+  verified:
+    verified_on: 2026-11-19
+    source_title: Agentic Architectures
+    license: MIT
+    primary_language: Jupyter Notebook
+    source_description: "35 production-grade agentic AI architectures (Reflexion, LATS, GraphRAG, MemGPT, Voyager, BrowserAgent, ...) — a Python library and runnable textbook with multi-provider LLM support and a 17-task benchmark leaderboard."
+  metadata_status: verified
+  metadata_notes: "O README cita 36 arquiteturas e a descrição do GitHub cita 35 (nov/2026)."
+
+- id: dair-ai
+  title: DAIR.AI
+  url: https://github.com/dair-ai
+  provider: DAIR.AI
+  type: collection
+  category: llm-engineering
+  difficulty: beginner
+  language: en
+  sequence: 35
+  added_on: 2026-11-19
+  github_repo: dair-ai
+  tags: [organizacao, prompt engineering, papers, cursos, guias de estudo]
+  short_description: >-
+    Organização no GitHub com guias e coleções educacionais sobre IA — prompting, papers explicados,
+    cursos no YouTube e roteiros de estudo. A Academy selecionou os projetos mais úteis para aprender.
+  plain_language_explanation: >-
+    No GitHub, uma "organização" é uma conta que agrupa vários repositórios. A DAIR.AI mantém dezenas
+    deles; muitos são listas curadas e guias de estudo (não software). Em vez de importar tudo, a Academy
+    escolheu os que ajudam diretamente no aprendizado de LLMs e IA aplicada — veja-os abaixo.
+  technical_explanation: >-
+    Na data da curadoria, a organização tinha 70 repositórios públicos retornados pela API. Critério de
+    seleção: foco educacional, relevância para prompting, modelos de linguagem e IA generativa aplicada,
+    e utilidade como ponto de partida. Repositórios não selecionados continuam acessíveis pelo link da
+    organização.
+  why_it_matters: >-
+    Coleções curadas economizam tempo de pesquisa e indicam referências que a comunidade já validou.
+  learning_outcomes:
+    - Localizar guias de prompting, papers explicados e cursos curados da DAIR.AI.
+    - Escolher o repositório adequado ao seu momento de estudo.
+  audience:
+    - Qualquer pessoa estudando IA, de iniciantes a profissionais.
+  prerequisites:
+    required: []
+    helpful: []
+  key_concepts: [prompt-engineering, github-repository, llm]
+  practical_applications:
+    - Usar os guias como material de apoio em treinamentos internos.
+  study_guide:
+    - Comece pelo Prompt Engineering Guide se você constrói aplicações.
+    - Use ML-YouTube-Courses para descobrir cursos e ML-Papers-Explained para revisar conceitos.
+  related_resources: [dair-prompt-engineering-guide]
+  verified:
+    verified_on: 2026-11-19
+    source_title: dair-ai (GitHub organization)
+  metadata_status: partial
+  metadata_notes: "Coleção: apenas os repositórios listados como itens filhos foram verificados individualmente."
+
+- id: dair-prompt-engineering-guide
+  title: Prompt-Engineering-Guide
+  url: https://github.com/dair-ai/Prompt-Engineering-Guide
+  provider: DAIR.AI
+  type: github
+  category: llm-engineering
+  difficulty: beginner
+  language: en
+  parent: dair-ai
+  sequence: 36
+  added_on: 2026-11-19
+  github_repo: dair-ai/Prompt-Engineering-Guide
+  featured: [beginners]
+  tags: [prompt engineering, context engineering, rag, agentes, guia]
+  short_description: >-
+    Guias, papers, lições e notebooks sobre prompt engineering, context engineering, RAG e agentes.
+  plain_language_explanation: >-
+    Prompt engineering é a prática de escrever instruções e fornecer contexto de modo que o modelo
+    responda do jeito que você precisa — como dar um briefing claro a um colega. Este guia reúne
+    técnicas, exemplos e referências para isso, e se estende a temas vizinhos como montar o contexto
+    certo (context engineering), RAG e agentes.
+  technical_explanation: >-
+    Segundo a descrição do repositório: guias, papers, lições, notebooks e recursos para prompt
+    engineering, context engineering, RAG e AI Agents. O conteúdo é majoritariamente em MDX
+    (documentação), o que indica um site de guias e não uma biblioteca de software.
+  why_it_matters: >-
+    O prompt é a interface principal com um LLM. Boas práticas de prompting melhoram qualidade e
+    consistência sem nenhum custo de infraestrutura e são a base para RAG e agentes.
+  learning_outcomes:
+    - Aplicar técnicas fundamentais de prompting.
+    - Entender a diferença entre prompt engineering e context engineering.
+    - Encontrar referências para RAG e agentes a partir de um guia único.
+  audience:
+    - Pessoas começando a construir com LLMs.
+    - Profissionais de qualquer área que usam assistentes de IA no trabalho.
+  prerequisites:
+    required: []
+    helpful:
+      - Ter usado algum assistente de IA.
+  key_concepts: [prompt-engineering, context-window, rag, ai-agents]
+  practical_applications:
+    - Padronizar prompts de um time para tarefas recorrentes.
+    - Melhorar a qualidade de respostas de um chatbot interno.
+  study_guide:
+    - Leia primeiro as seções introdutórias de técnicas básicas.
+    - Teste cada técnica em um assistente que você já usa, com uma tarefa real sua.
+    - Avance para RAG e agentes quando os fundamentos estiverem confortáveis.
+  related_resources: [fsdl-llm-bootcamp-2023, production-agentic-rag-course]
+  learning_paths: [t2-aplicacoes-llm]
+  verified:
+    verified_on: 2026-11-19
+    source_title: Prompt-Engineering-Guide
+    primary_language: MDX
+    source_description: "Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents."
+  metadata_status: partial
+  metadata_notes: "Verificados: descrição e linguagem via API da organização. README não analisado em detalhe; licença não conferida."
+
+- id: dair-ml-youtube-courses
+  title: ML-YouTube-Courses
+  url: https://github.com/dair-ai/ML-YouTube-Courses
+  provider: DAIR.AI
+  type: github
+  category: ai-foundations
+  difficulty: beginner
+  language: en
+  parent: dair-ai
+  sequence: 37
+  added_on: 2026-11-19
+  github_repo: dair-ai/ML-YouTube-Courses
+  featured: [beginners]
+  tags: [cursos, youtube, machine learning, lista curada]
+  short_description: >-
+    Lista curada de cursos de machine learning e IA disponíveis gratuitamente no YouTube.
+  plain_language_explanation: >-
+    Há muitos cursos gratuitos de IA no YouTube, mas é difícil saber por onde começar. Este repositório
+    é um índice organizado: não tem aulas próprias, e sim links para cursos de diversas instituições.
+  technical_explanation: >-
+    Segundo a descrição do repositório, é um ponto de descoberta dos cursos mais recentes de ML/IA no
+    YouTube. A última atualização registrada pela API foi em jan/2024, então cursos mais novos podem não
+    estar listados.
+  why_it_matters: >-
+    Ajuda a montar um plano de estudos com fontes de qualidade sem custo.
+  learning_outcomes:
+    - Descobrir cursos gratuitos de ML e IA organizados por tema.
+  audience:
+    - Iniciantes montando um plano de estudos.
+  prerequisites:
+    required: []
+    helpful: []
+  key_concepts: [machine-learning, deep-learning]
+  practical_applications:
+    - Selecionar cursos complementares para uma trilha da Academy.
+  study_guide:
+    - Use como índice; escolha no máximo um curso por vez.
+    - Confira a data das aulas — a lista teve a última atualização em 2024.
+  related_resources: [stanford-online-playlists, dair-ml-papers-explained]
+  verified:
+    verified_on: 2026-11-19
+    source_title: ML-YouTube-Courses
+    source_description: Discover the latest machine learning / AI courses on YouTube.
+  metadata_status: partial
+  metadata_notes: "Verificada apenas a descrição via API; README não analisado em detalhe; licença não conferida."
+
+- id: dair-ml-papers-explained
+  title: ML-Papers-Explained
+  url: https://github.com/dair-ai/ML-Papers-Explained
+  provider: DAIR.AI
+  type: github
+  category: ai-foundations
+  difficulty: intermediate
+  language: en
+  parent: dair-ai
+  sequence: 38
+  added_on: 2026-11-19
+  github_repo: dair-ai/ML-Papers-Explained
+  tags: [papers, explicacoes, conceitos, pesquisa]
+  short_description: >-
+    Explicações de conceitos-chave de machine learning a partir de papers importantes.
+  plain_language_explanation: >-
+    Papers científicos são a fonte original das ideias de IA, mas costumam ser densos. Este repositório
+    reúne explicações mais acessíveis de trabalhos importantes, ajudando a entender de onde vêm os
+    conceitos que você encontra nos cursos.
+  technical_explanation: >-
+    Segundo a descrição do repositório: "Explanation to key concepts in ML". A API registrou atualização
+    em jun/2025. O conteúdo detalhado não foi analisado pela curadoria.
+  why_it_matters: >-
+    Ler (ou entender) papers é o que permite acompanhar a área sem depender apenas de resumos de terceiros.
+  learning_outcomes:
+    - Revisar conceitos de ML a partir de suas fontes originais.
+  audience:
+    - Profissionais que querem começar a ler pesquisa em IA.
+  prerequisites:
+    required: []
+    helpful:
+      - Fundamentos de ML e deep learning.
+  key_concepts: [machine-learning, deep-learning, transformer]
+  practical_applications:
+    - Preparar sessões de leitura de papers em grupo.
+  study_guide:
+    - Escolha um conceito que você já viu em aula e leia a explicação correspondente.
+  related_resources: [dair-transformers-recipe, dair-ml-youtube-courses]
+  verified:
+    verified_on: 2026-11-19
+    source_title: ML-Papers-Explained
+    source_description: Explanation to key concepts in ML
+  metadata_status: partial
+  metadata_notes: "Verificada apenas a descrição via API; conteúdo e licença não conferidos."
+
+- id: dair-transformers-recipe
+  title: Transformers-Recipe
+  url: https://github.com/dair-ai/Transformers-Recipe
+  provider: DAIR.AI
+  type: github
+  category: llms
+  difficulty: intermediate
+  language: en
+  parent: dair-ai
+  sequence: 25
+  added_on: 2026-11-19
+  github_repo: dair-ai/Transformers-Recipe
+  tags: [transformer, guia de estudo, attention]
+  short_description: >-
+    Guia de estudo com uma sequência de materiais para aprender sobre Transformers.
+  plain_language_explanation: >-
+    Em vez de ensinar diretamente, este repositório funciona como uma "receita": indica o que ler e
+    assistir, e em que ordem, para entender a arquitetura Transformer — a base dos LLMs.
+  technical_explanation: >-
+    Segundo a descrição: "A study guide to learn about Transformers". Última atualização registrada pela
+    API em jun/2023; materiais posteriores não estarão incluídos.
+  why_it_matters: >-
+    Transformers aparecem em todo o ecossistema de IA atual; um roteiro de estudo evita lacunas.
+  learning_outcomes:
+    - Seguir uma sequência de estudo estruturada sobre Transformers.
+  audience:
+    - Quem já tem noções de redes neurais e quer entender Transformers.
+  prerequisites:
+    required: []
+    helpful:
+      - Noções de redes neurais.
+  key_concepts: [transformer, attention, neural-networks]
+  practical_applications:
+    - Organizar um grupo de estudo sobre Transformers.
+  study_guide:
+    - Siga a ordem sugerida pelo próprio guia e complemente com a aula 1 do CME295.
+  related_resources: [stanford-cme295-2025, llms-por-dentro]
+  learning_paths: [t1-fundamentos-ia-llms]
+  verified:
+    verified_on: 2026-11-19
+    source_title: Transformers-Recipe
+    source_description: A study guide to learn about Transformers
+  metadata_status: partial
+  metadata_notes: "Verificada apenas a descrição via API; conteúdo e licença não conferidos."
+
+# =====================================================================
+# CATEGORIA D — AI-Assisted Software Engineering
+# =====================================================================
+- id: mattpocock-skills
+  title: Skills For Real Engineers (mattpocock/skills)
+  url: https://github.com/mattpocock/skills
+  provider: Matt Pocock
+  type: collection
+  category: software-engineering
+  difficulty: beginner
+  language: en
+  sequence: 85
+  added_on: 2026-11-19
+  github_repo: mattpocock/skills
+  featured: [start_here]
+  tags: [agent skills, claude code, codex, copilot, workflows, engenharia de software, tdd, code review]
+  short_description: >-
+    Coleção de skills pequenas e combináveis para assistentes de código (Claude Code, Codex, Copilot,
+    Gemini CLI e outros), criadas para corrigir falhas comuns como desalinhamento entre o que você quer
+    e o que o agente constrói.
+  plain_language_explanation: >-
+    Uma "skill" de IA é um arquivo de instruções (geralmente um SKILL.md em Markdown) que ensina um
+    assistente de código a executar um procedimento específico — por exemplo, entrevistar você antes de
+    começar uma tarefa, revisar código ou escrever testes primeiro. Diferente de um pacote de software
+    ou de um aplicativo, uma skill não é um programa que roda sozinho: é conhecimento de processo que o
+    agente lê e segue. Por isso é fácil de ler, adaptar e combinar. Este repositório reúne as skills
+    que o autor usa no dia a dia.
+  technical_explanation: >-
+    O README apresenta instalação como plugin (Claude Code, Codex, GitHub Copilot), via Gemini CLI ou
+    via `npx skills` para outros agentes, seguida de `/setup-matt-pocock-skills`, que pergunta qual
+    issue tracker usar, quais labels de triagem e onde salvar docs. As skills ficam em skills/ por
+    área (engineering, productivity, misc, in-progress) — por exemplo code-review, tdd, to-spec,
+    to-tickets, triage, diagnosing-bugs, domain-modeling, grill-with-docs, grilling, grill-me, handoff.
+    Algumas skills apenas compõem outras (ex.: grill-me invoca grilling).
+  why_it_matters: >-
+    Assistentes de código são poderosos, mas falham de formas previsíveis: entendem errado o pedido,
+    pulam etapas, perdem contexto. Skills transformam boas práticas de engenharia em procedimentos que
+    o agente segue de forma consistente, mantendo você no controle.
+  learning_outcomes:
+    - Explicar o que é uma agent skill e como difere de um pacote ou aplicativo.
+    - Instalar e configurar uma coleção de skills em um assistente de código.
+    - Identificar skills para alinhamento, revisão, testes e organização de trabalho.
+    - Ler um SKILL.md e adaptá-lo ao seu fluxo.
+  audience:
+    - Desenvolvedores que usam assistentes de código com IA.
+    - Líderes técnicos padronizando fluxos de desenvolvimento assistido por IA.
+  prerequisites:
+    required:
+      - "Usar algum assistente de código compatível (ex.: Claude Code, Codex, Copilot, Gemini CLI)."
+    helpful:
+      - Noções de Git e de linha de comando.
+  key_concepts: [agent-skills, github-repository, readme, spec-driven-development]
+  practical_applications:
+    - Padronizar como o time inicia tarefas com o agente (alinhamento antes de código).
+    - Adotar fluxos de TDD e code review assistidos por IA.
+  study_guide:
+    - Leia a seção "Why These Skills Exist" do README para entender os problemas que as skills resolvem.
+    - Abra 2 ou 3 SKILL.md (comece por grill-me e grilling) e note como são curtos e textuais.
+    - Instale pelo método do seu agente e rode o setup uma vez por repositório.
+    - Experimente uma skill por vez em uma tarefa real antes de adotar várias.
+  related_resources: [sdd-emersonmendes, grill-me, grill-with-docs]
+  learning_paths: [t5-engenharia-assistida-ia]
+  github_highlights:
+    - {path: skills/engineering/, why: "Skills de engenharia (code-review, tdd, to-spec, triage, domain-modeling...)."}
+    - {path: skills/productivity/, why: "Skills de produtividade (grilling, grill-me, handoff, teach...)."}
+    - {path: GLOSSARY.md, why: Vocabulário usado pelas skills.}
+    - {path: CONTRIBUTING.md, why: Como o repositório é mantido.}
+  links:
+    - {label: Ver página do projeto, url: "https://aihero.dev/skills"}
+  verified:
+    verified_on: 2026-11-19
+    source_title: Skills For Real Engineers
+    license: MIT
+    primary_language: Shell
+    source_description: Skills for Real Engineers. Straight from my .agents directory.
+  metadata_status: verified
+
+- id: grill-with-docs
+  title: grill-with-docs
+  url: https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs
+  provider: Matt Pocock
+  type: tool
+  category: software-engineering
+  difficulty: intermediate
+  language: en
+  parent: mattpocock-skills
+  sequence: 88
+  added_on: 2026-11-19
+  github_repo: mattpocock/skills
+  tags: [agent skill, entrevista, design, adr, glossario, domain modeling]
+  short_description: >-
+    Skill que conduz uma entrevista rigorosa para afiar um plano ou design e, ao mesmo tempo, registra a
+    documentação resultante — glossário do domínio e ADRs (registros de decisões de arquitetura).
+  plain_language_explanation: >-
+    Imagine um colega experiente que, antes de você começar a programar, faz todas as perguntas
+    incômodas: "o que acontece se...?", "esse termo significa X ou Y?". Esta skill faz o agente agir
+    assim e, enquanto conversa, anota as definições combinadas em um glossário e as decisões
+    importantes em documentos de decisão. Você sai com um plano mais claro e com documentação pronta.
+  technical_explanation: >-
+    O SKILL.md é mínimo: declara `disable-model-invocation: true` (só roda quando chamada explicitamente)
+    e instrui o agente a chamar duas outras skills — grilling e domain-modeling. A grilling organiza a
+    entrevista como uma árvore de decisões trabalhada em rodadas: a cada rodada pergunta toda a
+    "fronteira" (decisões cujos pré-requisitos já estão resolvidos), numera as perguntas, dá uma
+    resposta recomendada e busca fatos no ambiente em vez de perguntar ao usuário. A domain-modeling
+    desafia termos contra o GLOSSARY.md, propõe termos canônicos, testa cenários de borda, confere o
+    código e só propõe ADR quando a decisão é difícil de reverter, surpreendente sem contexto e fruto
+    de um trade-off real. A pasta também traz agents/openai.yaml.
+  why_it_matters: >-
+    Desalinhamento é a falha mais cara em desenvolvimento, com ou sem IA. Resolver ambiguidades e
+    registrar decisões antes do código reduz retrabalho e preserva o "porquê" para quem vier depois.
+  learning_outcomes:
+    - Conduzir uma sessão de alinhamento estruturada com um agente antes de implementar.
+    - Entender a ideia de árvore de decisões e "fronteira" de perguntas.
+    - Manter um glossário de domínio vivo, sem detalhes de implementação.
+    - Decidir quando uma decisão merece um ADR.
+  audience:
+    - Engenheiros e líderes técnicos que desenham features com assistentes de código.
+    - Times que querem documentação de domínio sem burocracia.
+  prerequisites:
+    required:
+      - Um assistente de código que suporte skills e a coleção instalada (as skills grilling e domain-modeling precisam estar disponíveis).
+    helpful:
+      - Noção do que são ADRs e glossários de domínio.
+  key_concepts: [agent-skills, spec-driven-development, readme]
+  practical_applications:
+    - Afiar o design de uma nova feature e sair com GLOSSARY.md e ADRs atualizados.
+    - Padronizar a linguagem do domínio entre produto e engenharia.
+  study_guide:
+    - Leia o SKILL.md do grill-with-docs e, em seguida, os de grilling e domain-modeling.
+    - Leia ADR-FORMAT.md e GLOSSARY-FORMAT.md na pasta domain-modeling.
+    - Teste em um plano pequeno e real; responda "yes" para aceitar as recomendações quando concordar.
+  related_resources: [grill-me, sdd-emersonmendes]
+  learning_paths: [t5-engenharia-assistida-ia]
+  github_highlights:
+    - {path: skills/engineering/grill-with-docs/SKILL.md, why: Definição da skill.}
+    - {path: skills/productivity/grilling/SKILL.md, why: Mecânica da entrevista em rodadas.}
+    - {path: skills/engineering/domain-modeling/SKILL.md, why: Regras de glossário e ADR.}
+  verified:
+    verified_on: 2026-11-19
+    source_title: grill-with-docs
+    source_description: "A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go."
+  metadata_status: verified
+
+- id: grill-me
+  title: grill-me
+  url: https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me
+  provider: Matt Pocock
+  type: tool
+  category: software-engineering
+  difficulty: beginner
+  language: en
+  parent: mattpocock-skills
+  sequence: 87
+  added_on: 2026-11-19
+  github_repo: mattpocock/skills
+  featured: [start_here, beginners]
+  tags: [agent skill, entrevista, alinhamento, planejamento, decisao]
+  short_description: >-
+    Skill que faz o assistente entrevistar você de forma insistente para testar e afiar um plano,
+    decisão ou ideia antes de agir.
+  plain_language_explanation: >-
+    Muitas vezes nós mesmos não sabemos exatamente o que queremos até alguém nos perguntar. Esta skill
+    inverte o jogo: em vez de o agente sair executando, ele faz perguntas numeradas, uma rodada por vez,
+    sempre sugerindo uma resposta recomendada. Só quando você confirma que chegaram a um entendimento
+    comum é que ele parte para a ação. Funciona para código, mas também para qualquer plano.
+  technical_explanation: >-
+    O SKILL.md declara `disable-model-invocation: true` e apenas chama a skill grilling. Ela modela a
+    conversa como uma árvore de decisões; a cada rodada pergunta todas as decisões da fronteira, cada
+    uma com resposta recomendada e redigida para que "yes" aceite a recomendação; fatos do ambiente são
+    buscados pelo agente (podendo usar um sub-agente) e decisões ficam com o usuário. A sessão termina
+    quando a fronteira está vazia, e o agente não age antes da confirmação do usuário.
+  why_it_matters: >-
+    É a forma mais simples de evitar que um agente construa a coisa errada. Também é uma excelente
+    introdução ao conceito de skills: cabe em poucas linhas e o efeito é imediato.
+  learning_outcomes:
+    - Usar um agente para testar um plano antes de executá-lo.
+    - Entender como uma skill pode delegar para outra skill.
+    - Separar fatos (que o agente busca) de decisões (que são suas).
+  audience:
+    - Pessoas começando a usar assistentes de código.
+    - Qualquer profissional que queira estruturar decisões com ajuda de IA.
+  prerequisites:
+    required:
+      - Um assistente compatível com skills e a coleção instalada (a skill grilling precisa estar disponível).
+    helpful: []
+  key_concepts: [agent-skills]
+  practical_applications:
+    - Revisar o escopo de uma tarefa antes de pedir a implementação.
+    - Preparar uma decisão técnica ou de produto com perguntas estruturadas.
+  study_guide:
+    - Leia o SKILL.md do grill-me (2 linhas) e o da grilling (o procedimento real).
+    - Rode em um plano pequeno; observe o formato das rodadas e das respostas recomendadas.
+    - Evolua para grill-with-docs quando quiser registrar glossário e decisões.
+  related_resources: [grill-with-docs, mattpocock-skills]
+  learning_paths: [t5-engenharia-assistida-ia]
+  github_highlights:
+    - {path: skills/productivity/grill-me/SKILL.md, why: Definição da skill.}
+    - {path: skills/productivity/grilling/SKILL.md, why: Procedimento de entrevista em rodadas.}
+  verified:
+    verified_on: 2026-11-19
+    source_title: grill-me
+    source_description: A relentless interview to sharpen a plan or design.
+  metadata_status: verified
+
+- id: sdd-emersonmendes
+  title: "sdd — Template de Spec-Driven Development para Claude Code"
+  url: https://github.com/emersonmendes/sdd
+  provider: Emerson Mendes
+  type: github
+  category: software-engineering
+  difficulty: intermediate
+  language: multi
+  sequence: 90
+  added_on: 2026-11-19
+  github_repo: emersonmendes/sdd
+  featured: [hands_on]
+  tags: [spec-driven development, sdd, claude code, skills, specs, review, seguranca, owasp, template]
+  short_description: >-
+    Template reutilizável de skills, agentes e documentos para Claude Code que coloca o projeto em um fluxo
+    de Spec-Driven Development: spec, tarefas, código, review de conformidade e análise de segurança.
+  plain_language_explanation: >-
+    Spec-Driven Development (SDD) é escrever o comportamento esperado antes de construir: um documento
+    curto com objetivo, regras de negócio numeradas, fluxos e critérios de aceite verificáveis. Essa
+    especificação vira a fonte de verdade — o código, os testes e as revisões derivam dela. Com um
+    assistente de IA isso é ainda mais importante, porque o agente não consegue adivinhar requisitos.
+    Este template instala esse fluxo no seu projeto, com um comando para cada etapa.
+  technical_explanation: >-
+    Segundo o README (disponível em pt-BR): skills com prefixo do projeto — start (spec.md, flows.md e
+    rules.md em /specs/<feature>/), tasks (tasks.md por app/módulo/camada), code (implementação com
+    testes e lint), review (conformidade com spec, arquitetura e testes), security (checklist AppSec com
+    achados mapeados em OWASP e gate sem Crítico/Alto aberto), go (os cinco passos com check-points),
+    express, fix, reverse (spec a partir de código legado), ask, commit (varredura de vazamentos) e
+    update (merge 3-way com o template). Inclui agentes techlead e <app>-dev, e docs como CLAUDE.md,
+    ai/module_map.md e ai/conventions.md.
+  why_it_matters: >-
+    Transforma "parece bom" em check-points revisáveis (spec → tarefas → código), torna testes
+    rastreáveis às regras de negócio e coloca segurança como gate, não como lembrança. O próprio README
+    recomenda pular o fluxo em protótipos descartáveis e usá-lo no que será mantido.
+  learning_outcomes:
+    - Explicar especificação, requisitos, regras de negócio e critérios de aceite.
+    - Seguir a cadeia spec → tarefas → código → review → segurança.
+    - Mapear critérios de aceite numerados para testes.
+    - Trazer código legado para o fluxo gerando specs a partir do que existe.
+  audience:
+    - Desenvolvedores que usam Claude Code em projetos que serão mantidos.
+    - Líderes técnicos que querem previsibilidade e rastreabilidade com IA.
+  prerequisites:
+    required:
+      - Claude Code (o template é voltado a ele).
+    helpful:
+      - Experiência com testes automatizados e revisão de código.
+      - Noções de segurança de aplicações (OWASP).
+  key_concepts: [spec-driven-development, agent-skills, git, github-repository]
+  practical_applications:
+    - Especificar e implementar uma feature com check-points de aprovação em cada etapa.
+    - Documentar features legadas com a skill reverse.
+    - Evitar commits com segredos ou dados reais por meio da varredura do commit.
+  study_guide:
+    - Leia o README.pt-BR.md, em especial "O que é SDD, e por que usar" e a tabela de skills.
+    - Explore a pasta template/ para ver os arquivos que serão renderizados no seu projeto.
+    - Experimente o fluxo completo (go) em uma feature pequena; depois avalie o express para casos simples.
+    - Compare com as skills de Matt Pocock (grill-me, to-spec) para entender abordagens diferentes.
+  related_resources: [mattpocock-skills, grill-with-docs]
+  learning_paths: [t5-engenharia-assistida-ia]
+  github_highlights:
+    - {path: README.pt-BR.md, why: Documentação completa em português.}
+    - {path: template/, why: Arquivos renderizados em cada projeto.}
+    - {path: setup/, why: Scripts de instalação do template.}
+    - {path: .claude/, why: Configuração de skills e agentes.}
+  verified:
+    verified_on: 2026-11-19
+    source_title: "sdd — Template de Spec-Driven Development para Claude Code"
+    license: MIT
+    primary_language: JavaScript
+    source_description: SSD (Spec Driven Development) Skills template
+  metadata_status: verified
+  metadata_notes: "A descrição curta do GitHub usa a sigla 'SSD'; o README usa 'SDD (Spec-Driven Development)'."
+
+# =====================================================================
+# CATEGORIA E — Creative Coding & Visualization (ferramentas, nao cursos)
+# =====================================================================
+- id: motion
+  title: Motion
+  url: https://github.com/motiondivision/motion
+  provider: Motion Division
+  type: tool
+  category: creative-coding
+  difficulty: intermediate
+  language: en
+  sequence: 100
+  added_on: 2026-11-19
+  github_repo: motiondivision/motion
+  tags: [animacao, react, javascript, vue, gestos, springs, scroll, layout, framer motion]
+  short_description: >-
+    Biblioteca open source de animação para JavaScript, React e Vue (antiga Framer Motion), com gestos,
+    springs, transições de layout, efeitos ligados ao scroll e timelines.
+  plain_language_explanation: >-
+    Uma biblioteca de animação é um conjunto de funções prontas para fazer elementos de uma página se
+    moverem, aparecerem ou mudarem de forma suavemente, sem que você calcule cada quadro. Vale distinguir
+    design de interação de decoração: animação de interação comunica algo ("este item foi movido",
+    "este botão respondeu ao toque", "você está aqui no scroll"), enquanto decoração só enfeita — e,
+    em excesso, atrapalha. Motion é uma ferramenta para o primeiro tipo, muito usada em React.
+  technical_explanation: >-
+    Segundo o README: API para React (`motion/react`), JavaScript (`animate`) e Vue (`motion-v`); motor
+    híbrido que combina JavaScript com APIs nativas do navegador para animações aceleradas por GPU;
+    TypeScript, tree-shakable; inclui gestos, springs, layout transitions, scroll-linked effects e
+    timelines. O README informa que Framer Motion agora é Motion e cita 450+ exemplos oficiais.
+  why_it_matters: >-
+    Movimento bem aplicado melhora a compreensão de interfaces (continuidade, feedback, hierarquia).
+    Saber usar uma biblioteca madura evita reinventar física de animação e problemas de performance.
+  learning_outcomes:
+    - Distinguir animação de interação de animação decorativa.
+    - Animar componentes React com a API declarativa de Motion.
+    - Usar gestos, springs e transições de layout.
+    - Criar efeitos ligados ao scroll com atenção à performance.
+  audience:
+    - Desenvolvedores front-end (React, JavaScript ou Vue).
+    - Designers de produto que prototipam em código.
+  prerequisites:
+    required:
+      - JavaScript e noções de React ou Vue.
+    helpful:
+      - CSS (transforms, transitions).
+  key_concepts: [animation-library, api]
+  practical_applications:
+    - Transições entre estados de uma lista (adicionar, remover, reordenar).
+    - Feedback visual de gestos (arrastar, pressionar) em interfaces.
+  study_guide:
+    - Leia a seção "Why Motion?" e escolha a plataforma (React, JS ou Vue).
+    - Siga o quick start da documentação oficial e reproduza 2 ou 3 exemplos oficiais.
+    - Antes de animar algo, escreva em uma frase o que a animação comunica ao usuário.
+    - Observação - Motion é uma biblioteca JavaScript e não roda nativamente dentro de apps Python como Streamlit.
+  related_resources: [lottie-web, manim]
+  learning_paths: [t6-visualizacao-creative]
+  github_highlights:
+    - {path: packages/, why: Pacotes da biblioteca (monorepo).}
+    - {path: dev/, why: Ambientes de desenvolvimento e exemplos internos.}
+    - {path: CHANGELOG.md, why: Histórico de versões.}
+  links:
+    - {label: Ver documentação, url: "https://motion.dev"}
+    - {label: Explorar exemplos, url: "https://motion.dev/examples"}
+  verified:
+    verified_on: 2026-11-19
+    source_title: Motion
+    license: MIT
+    primary_language: TypeScript
+    source_description: A modern animation library for React and JavaScript
+  metadata_status: verified
+
+- id: manim
+  title: Manim (Community Edition)
+  url: https://github.com/ManimCommunity/manim
+  provider: Manim Community
+  type: tool
+  category: creative-coding
+  difficulty: intermediate
+  language: en
+  sequence: 102
+  added_on: 2026-11-19
+  github_repo: ManimCommunity/manim
+  featured: [hands_on]
+  tags: [python, animacao matematica, 3blue1brown, video, algoritmos, educacao]
+  short_description: >-
+    Framework Python mantido pela comunidade para criar, por código, animações precisas de matemática e
+    explicações visuais — o estilo popularizado pelos vídeos do 3Blue1Brown.
+  plain_language_explanation: >-
+    Em vez de arrastar objetos em um editor de vídeo, com Manim você escreve um pequeno programa em
+    Python que diz "desenhe um quadrado, transforme-o em círculo, mostre esta fórmula" — e o Manim gera
+    o vídeo. Por ser código, a animação é exata e reproduzível, ideal para explicar matemática,
+    algoritmos e conceitos de IA (como vetores de embeddings ou o passo a passo de uma ordenação).
+  technical_explanation: >-
+    Segundo o README: motor de animação para vídeos matemáticos explicativos, usado para criar animações
+    precisas programaticamente. A Community Edition (ManimCE) é um fork mantido pela comunidade do
+    3b1b/manim original de Grant Sanderson; o README alerta que as instruções de instalação das duas
+    versões não são intercambiáveis. Cenas são classes `Scene` com método `construct()`; há ambiente
+    Jupyter online para experimentar e imagem Docker.
+  why_it_matters: >-
+    Visualizações precisas aceleram a compreensão de conceitos abstratos. Para quem ensina IA, dados ou
+    algoritmos, Manim permite produzir material didático de alta qualidade e versionado como código.
+  learning_outcomes:
+    - Entender animação programática e quando ela supera ferramentas visuais.
+    - Criar uma cena Manim simples com formas, transformações e texto.
+    - Animar uma ideia matemática ou algoritmo passo a passo.
+    - Diferenciar ManimCE de 3b1b/manim ao instalar e buscar ajuda.
+  audience:
+    - Educadores, criadores de conteúdo técnico e Data Scientists que explicam conceitos.
+    - Desenvolvedores Python interessados em visualização.
+  prerequisites:
+    required:
+      - Python básico (classes e métodos).
+    helpful:
+      - Noções de geometria e álgebra linear para animações matemáticas.
+  key_concepts: [programmatic-animation, sdk]
+  practical_applications:
+    - Produzir uma animação explicando como funciona a atenção em um Transformer.
+    - Criar vídeos curtos de algoritmos para treinamentos internos.
+  study_guide:
+    - Experimente primeiro no ambiente Jupyter online indicado no README, sem instalar nada.
+    - Reproduza o exemplo SquareToCircle do README e altere parâmetros.
+    - Siga a documentação oficial para instalação local da Community Edition.
+    - Explore example_scenes/ para ideias de cenas.
+  related_resources: [motion, lottie-web]
+  learning_paths: [t6-visualizacao-creative]
+  github_highlights:
+    - {path: example_scenes/, why: Cenas de exemplo prontas para estudar.}
+    - {path: manim/, why: Código-fonte da biblioteca.}
+    - {path: docs/, why: Fonte da documentação oficial.}
+  links:
+    - {label: Ver documentação, url: "https://docs.manim.community/en/stable/"}
+    - {label: Experimentar online, url: "https://try.manim.community/"}
+  verified:
+    verified_on: 2026-11-19
+    source_title: Manim
+    license: MIT
+    primary_language: Python
+    source_description: A community-maintained Python framework for creating mathematical animations.
+  metadata_status: verified
+
+- id: lottie-web
+  title: lottie-web
+  url: https://github.com/airbnb/lottie-web
+  provider: Airbnb
+  type: tool
+  category: creative-coding
+  difficulty: intermediate
+  language: en
+  sequence: 104
+  added_on: 2026-11-19
+  github_repo: airbnb/lottie-web
+  tags: [lottie, after effects, bodymovin, json, animacao, web]
+  short_description: >-
+    Biblioteca que renderiza na web animações criadas no Adobe After Effects e exportadas como JSON
+    (via plugin Bodymovin), com equivalentes para Android, iOS e React Native.
+  plain_language_explanation: >-
+    Um arquivo Lottie é uma animação descrita em JSON: em vez de um vídeo ou GIF, ele guarda formas,
+    cores e movimentos como dados, que uma biblioteca "toca" na tela. A diferença para animações
+    programáticas (como Motion ou Manim) é quem cria: aqui, o designer desenha a animação no After
+    Effects e exporta; o desenvolvedor apenas a exibe, sem recriá-la em código. É ideal para ícones
+    animados, ilustrações e telas de carregamento.
+  technical_explanation: >-
+    Segundo o README: lottie-web interpreta animações do After Effects exportadas em JSON com o
+    Bodymovin e as renderiza nativamente; o plugin pode ser obtido via aescripts, Adobe Exchange ou
+    instalação manual do .zxp. Há bibliotecas irmãs para Android, iOS, React Native e Windows. A
+    documentação geral está em airbnb.io/lottie. O último push registrado no repositório foi em set/2025.
+  why_it_matters: >-
+    Separa o trabalho de design de movimento do de engenharia, reduzindo retrabalho e mantendo arquivos
+    leves e escaláveis (vetoriais) em comparação a vídeos ou GIFs.
+  learning_outcomes:
+    - Explicar o que é um arquivo Lottie e como ele difere de animações geradas por código.
+    - Entender o fluxo After Effects → Bodymovin → JSON → player.
+    - Exibir uma animação Lottie em uma página web.
+  audience:
+    - Desenvolvedores front-end e mobile.
+    - Designers de movimento que entregam animações para produto.
+  prerequisites:
+    required:
+      - HTML e JavaScript básicos.
+    helpful:
+      - Acesso ao After Effects (para criar animações; para apenas exibir, não é necessário).
+  key_concepts: [animation-library, programmatic-animation]
+  practical_applications:
+    - Adicionar ícones animados e estados de carregamento leves a uma aplicação.
+    - Integrar animações entregues por designers sem recriá-las em código.
+  study_guide:
+    - Leia a introdução do README e visite airbnb.io/lottie para a documentação.
+    - Use um arquivo Lottie de exemplo e exiba-o com o player web.
+    - Compare o resultado com uma animação equivalente feita com Motion para entender os trade-offs.
+  related_resources: [motion, manim]
+  learning_paths: [t6-visualizacao-creative]
+  github_highlights:
+    - {path: build/, why: Builds do player e da extensão Bodymovin.}
+    - {path: demo/, why: Demos de uso.}
+    - {path: docs/, why: Documentação do projeto.}
+  links:
+    - {label: Ver documentação, url: "https://airbnb.io/lottie/"}
+  verified:
+    verified_on: 2026-11-19
+    source_title: lottie-web
+    license: MIT
+    primary_language: JavaScript
+    source_description: "Render After Effects animations natively on Web, Android and iOS, and React Native."
+  metadata_status: verified

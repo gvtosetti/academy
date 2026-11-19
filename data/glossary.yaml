@@ -1,0 +1,360 @@
+# Base de Conhecimento da Academy — conceitos explicados em camadas (simples -> tecnico).
+# Texto autoral da curadoria. Cada id pode ser referenciado em resources.yaml (key_concepts).
+
+# ---------------- Fundamentos ----------------
+- id: artificial-intelligence
+  name: Artificial Intelligence (AI)
+  name_pt: Inteligência Artificial
+  simple: "Campo que cria sistemas capazes de realizar tarefas que normalmente exigiriam inteligência humana, como reconhecer imagens, entender texto ou tomar decisões."
+  technical: "Conjunto amplo de técnicas — busca, lógica, raciocínio probabilístico, aprendizado de máquina — para construir agentes que percebem o ambiente e agem para atingir objetivos."
+  example: "Um sistema de rotas que encontra o caminho mais rápido entre duas cidades usa técnicas clássicas de IA (busca em grafos)."
+  why: "É o guarda-chuva sob o qual estão ML, deep learning e LLMs; entender a visão ampla evita confundir IA com apenas chatbots."
+  related: [machine-learning, deep-learning, generative-ai]
+
+- id: machine-learning
+  name: Machine Learning (ML)
+  name_pt: Aprendizado de Máquina
+  simple: "Em vez de programar regras à mão, mostramos muitos exemplos ao computador e ele aprende os padrões sozinho."
+  technical: "Algoritmos que ajustam parâmetros de um modelo para minimizar uma função de perda sobre dados de treino, buscando generalizar para dados novos (supervisionado, não supervisionado, por reforço)."
+  example: "Um filtro de spam que aprende com milhares de e-mails marcados como spam ou não."
+  why: "É a base de quase toda a IA moderna; conceitos como treino, validação e overfitting reaparecem em LLMs."
+  related: [artificial-intelligence, deep-learning, training]
+
+- id: deep-learning
+  name: Deep Learning
+  name_pt: Aprendizado Profundo
+  simple: "Um tipo de machine learning que usa redes neurais com muitas camadas, capazes de aprender padrões muito complexos."
+  technical: "Modelos compostos por várias camadas de transformações não lineares, treinados por backpropagation e gradiente descendente, que aprendem representações hierárquicas dos dados."
+  example: "Reconhecimento de voz em assistentes de celular."
+  why: "LLMs são modelos de deep learning; entender camadas e treinamento por gradiente explica muito do comportamento deles."
+  related: [neural-networks, machine-learning, transformer]
+
+- id: neural-networks
+  name: Neural Networks
+  name_pt: Redes Neurais
+  simple: "Modelos inspirados vagamente no cérebro: muitos 'neurônios' simples conectados, cada um fazendo uma conta pequena."
+  technical: "Composição de camadas lineares (pesos e vieses) seguidas de funções de ativação; os pesos são ajustados por backpropagation para reduzir a perda."
+  example: "Uma rede que recebe os pixels de uma foto e devolve a probabilidade de ser um gato."
+  why: "É o bloco de construção de deep learning e, portanto, de Transformers e LLMs."
+  related: [deep-learning, training, transformer]
+
+- id: generative-ai
+  name: Generative AI
+  name_pt: IA Generativa
+  simple: "IA que cria conteúdo novo — texto, imagens, áudio ou código — em vez de apenas classificar ou prever."
+  technical: "Modelos que aprendem a distribuição dos dados e amostram novas instâncias dela (ex.: modelos autorregressivos de linguagem, modelos de difusão)."
+  example: "Pedir a um assistente que redija um e-mail ou gerar uma imagem a partir de uma descrição."
+  why: "Respostas geradas variam e podem estar erradas, o que exige novas práticas de avaliação e produto."
+  related: [llm, hallucination, evaluation]
+
+# ---------------- LLMs ----------------
+- id: llm
+  name: Large Language Model (LLM)
+  name_pt: Modelo de Linguagem de Grande Escala
+  simple: "Um modelo treinado com enormes quantidades de texto que aprendeu a prever a próxima palavra — e, com isso, consegue conversar, resumir, traduzir e escrever código."
+  technical: "Rede neural baseada em Transformer, com bilhões de parâmetros, pré-treinada para predição do próximo token e geralmente ajustada depois (SFT, preferências/RL) para seguir instruções."
+  example: "Os modelos por trás de assistentes de chat e de ferramentas de código."
+  why: "É o componente central da maioria das aplicações de IA generativa atuais."
+  related: [transformer, tokens, training, inference]
+
+- id: tokens
+  name: Tokens
+  name_pt: Tokens
+  simple: "Os 'pedaços' de texto que o modelo realmente lê e escreve — podem ser palavras inteiras, partes de palavras ou sinais."
+  technical: "Unidades discretas de um vocabulário fixo; cada token é mapeado para um ID inteiro e depois para um vetor (embedding). Custo, limite de contexto e latência são medidos em tokens."
+  example: "Uma palavra longa em português pode virar 2 ou 3 tokens."
+  why: "Explica por que preço e limites de LLMs são contados em tokens e por que textos em português podem custar mais."
+  related: [tokenization, embeddings, context-window]
+
+- id: tokenization
+  name: Tokenization
+  name_pt: Tokenização
+  simple: "O processo de quebrar o texto em tokens antes de entregá-lo ao modelo."
+  technical: "Algoritmos como BPE (Byte Pair Encoding) constroem um vocabulário de subpalavras a partir de um corpus e convertem texto em sequências de IDs e de volta."
+  example: "'tokenização' pode ser dividida em 'token', 'iza', 'ção'."
+  why: "Muitos comportamentos estranhos de LLMs (contar letras, aritmética) vêm da tokenização."
+  related: [tokens, llm]
+
+- id: embeddings
+  name: Embeddings
+  name_pt: Embeddings (vetores de representação)
+  simple: "Uma forma de transformar palavras, frases ou documentos em listas de números, de modo que coisas com significado parecido fiquem 'perto' umas das outras."
+  technical: "Vetores densos em um espaço de alta dimensão aprendidos por um modelo; a similaridade (ex.: cosseno) entre vetores aproxima a similaridade semântica."
+  example: "'carro' e 'automóvel' ficam próximos; 'carro' e 'banana', distantes."
+  why: "São a base da busca semântica e do RAG."
+  related: [semantic-search, vector-database, tokens]
+
+- id: transformer
+  name: Transformer
+  name_pt: Transformer
+  simple: "A arquitetura de rede neural por trás dos LLMs, que consegue olhar para todas as palavras de um texto ao mesmo tempo e decidir quais são importantes umas para as outras."
+  technical: "Arquitetura (Vaswani et al., 2017) baseada em blocos de self-attention multi-cabeça e redes feed-forward, com normalização e conexões residuais; LLMs usam em geral a variante decoder-only."
+  example: "Ao ler 'o banco estava cheio de peixes', o Transformer usa 'peixes' para entender que 'banco' não é uma instituição financeira."
+  why: "Entender o Transformer explica janela de contexto, custo de inferência e muitas limitações de LLMs."
+  related: [attention, llm, neural-networks]
+
+- id: attention
+  name: Attention
+  name_pt: Atenção
+  simple: "O mecanismo que permite ao modelo decidir em quais partes do texto 'prestar atenção' ao processar cada palavra."
+  technical: "Cada token gera vetores query, key e value; os pesos de atenção são softmax(QK^T / sqrt(d)) aplicados aos values. O custo cresce quadraticamente com o tamanho da sequência."
+  example: "Em 'Maria deu o livro para Ana porque ela pediu', a atenção ajuda a ligar 'ela' a 'Ana'."
+  why: "É o coração do Transformer e a razão pela qual contextos longos são caros."
+  related: [transformer, context-window]
+
+- id: training
+  name: Training
+  name_pt: Treinamento
+  simple: "A fase em que o modelo aprende, ajustando seus parâmetros a partir de muitos exemplos."
+  technical: "Otimização iterativa (gradiente descendente e variantes como AdamW) de uma função de perda. Em LLMs: pré-treino em grande corpus e pós-treino (SFT, DPO, RLHF e similares)."
+  example: "Pré-treinar um modelo em textos da web para prever o próximo token."
+  why: "Distinguir treino de inferência ajuda a entender custos e o que é possível mudar em um modelo."
+  related: [inference, fine-tuning, machine-learning]
+
+- id: inference
+  name: Inference
+  name_pt: Inferência
+  simple: "Usar um modelo já treinado para gerar respostas — é o que acontece cada vez que você envia uma pergunta."
+  technical: "Execução do forward pass sem atualizar pesos. Em LLMs há a fase de prefill (processar o prompt) e de decode (gerar token a token), com KV cache para reaproveitar cálculos."
+  example: "O tempo até aparecer a primeira palavra da resposta (TTFT) é dominado pelo prefill."
+  why: "É onde estão o custo recorrente e a latência percebida pelo usuário."
+  related: [training, model-serving, tokens]
+
+- id: fine-tuning
+  name: Fine-tuning
+  name_pt: Ajuste Fino
+  simple: "Continuar o treinamento de um modelo já pronto com exemplos específicos para especializá-lo em uma tarefa ou estilo."
+  technical: "Treino adicional sobre um modelo pré-treinado (completo ou eficiente em parâmetros, como LoRA), por SFT ou otimização por preferências."
+  example: "Ajustar um modelo para responder sempre no formato de laudo técnico da empresa."
+  why: "É uma alternativa (ou complemento) a prompting e RAG — útil para estilo e formato, menos para conhecimento que muda."
+  related: [training, prompt-engineering, rag]
+
+- id: prompt-engineering
+  name: Prompt Engineering
+  name_pt: Engenharia de Prompt
+  simple: "A prática de escrever instruções e dar contexto ao modelo de forma clara para obter respostas melhores."
+  technical: "Técnicas como instruções explícitas, exemplos (few-shot), decomposição, chain-of-thought e formatos de saída estruturados; evolui para 'context engineering' — decidir o que entra na janela de contexto."
+  example: "Pedir 'responda em 3 tópicos, citando a seção do documento' em vez de 'resuma'."
+  why: "É a alavanca mais barata para melhorar qualidade antes de mudar de modelo."
+  related: [context-window, llm, evaluation]
+
+- id: context-window
+  name: Context Window
+  name_pt: Janela de Contexto
+  simple: "A quantidade máxima de texto (em tokens) que o modelo consegue considerar de uma vez — a sua 'memória de trabalho'."
+  technical: "Limite do comprimento da sequência (prompt + resposta) processada pelo Transformer; contextos maiores aumentam custo e latência e nem sempre são bem aproveitados."
+  example: "Um contrato muito longo pode não caber inteiro e precisar ser dividido ou recuperado por partes (RAG)."
+  why: "Define o que o modelo 'sabe' naquele momento e motiva técnicas como RAG e resumo."
+  related: [tokens, attention, rag]
+
+- id: hallucination
+  name: Hallucination
+  name_pt: Alucinação
+  simple: "Quando o modelo responde com confiança algo que não é verdade ou que ele inventou."
+  technical: "Geração fluente mas não suportada pelos dados ou pelo contexto fornecido; decorre de o modelo otimizar plausibilidade do texto, não verdade factual."
+  example: "Citar um artigo científico que não existe."
+  why: "É o principal risco de qualidade em IA generativa e motiva grounding, RAG e avaliação."
+  related: [grounding, rag, evaluation]
+
+- id: grounding
+  name: Grounding
+  name_pt: Ancoragem em Fontes
+  simple: "Fazer o modelo basear a resposta em informações fornecidas (documentos, dados), e não apenas no que 'lembra' do treino."
+  technical: "Incluir evidências relevantes no contexto e instruir/verificar que a saída seja suportada por elas, idealmente com citações rastreáveis."
+  example: "Um assistente de RH que responde citando o trecho da política interna."
+  why: "Reduz alucinações e permite que o usuário confira a resposta."
+  related: [rag, hallucination, semantic-search]
+
+# ---------------- RAG e busca ----------------
+- id: rag
+  name: Retrieval-Augmented Generation (RAG)
+  name_pt: Geração Aumentada por Recuperação
+  simple: "Antes de responder, o sistema busca trechos relevantes em uma base de documentos e os entrega ao modelo — como consultar o livro antes de responder a prova."
+  technical: "Pipeline de ingestão (parsing, chunking, indexação) + recuperação (BM25, vetorial ou híbrida, com reranking) + geração condicionada ao contexto recuperado. Variantes agênticas decidem quando e como buscar."
+  example: "Um chatbot que responde perguntas sobre manuais técnicos da empresa."
+  why: "Permite usar conhecimento privado e atualizado sem re-treinar o modelo."
+  related: [semantic-search, vector-database, reranking, grounding]
+
+- id: vector-database
+  name: Vector Database
+  name_pt: Banco de Dados Vetorial
+  simple: "Um banco especializado em guardar embeddings e encontrar rapidamente os mais parecidos com uma consulta."
+  technical: "Armazena vetores e executa busca de vizinhos mais próximos aproximada (ANN, ex.: HNSW), geralmente com filtros por metadados."
+  example: "Guardar embeddings de 1 milhão de trechos de documentos e recuperar os 5 mais relevantes em milissegundos."
+  why: "É a infraestrutura típica da etapa de recuperação em RAG."
+  related: [embeddings, semantic-search, rag]
+
+- id: semantic-search
+  name: Semantic Search
+  name_pt: Busca Semântica
+  simple: "Busca pelo significado, e não só pelas palavras exatas."
+  technical: "Compara embeddings da consulta e dos documentos; costuma ser combinada com busca léxica (BM25) em busca híbrida, pois cada uma falha em casos diferentes."
+  example: "Buscar 'como pedir férias' e encontrar um documento intitulado 'Solicitação de descanso anual'."
+  why: "Melhora a recuperação em RAG, mas não substitui a busca por palavra-chave para códigos, nomes e siglas."
+  related: [embeddings, vector-database, reranking]
+
+- id: reranking
+  name: Reranking
+  name_pt: Reordenação
+  simple: "Uma segunda etapa que reavalia os resultados da busca e coloca os mais relevantes no topo."
+  technical: "Um modelo mais caro (ex.: cross-encoder) pontua pares consulta-documento sobre um conjunto candidato recuperado por um método rápido."
+  example: "Recuperar 50 trechos rapidamente e reordenar para enviar só os 5 melhores ao LLM."
+  why: "Melhora a precisão do contexto, reduzindo custo e alucinação."
+  related: [semantic-search, rag]
+
+# ---------------- Agentes ----------------
+- id: ai-agents
+  name: AI Agents
+  name_pt: Agentes de IA
+  simple: "Sistemas em que o modelo não só responde, mas decide os próximos passos sozinho — planeja, usa ferramentas, observa o resultado e ajusta até cumprir um objetivo."
+  technical: "Laço percepção-raciocínio-ação com um LLM como política, acesso a ferramentas, memória e critério de parada; padrões incluem ReAct, Planning, Reflection e Plan-Execute-Verify."
+  example: "Um agente que recebe 'corrija o teste que está falhando', lê o código, roda os testes, edita e verifica."
+  why: "Amplia o que a IA consegue fazer, mas também o risco — exige limites, verificação e observabilidade."
+  related: [tool-calling, multi-agent-systems, agent-orchestration]
+
+- id: tool-calling
+  name: Tool Calling
+  name_pt: Chamada de Ferramentas
+  simple: "A capacidade de o modelo pedir para usar uma ferramenta externa — uma busca, uma calculadora, uma API — e usar o resultado na resposta."
+  technical: "O modelo emite uma chamada estruturada (nome + argumentos em JSON, segundo um schema); a aplicação executa a função e devolve o resultado ao contexto."
+  example: "Perguntar a cotação do dólar e o modelo chamar uma API de câmbio."
+  why: "É o que conecta LLMs a sistemas reais e a base de qualquer agente."
+  related: [ai-agents, api]
+
+- id: multi-agent-systems
+  name: Multi-Agent Systems
+  name_pt: Sistemas Multiagente
+  simple: "Vários agentes especializados que dividem o trabalho, colaboram ou debatem entre si."
+  technical: "Arquiteturas como supervisor/trabalhadores, blackboard, debate ou mixture-of-agents, com protocolo de comunicação e estado compartilhado."
+  example: "Um agente pesquisador coleta fontes e um agente redator escreve o relatório."
+  why: "Pode melhorar tarefas complexas, mas aumenta custo e pontos de falha — nem sempre vale a pena."
+  related: [ai-agents, agent-orchestration]
+
+- id: agent-orchestration
+  name: Agent Orchestration
+  name_pt: Orquestração de Agentes
+  simple: "A lógica que coordena quando cada agente ou ferramenta age, em que ordem e com quais informações."
+  technical: "Definição explícita do fluxo (ex.: máquinas de estado/grafos como LangGraph), roteamento, retries, gates determinísticos e critérios de parada."
+  example: "Um grafo que primeiro classifica a pergunta e depois envia ao agente de RAG ou ao agente de SQL."
+  why: "Torna sistemas agênticos previsíveis, testáveis e depuráveis."
+  related: [ai-agents, multi-agent-systems, observability]
+
+# ---------------- Produção ----------------
+- id: evaluation
+  name: Evaluation
+  name_pt: Avaliação
+  simple: "Medir de forma sistemática se as respostas do sistema de IA são boas — corretas, úteis, seguras."
+  technical: "Conjuntos de teste representativos, métricas (exatas, baseadas em referência ou LLM-as-a-judge), avaliação humana e comparação entre versões de prompt, modelo e recuperação."
+  example: "Rodar 100 perguntas conhecidas antes e depois de trocar o prompt e comparar a taxa de acerto."
+  why: "Sem avaliação, mudanças são palpites; com ela, viram decisões baseadas em evidência."
+  related: [llmops, observability, hallucination]
+
+- id: llmops
+  name: LLMOps
+  name_pt: LLMOps
+  simple: "As práticas para colocar e manter aplicações com LLM em produção com qualidade, custo e segurança sob controle."
+  technical: "Versionamento de prompts e modelos, avaliação contínua, CI, monitoramento, tracing, controle de custo/latência, guardrails e gestão de incidentes."
+  example: "Bloquear o deploy de um novo prompt se a avaliação automática piorar."
+  why: "O protótipo é a parte fácil; operar com confiabilidade é onde está a maior parte do trabalho."
+  related: [evaluation, observability, model-serving]
+
+- id: observability
+  name: Observability
+  name_pt: Observabilidade
+  simple: "Registrar o que acontece dentro do sistema de IA para entender por que uma resposta saiu boa ou ruim."
+  technical: "Traces de cada etapa (recuperação, chamadas ao LLM, ferramentas), com entradas, saídas, latência, tokens e custo, além de métricas agregadas e feedback de usuários."
+  example: "Abrir o trace de uma resposta errada e ver que a busca trouxe o documento errado."
+  why: "Sem observabilidade não há depuração eficiente nem melhoria contínua."
+  related: [llmops, evaluation, agent-orchestration]
+
+- id: model-serving
+  name: Model Serving
+  name_pt: Disponibilização de Modelos
+  simple: "Colocar um modelo no ar para que aplicações possam enviar pedidos a ele e receber respostas."
+  technical: "Infraestrutura de inferência (endpoints, batching, autoescalonamento, KV cache, quantização) com metas de latência, throughput e custo."
+  example: "Um endpoint HTTP que recebe um prompt e devolve a resposta do modelo."
+  why: "Determina custo, latência e disponibilidade percebidos pelo usuário."
+  related: [inference, llmops, api]
+
+# ---------------- Engenharia de software ----------------
+- id: git
+  name: Git
+  name_pt: Git
+  simple: "Uma ferramenta que guarda o histórico de mudanças de um projeto, permitindo voltar no tempo e trabalhar em equipe sem sobrescrever o trabalho dos outros."
+  technical: "Sistema de controle de versão distribuído baseado em commits (snapshots), branches e merges."
+  example: "Criar um branch para testar uma ideia e só juntá-lo ao principal depois de revisado."
+  why: "É a base para colaborar em código e para entender como projetos open source são organizados."
+  related: [github-repository, readme]
+
+- id: github-repository
+  name: GitHub Repository
+  name_pt: Repositório no GitHub
+  simple: "Uma pasta de projeto hospedada no GitHub, com código, documentação e todo o histórico de mudanças."
+  technical: "Repositório Git remoto com recursos colaborativos: issues, pull requests, releases, licença, stars e forks."
+  example: "github.com/ManimCommunity/manim contém o código e a documentação do Manim."
+  why: "Muitos dos melhores materiais de IA são repositórios; saber navegá-los acelera o aprendizado."
+  related: [git, readme]
+
+- id: readme
+  name: README
+  name_pt: README
+  simple: "O arquivo de 'boas-vindas' de um projeto: explica o que é, como instalar e como usar."
+  technical: "Arquivo Markdown na raiz do repositório exibido automaticamente pelo GitHub; costuma conter visão geral, instalação, exemplos, licença e contribuição."
+  example: "Ler o README de um curso para descobrir os pré-requisitos antes de clonar."
+  why: "É o primeiro lugar para avaliar se um projeto serve para você."
+  related: [github-repository, git]
+
+- id: api
+  name: API
+  name_pt: Interface de Programação de Aplicações
+  simple: "Um 'cardápio' de pedidos que um sistema aceita de outro programa, com regras claras de como pedir e o que vem de volta."
+  technical: "Contrato de comunicação entre softwares — por exemplo, endpoints HTTP/REST com formato JSON, autenticação e limites de uso."
+  example: "A API do GitHub devolve, em JSON, o número de stars de um repositório."
+  why: "LLMs, ferramentas de agentes e integrações são quase sempre acessados via API."
+  related: [sdk, tool-calling]
+
+- id: sdk
+  name: SDK
+  name_pt: Kit de Desenvolvimento de Software
+  simple: "Um pacote de código pronto que facilita usar um serviço ou uma tecnologia na sua linguagem de programação."
+  technical: "Bibliotecas, tipos e utilitários que encapsulam uma API ou plataforma (autenticação, retries, paginação)."
+  example: "Usar uma biblioteca Python em vez de montar as requisições HTTP manualmente."
+  why: "Reduz código repetitivo e erros ao integrar serviços."
+  related: [api]
+
+- id: agent-skills
+  name: Agent Skills
+  name_pt: Skills para Agentes
+  simple: "Arquivos de instruções que ensinam um assistente de IA a seguir um procedimento específico — como uma receita que ele lê quando precisa."
+  technical: "Em geral um SKILL.md com metadados (nome, descrição, quando usar) e passos, opcionalmente com scripts e referências; o agente carrega a skill sob demanda. Não é um pacote executável nem um aplicativo."
+  example: "A skill grill-me faz o agente entrevistar você antes de começar uma tarefa."
+  why: "Transformam boas práticas em comportamento consistente do agente, sem programar."
+  related: [ai-agents, spec-driven-development]
+
+- id: spec-driven-development
+  name: Spec-Driven Development (SDD)
+  name_pt: Desenvolvimento Orientado a Especificação
+  simple: "Escrever primeiro o que o sistema deve fazer — objetivo, regras e critérios de aceite — e só depois construir."
+  technical: "A especificação é a fonte de verdade: tarefas, código, testes e revisões derivam dela e são rastreáveis a regras de negócio e critérios numerados."
+  example: "Uma spec diz 'CA-3: pedido sem estoque retorna erro 409'; existe um teste nomeado para CA-3."
+  why: "Com assistentes de código, especificar bem é o que evita que o agente construa a coisa errada."
+  related: [agent-skills, git]
+
+# ---------------- Visualização ----------------
+- id: animation-library
+  name: Animation Library
+  name_pt: Biblioteca de Animação
+  simple: "Um conjunto de funções prontas para fazer elementos de uma interface se moverem de forma suave, sem calcular cada quadro."
+  technical: "Abstrações sobre interpolação, springs, timelines e APIs do navegador (CSS, Web Animations) com foco em performance."
+  example: "Animar a entrada de um card ao aparecer na tela com Motion."
+  why: "Movimento bem usado comunica estado e continuidade; mal usado, distrai."
+  related: [programmatic-animation]
+
+- id: programmatic-animation
+  name: Programmatic Animation
+  name_pt: Animação Programática
+  simple: "Criar animações escrevendo código, em vez de desenhá-las quadro a quadro em um editor."
+  technical: "A cena é descrita por objetos e transformações em código, renderizada de forma determinística e versionada como software."
+  example: "Uma cena Manim que transforma um quadrado em círculo."
+  why: "Permite explicações visuais precisas e reproduzíveis de conceitos técnicos."
+  related: [animation-library]

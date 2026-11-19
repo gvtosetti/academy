@@ -1,0 +1,29 @@
+# Categorias exibidas na Home e usadas nos filtros. So mantenha categorias com recursos.
+- id: ai-foundations
+  name: AI & Machine Learning Foundations
+  icon: ":material/school:"
+  description: Os fundamentos que sustentam tudo o mais — aprendizado de máquina, redes neurais, busca, probabilidade e deep learning.
+- id: llms
+  name: Large Language Models
+  icon: ":material/neurology:"
+  description: Como modelos de linguagem transformam texto em números, processam contexto e geram respostas — do token ao treinamento.
+- id: llm-engineering
+  name: LLM Engineering & RAG
+  icon: ":material/build:"
+  description: Construir aplicações reais com LLMs — prompting, recuperação de informação (RAG), arquitetura e integração.
+- id: agents
+  name: AI Agents & Agentic Systems
+  icon: ":material/smart_toy:"
+  description: Sistemas em que o modelo planeja, usa ferramentas, verifica o próprio trabalho e coopera com outros agentes.
+- id: llmops
+  name: LLMOps, Evaluation & Production
+  icon: ":material/monitoring:"
+  description: Avaliar, depurar, observar e operar aplicações de IA generativa com qualidade, custo e latência sob controle.
+- id: software-engineering
+  name: Software Engineering & AI-Assisted Development
+  icon: ":material/code:"
+  description: Fluxos de trabalho estruturados com assistentes de código — skills, especificações, revisão e alinhamento antes de construir.
+- id: creative-coding
+  name: Creative Coding & Visualization
+  icon: ":material/animation:"
+  description: Ferramentas para animação e explicação visual — interfaces web animadas, vídeos matemáticos e animações de designers.

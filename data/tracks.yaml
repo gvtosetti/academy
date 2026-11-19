@@ -1,0 +1,254 @@
+# Trilhas de aprendizado da Academy. Cada recurso listado em um modulo deve declarar a trilha em
+# resources.yaml (learning_paths), e vice-versa — validado por services/catalog.py.
+
+- id: t1-fundamentos-ia-llms
+  title: Fundamentos de IA e LLMs
+  icon: ":material/school:"
+  objective: "Entender o que são IA, machine learning, deep learning e LLMs, e como um modelo de linguagem transforma texto em números, processa contexto e gera respostas."
+  audience:
+    - Iniciantes em IA vindos de qualquer área.
+    - Profissionais de dados que querem entender LLMs por dentro.
+  difficulty: beginner
+  prerequisites:
+    - Nenhum para o módulo 1; Python básico ajuda a partir do módulo 3.
+  modules:
+    - id: m1-como-llms-funcionam
+      title: Como LLMs funcionam (visão intuitiva)
+      summary: "Do texto aos tokens, dos tokens aos embeddings e à geração — sem matemática pesada."
+      outcomes:
+        - Explicar tokens, embeddings e predição do próximo token com suas palavras.
+        - Entender por que contexto longo custa mais.
+      resources: [llms-por-dentro]
+      concepts: [llm, tokens, tokenization, embeddings, context-window]
+      practice:
+        - Faça o quiz de Tokens e Embeddings na Base de Conhecimento.
+    - id: m2-transformers
+      title: Transformers e atenção
+      summary: "A arquitetura por trás dos LLMs e o mecanismo de atenção."
+      outcomes:
+        - Descrever os blocos de um Transformer.
+        - Explicar o que a atenção calcula e por que é cara.
+      resources: [dair-transformers-recipe, stanford-cme295-2025]
+      concepts: [transformer, attention]
+      practice:
+        - Desenhe o fluxo de um token por um bloco Transformer e compare com a aula 1 do CME295.
+    - id: m3-fundamentos-ml
+      title: Fundamentos de IA, ML e deep learning
+      summary: "A base clássica: busca, aprendizado supervisionado, redes neurais e deep learning."
+      outcomes:
+        - Distinguir IA, ML e deep learning.
+        - Entender treino, validação e redes neurais.
+      resources: [stanford-cs221-2025, stanford-cs229-2026, stanford-cs230-2025]
+      concepts: [artificial-intelligence, machine-learning, deep-learning, neural-networks]
+      practice:
+        - Escolha uma aula de cada curso e anote 3 conceitos que reaparecem em LLMs.
+    - id: m4-construindo-um-llm
+      title: Construindo um LLM do zero
+      summary: "Pré-treino, pós-treino e sistemas — para quem quer ir fundo."
+      outcomes:
+        - Entender as etapas de treinamento de um LLM.
+        - Relacionar escolhas de arquitetura com custo de treino e inferência.
+      resources: [train-llm-from-scratch, stanford-cs336-2026]
+      concepts: [training, fine-tuning, inference]
+      practice:
+        - Rode o passo 1 do train-llm-from-scratch na trilha CPU.
+
+- id: t2-aplicacoes-llm
+  title: Construindo aplicações com LLMs
+  icon: ":material/build:"
+  objective: "Ir do prompt à aplicação: prompting, RAG, avaliação e a arquitetura típica de um produto com LLM."
+  audience:
+    - Desenvolvedores e Data Scientists construindo o primeiro produto com LLM.
+  difficulty: intermediate
+  prerequisites:
+    - Trilha 1 (módulos 1 e 2) ou conhecimento equivalente.
+    - Python e noções de APIs.
+  modules:
+    - id: m1-prompting
+      title: Prompt e context engineering
+      summary: "Técnicas para instruir o modelo e montar o contexto certo."
+      outcomes:
+        - Aplicar técnicas básicas e avançadas de prompting.
+      resources: [dair-prompt-engineering-guide]
+      concepts: [prompt-engineering, context-window, hallucination]
+      practice:
+        - Reescreva um prompt real seu usando 3 técnicas do guia e compare as respostas.
+    - id: m2-arquitetura-app-llm
+      title: Arquitetura de uma aplicação com LLM
+      summary: "Do protótipo ao produto: modelos aumentados, UX e operação."
+      outcomes:
+        - Descrever os componentes de uma aplicação LLM de ponta a ponta.
+      resources: [fsdl-llm-bootcamp-2023]
+      concepts: [llm, rag, tool-calling]
+      practice:
+        - Esboce a arquitetura de um assistente para seu time usando o askFSDL como modelo.
+    - id: m3-rag-na-pratica
+      title: RAG na prática
+      summary: "Ingestão, busca BM25 e híbrida, geração com contexto e grounding."
+      outcomes:
+        - Construir um pipeline RAG com busca híbrida.
+      resources: [production-agentic-rag-course]
+      concepts: [rag, semantic-search, vector-database, reranking, grounding]
+      practice:
+        - Complete as semanas 1 a 5 do curso.
+    - id: m4-avaliacao
+      title: Avaliar e depurar
+      summary: "Como saber se a aplicação melhorou depois de uma mudança."
+      outcomes:
+        - Montar um conjunto de avaliação simples.
+      resources: [dlai-evaluating-debugging-genai]
+      concepts: [evaluation, observability]
+      practice:
+        - Crie 20 perguntas com respostas esperadas para sua aplicação e meça a taxa de acerto.
+
+- id: t3-agentes-agentic-rag
+  title: Agentes e Agentic RAG
+  icon: ":material/smart_toy:"
+  objective: "Entender e construir sistemas em que o modelo planeja, usa ferramentas, verifica o próprio trabalho e coopera com outros agentes."
+  audience:
+    - Engenheiros que já construíram aplicações com LLM e RAG.
+  difficulty: advanced
+  prerequisites:
+    - Trilha 2 ou experiência equivalente com RAG e chamadas a LLMs.
+  modules:
+    - id: m1-padroes-de-agentes
+      title: Padrões de arquitetura de agentes
+      summary: "ReAct, Planning, Reflection, multiagentes — e quando usar cada um."
+      outcomes:
+        - Distinguir chatbot, LLM com ferramentas, agente e sistema multiagente.
+        - Escolher um padrão adequado a um problema.
+      resources: [all-agentic-architectures]
+      concepts: [ai-agents, tool-calling, multi-agent-systems, agent-orchestration]
+      practice:
+        - Siga o learning path Beginner do repositório (Reflection, Tool Use, ReAct, Planning, Self-Consistency).
+    - id: m2-agentic-rag
+      title: Agentic RAG em produção
+      summary: "Grading de documentos, reescrita de consulta, guardrails e tracing."
+      outcomes:
+        - Evoluir um pipeline RAG para uma versão agêntica.
+      resources: [production-agentic-rag-course]
+      concepts: [rag, ai-agents, observability]
+      practice:
+        - Complete as semanas 6 e 7 do curso.
+    - id: m3-agentes-que-se-aprimoram
+      title: Agentes que se aprimoram (pesquisa)
+      summary: "Test-time compute, verificação, RL e avaliação de agentes."
+      outcomes:
+        - Conhecer as fronteiras de pesquisa em agentes.
+      resources: [stanford-cs329a]
+      concepts: [ai-agents, evaluation]
+      practice:
+        - Resuma em um parágrafo a ideia central de cada aula assistida.
+
+- id: t4-llmops-producao
+  title: LLMOps e produção
+  icon: ":material/monitoring:"
+  objective: "Operar aplicações de IA generativa com qualidade, custo e latência sob controle."
+  audience:
+    - Engenheiros de ML/IA e plataforma.
+  difficulty: intermediate
+  prerequisites:
+    - Trilha 2 ou experiência equivalente.
+  modules:
+    - id: m1-inferencia-e-latencia
+      title: Inferência, latência e custo
+      summary: "Prefill, decode, KV cache e o que determina custo e tempo de resposta."
+      outcomes:
+        - Explicar TTFT e os fatores que afetam latência.
+      resources: [llms-por-dentro, stanford-cs336-2026]
+      concepts: [inference, model-serving, tokens]
+      practice:
+        - Meça o tempo de resposta de um LLM variando o tamanho do prompt.
+    - id: m2-avaliacao-e-observabilidade
+      title: Avaliação, observabilidade e LLMOps
+      summary: "Avaliar, versionar prompts, rastrear e monitorar."
+      outcomes:
+        - Desenhar um processo de avaliação contínua e tracing.
+      resources: [fsdl-llm-bootcamp-2023, dlai-evaluating-debugging-genai, production-agentic-rag-course]
+      concepts: [evaluation, observability, llmops]
+      practice:
+        - Adicione tracing a um pipeline e analise 5 respostas ruins.
+    - id: m3-agentes-em-producao
+      title: Agentes em produção
+      summary: "Benchmarks, custo por padrão e gates determinísticos."
+      outcomes:
+        - Comparar custo e desempenho de arquiteturas agênticas.
+      resources: [all-agentic-architectures]
+      concepts: [agent-orchestration, evaluation]
+      practice:
+        - Compare duas arquiteturas no leaderboard e justifique a escolha para um caso real.
+    - id: m4-proximos-topicos
+      title: Próximos tópicos
+      summary: "Temas recomendados ainda sem fonte curada na Academy."
+      outcomes:
+        - Identificar lacunas para estudo futuro.
+      recommended_topics:
+        - Guardrails e segurança de aplicações LLM (prompt injection).
+        - Gestão de custos e roteamento entre modelos.
+
+- id: t5-engenharia-assistida-ia
+  title: Engenharia de software assistida por IA
+  icon: ":material/code:"
+  objective: "Usar assistentes de código com processo: skills, alinhamento antes de construir e Spec-Driven Development."
+  audience:
+    - Desenvolvedores e líderes técnicos que usam assistentes de código.
+  difficulty: beginner
+  prerequisites:
+    - Usar algum assistente de código; noções de Git.
+  modules:
+    - id: m1-o-que-sao-skills
+      title: O que são agent skills
+      summary: "Skills como procedimentos que o agente lê e segue."
+      outcomes:
+        - Explicar o que é uma skill e como instalá-la.
+      resources: [mattpocock-skills]
+      concepts: [agent-skills, github-repository, readme]
+      practice:
+        - Leia 3 SKILL.md da coleção e descreva o que cada um faz.
+    - id: m2-alinhamento
+      title: Alinhamento antes de construir
+      summary: "Entrevistas estruturadas, glossário de domínio e ADRs."
+      outcomes:
+        - Conduzir uma sessão de grilling com um agente.
+      resources: [grill-me, grill-with-docs]
+      concepts: [agent-skills, spec-driven-development]
+      practice:
+        - Use grill-me em um plano real antes de pedir a implementação.
+    - id: m3-spec-driven-development
+      title: Spec-Driven Development
+      summary: "Spec, tarefas, código, review e segurança com check-points."
+      outcomes:
+        - Seguir o fluxo completo de SDD em uma feature pequena.
+      resources: [sdd-emersonmendes]
+      concepts: [spec-driven-development, git]
+      practice:
+        - Especifique uma feature pequena com critérios de aceite numerados.
+
+- id: t6-visualizacao-creative
+  title: Visualização e creative coding
+  icon: ":material/animation:"
+  objective: "Conhecer ferramentas para explicar ideias com movimento: interfaces animadas, vídeos matemáticos e animações de designers."
+  audience:
+    - Desenvolvedores, educadores e criadores de conteúdo técnico.
+  difficulty: intermediate
+  prerequisites:
+    - Python básico (Manim) ou JavaScript básico (Motion, Lottie).
+  modules:
+    - id: m1-explicacoes-visuais
+      title: Explicações visuais com código
+      summary: "Animações programáticas precisas e reproduzíveis."
+      outcomes:
+        - Criar uma cena Manim simples.
+      resources: [manim]
+      concepts: [programmatic-animation]
+      practice:
+        - "Anime um conceito da Base de Conhecimento (ex.: embeddings) em uma cena curta."
+    - id: m2-interfaces-animadas
+      title: Interfaces animadas
+      summary: "Animação de interação na web e animações entregues por designers."
+      outcomes:
+        - Distinguir animação programática de animação exportada (Lottie).
+      resources: [motion, lottie-web]
+      concepts: [animation-library, programmatic-animation]
+      practice:
+        - Implemente a mesma microinteração com Motion e com um arquivo Lottie e compare.
