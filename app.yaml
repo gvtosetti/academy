@@ -1,0 +1,2 @@
+# Configuracao para Databricks Apps (opcional). Em outros hosts, use: streamlit run app.py
+command: ["streamlit", "run", "app.py"]

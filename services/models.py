@@ -21,7 +21,7 @@ ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 ResourceType = Literal["github", "course", "video", "playlist", "documentation", "tool", "collection"]
 Difficulty = Literal["beginner", "intermediate", "advanced"]
 MetadataStatus = Literal["verified", "partial", "pending"]
-FeaturedSection = Literal["start_here", "beginners", "deep_dives", "hands_on", "advanced", "recent"]
+TipKind = Literal["dev-tip", "tool", "practice", "in-practice"]
 
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
@@ -85,6 +85,8 @@ class Resource(_Strict):
     category: str
     difficulty: Difficulty
     language: Literal["pt", "en", "multi"]
+    areas: list[str] = Field(min_length=1, description="Areas/disciplinas (multidimensional); a primeira e a principal")
+    blurb: str = Field(description="1-2 frases para o card: o que e e por que me interessa")
     short_description: str
     plain_language_explanation: str
     technical_explanation: str
@@ -96,10 +98,8 @@ class Resource(_Strict):
     practical_applications: list[str] = Field(default_factory=list)
     study_guide: list[str] = Field(default_factory=list)
     related_resources: list[str] = Field(default_factory=list)
-    learning_paths: list[str] = Field(default_factory=list)
     tags: list[str] = Field(default_factory=list)
     parent: Optional[str] = None
-    featured: list[FeaturedSection] = Field(default_factory=list)
     sequence: int = 100
     added_on: date
     github_repo: Optional[str] = None
@@ -134,6 +134,8 @@ class Concept(_Strict):
     technical: str
     example: str
     why: str
+    areas: list[str] = Field(min_length=1)
+    tags: list[str] = Field(default_factory=list)
     related: list[str] = Field(default_factory=list)
 
     @field_validator("id")
@@ -142,43 +144,51 @@ class Concept(_Strict):
         return _check_id(v)
 
 
-class QuizQuestion(_Strict):
-    id: str
-    concept: str
-    question: str
-    options: list[str] = Field(min_length=2)
-    answer: int
-    explanation: str
+class Tip(_Strict):
+    """Nota curta e independente (Tips & Insights). Texto autoral da curadoria."""
 
-
-class Module(_Strict):
     id: str
+    kind: TipKind
     title: str
     summary: str
-    outcomes: list[str] = Field(min_length=1)
-    resources: list[str] = Field(default_factory=list)
-    concepts: list[str] = Field(default_factory=list)
-    practice: list[str] = Field(default_factory=list)
-    recommended_topics: list[str] = Field(
-        default_factory=list,
-        description="Topicos ainda sem fonte curada no catalogo (nao sao modulos concluidos).",
-    )
-
-
-class Track(_Strict):
-    id: str
-    title: str
-    icon: str
-    objective: str
-    audience: list[str]
-    difficulty: str
-    prerequisites: list[str] = Field(default_factory=list)
-    modules: list[Module] = Field(min_length=1)
+    body: str
+    areas: list[str] = Field(min_length=1)
+    tags: list[str] = Field(default_factory=list)
+    level: Optional[Difficulty] = None
+    related_resources: list[str] = Field(default_factory=list)
+    related_concepts: list[str] = Field(default_factory=list)
 
     @field_validator("id")
     @classmethod
     def v_id(cls, v: str) -> str:
         return _check_id(v)
+
+
+class Area(_Strict):
+    id: str
+    name: str
+    icon: str
+    description: str
+    chip: bool = True
+
+    @field_validator("id")
+    @classmethod
+    def v_id(cls, v: str) -> str:
+        return _check_id(v)
+
+
+class WorthItem(_Strict):
+    id: str
+    note: str
+
+
+class HomeEditorial(_Strict):
+    """Selecao editorial da pagina Discover (ids de recursos e de notas)."""
+
+    explore: list[str] = Field(default_factory=list)
+    worth_checking_out: list[WorthItem] = Field(default_factory=list)
+    quick_knowledge: list[str] = Field(default_factory=list)
+    tools: list[str] = Field(default_factory=list)
 
 
 class Category(_Strict):

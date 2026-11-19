@@ -12,7 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable, Optional, Protocol
 
-from services.catalog import Catalog
+from services.catalog import Catalog, Note, diverse
 from services.models import DIFFICULTY_ORDER, Concept, Resource
 from utils.text import normalize, tokenize
 
@@ -21,6 +21,7 @@ FIELD_WEIGHTS = {
     "tags": 4.0,
     "concepts": 4.0,
     "provider": 2.0,
+    "areas": 2.0,
     "short": 2.0,
     "body": 1.0,
 }
@@ -28,12 +29,17 @@ FIELD_WEIGHTS = {
 
 @dataclass
 class Filters:
-    categories: tuple[str, ...] = ()
-    difficulties: tuple[str, ...] = ()
+    """Filtros opcionais e combinaveis (AND entre grupos, OR dentro do grupo)."""
+
+    areas: tuple[str, ...] = ()
     types: tuple[str, ...] = ()
+    difficulties: tuple[str, ...] = ()
     languages: tuple[str, ...] = ()
-    providers: tuple[str, ...] = ()
-    tracks: tuple[str, ...] = ()
+    tags: tuple[str, ...] = ()
+
+    @property
+    def active(self) -> bool:
+        return any((self.areas, self.types, self.difficulties, self.languages, self.tags))
 
 
 class SearchBackend(Protocol):
@@ -41,10 +47,10 @@ class SearchBackend(Protocol):
         ...
 
 
-def _resource_fields(r: Resource, concepts: dict[str, Concept]) -> dict[str, str]:
+def _resource_fields(r: Resource, cat: Catalog) -> dict[str, str]:
     cnames = []
     for cid in r.key_concepts:
-        c = concepts.get(cid)
+        c = cat.concepts.get(cid)
         if c:
             cnames += [c.name, c.name_pt or "", cid.replace("-", " ")]
     return {
@@ -52,7 +58,8 @@ def _resource_fields(r: Resource, concepts: dict[str, Concept]) -> dict[str, str
         "tags": " ".join(r.tags),
         "concepts": " ".join(cnames),
         "provider": r.provider,
-        "short": r.short_description,
+        "areas": " ".join(cat.areas[a].name for a in r.areas if a in cat.areas),
+        "short": f"{r.blurb} {r.short_description}",
         "body": " ".join(
             [r.plain_language_explanation, r.why_it_matters, r.technical_explanation]
             + r.learning_outcomes + r.practical_applications
@@ -65,7 +72,7 @@ class LocalSearch:
         self.catalog = catalog
         self._index: dict[str, dict[str, set[str]]] = {}
         for r in catalog.resources.values():
-            self._index[r.id] = {f: set(tokenize(txt)) for f, txt in _resource_fields(r, catalog.concepts).items()}
+            self._index[r.id] = {f: set(tokenize(txt)) for f, txt in _resource_fields(r, catalog).items()}
 
     @staticmethod
     def _match(qtok: str, tokens: set[str]) -> bool:
@@ -91,8 +98,9 @@ class LocalSearch:
             total += 5.0
         return total
 
-    def _passes(self, r: Resource, f: Filters) -> bool:
-        if f.categories and r.category not in f.categories:
+    @staticmethod
+    def _passes(r: Resource, f: Filters) -> bool:
+        if f.areas and not set(f.areas) & set(r.areas):
             return False
         if f.difficulties and r.difficulty not in f.difficulties:
             return False
@@ -100,9 +108,7 @@ class LocalSearch:
             return False
         if f.languages and r.language not in f.languages:
             return False
-        if f.providers and r.provider not in f.providers:
-            return False
-        if f.tracks and not set(f.tracks) & set(r.learning_paths):
+        if f.tags and not set(f.tags) & set(r.tags):
             return False
         return True
 
@@ -115,13 +121,42 @@ class LocalSearch:
             s = self.score(r.id, query)
             if s > 0:
                 out.append((r, s))
-        if sort == "title":
+        if sort == "diverse":
+            pos = {r.id: i for i, r in enumerate(diverse([r for r, _ in out]))}
+            out.sort(key=lambda x: pos[x[0].id])
+        elif sort == "title":
             out.sort(key=lambda x: normalize(x[0].title))
         elif sort == "sequence":
             out.sort(key=lambda x: (x[0].sequence, DIFFICULTY_ORDER[x[0].difficulty], normalize(x[0].title)))
         else:  # relevance; empate -> sequencia curada
             out.sort(key=lambda x: (-x[1], x[0].sequence, normalize(x[0].title)))
         return out
+
+
+def search_notes(notes: Iterable[Note], query: str = "", kinds: tuple[str, ...] = (), areas: tuple[str, ...] = ()) -> list[Note]:
+    """Busca em Tips & Insights (titulo/tags pesam mais que o corpo). Sem consulta: ordem curada."""
+    qtoks = tokenize(query)
+    scored = []
+    for i, n in enumerate(notes):
+        if kinds and n.kind not in kinds:
+            continue
+        if areas and not set(areas) & set(n.areas):
+            continue
+        head = set(tokenize(f"{n.title} {n.id.replace('-', ' ')} {' '.join(n.tags)}"))
+        body = set(tokenize(f"{n.summary} {n.body} {n.technical or ''}"))
+        score, ok = 0, True
+        for qt in qtoks:
+            if LocalSearch._match(qt, head):
+                score += 3
+            elif LocalSearch._match(qt, body):
+                score += 1
+            else:
+                ok = False
+                break
+        if ok:
+            scored.append((n, score, i))
+    scored.sort(key=lambda x: (-x[1], x[2]))
+    return [n for n, _, _ in scored]
 
 
 def search_concepts(concepts: Iterable[Concept], query: str) -> list[Concept]:

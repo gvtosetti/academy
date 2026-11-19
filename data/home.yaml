@@ -1,0 +1,41 @@
+# Selecao editorial da pagina Discover. Edite livremente: so ids existentes sao aceitos.
+# Recursos: ids de resources.yaml. Notas: ids de glossary.yaml ou tips.yaml.
+# Quando um chip de area esta ativo, cada secao mostra apenas itens daquela area
+# (e a secao some se ficar vazia).
+
+# Explore & Discover: vitrine variada.
+explore:
+  - llms-por-dentro
+  - stanford-cs229-2026
+  - production-agentic-rag-course
+  - sdd-emersonmendes
+  - fsdl-llm-bootcamp-2023
+  - manim
+
+# Worth Checking Out: escolhas da curadoria, com uma frase de por que vale a pena.
+worth_checking_out:
+  - id: grill-me
+    note: Uma ideia simples que muda a forma de trabalhar com agentes de código, alinhando antes de executar.
+  - id: train-llm-from-scratch
+    note: É raro ver o ciclo completo de um modelo de linguagem em código legível, do dado ao modelo.
+  - id: all-agentic-architectures
+    note: Compara padrões de agentes lado a lado, em vez de defender um só.
+  - id: dair-ml-papers-explained
+    note: Um atalho para entender os papers que todo mundo cita.
+
+# Quick Knowledge: notas curtas (Tips & Insights).
+quick_knowledge:
+  - rag
+  - api
+  - data-lineage
+  - data-contract
+  - forecast-backtesting
+  - product-discovery
+
+# Tools & Resources: coisas para usar direto no trabalho.
+tools:
+  - dair-prompt-engineering-guide
+  - grill-with-docs
+  - mattpocock-skills
+  - motion
+  - lottie-web

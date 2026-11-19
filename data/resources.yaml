@@ -8,6 +8,8 @@
 # CATEGORIA A — AI Foundations & Understanding LLMs
 # =====================================================================
 - id: llms-por-dentro
+  areas: [ai-llms, data-science]
+  blurb: "Série em português que explica, sem matemática pesada, como um LLM transforma texto em tokens e gera respostas. Bom ponto de partida para quem usa IA e quer entender o que acontece por dentro."
   title: LLMs por Dentro
   url: https://github.com/glaucia86/llms-por-dentro
   provider: Glaucia Lemos
@@ -18,7 +20,6 @@
   sequence: 10
   added_on: 2026-11-19
   github_repo: glaucia86/llms-por-dentro
-  featured: [start_here, beginners]
   tags: [llm, tokens, embeddings, transformer, atencao, inferencia, kv cache, latencia, portugues, slides]
   short_description: >-
     Série visual em português, em quatro encontros, que mostra o caminho do texto até a resposta
@@ -62,12 +63,11 @@
     - Usar o material como roteiro para uma apresentação interna sobre como LLMs funcionam.
   study_guide:
     - Abra o portal da série (GitHub Pages) e assista/percorra o episódio 01 — é o que está com apresentação pronta.
-    - Após cada episódio, consulte na Base de Conhecimento os termos apresentados (tokens, embeddings, attention).
+    - Após cada episódio, consulte em Tips & Insights os termos apresentados (tokens, embeddings, attention).
     - Leia os planos de aula dos episódios 02–04 na pasta episodes/ para antecipar os próximos temas.
     - Consulte references/README.md para as fontes públicas e os limites didáticos assumidos.
-    - Faça o quiz rápido de Tokens e Embeddings aqui na Academy para fixar.
+    - Leia as notas curtas de Tokens e Embeddings em Tips & Insights para fixar.
   related_resources: [stanford-cme295-2025, dair-transformers-recipe, train-llm-from-scratch]
-  learning_paths: [t1-fundamentos-ia-llms, t4-llmops-producao]
   github_highlights:
     - {path: episodes/01-texto-aos-numeros/, why: "Slides, plano e roteiro completo do primeiro encontro."}
     - {path: episodes/04-latencia-inferencia/, why: "Plano do encontro sobre prefill, decode, KV cache e TTFT."}
@@ -86,6 +86,8 @@
   metadata_notes: "Segundo o README (nov/2026), apenas o episódio 01 tem apresentação e roteiro prontos; 02–04 têm plano de aula definido."
 
 - id: train-llm-from-scratch
+  areas: [ai-llms, data-science]
+  blurb: "Código passo a passo para treinar um pequeno modelo de linguagem do zero, do dataset ao modelo final. Para quem quer entender LLMs construindo um; ajuda ter Python e noções de deep learning."
   title: Train LLM From Scratch
   url: https://github.com/FareedKhan-dev/train-llm-from-scratch
   provider: Fareed Khan
@@ -96,7 +98,6 @@
   sequence: 60
   added_on: 2026-11-19
   github_repo: FareedKhan-dev/train-llm-from-scratch
-  featured: [hands_on, advanced]
   tags: [pytorch, pretraining, sft, rlhf, dpo, ppo, grpo, lora, moe, kv cache, transformer]
   short_description: >-
     Implementação em PyTorch puro de todo o ciclo de um LLM: dados, tokenização, Transformer,
@@ -151,7 +152,6 @@
     - Só depois avance ao Step 5 (pós-treino) — é a parte mais densa.
     - Execute o código apenas em um ambiente isolado (virtualenv ou container), nunca automaticamente.
   related_resources: [stanford-cs336-2026, llms-por-dentro, stanford-cme295-2025]
-  learning_paths: [t1-fundamentos-ia-llms]
   github_highlights:
     - {path: README.md, why: "Tutorial completo, do dado bruto ao modelo alinhado (Steps 1–7)."}
     - {path: src/, why: Código-fonte dos modelos e algoritmos de treino.}
@@ -169,6 +169,8 @@
   metadata_status: verified
 
 - id: stanford-online-playlists
+  areas: [data-science, ai-llms]
+  blurb: "Cursos completos de Stanford no YouTube sobre IA, machine learning e LLMs. Aulas de nível universitário, gratuitas, para assistir no seu ritmo."
   title: Stanford Online — Playlists
   url: https://www.youtube.com/@stanfordonline/playlists
   provider: Stanford Online
@@ -211,9 +213,9 @@
   practical_applications:
     - Montar um plano de estudos semestral com aulas gratuitas de referência.
   study_guide:
-    - Não tente assistir tudo. Escolha uma playlist pela trilha da Academy que você está seguindo.
+    - Não tente assistir tudo. Escolha a playlist do tema que mais interessa agora.
     - Para fundamentos, comece por CS229 ou CS230; para LLMs, por CME295; para ir fundo, CS336.
-    - Assista com pausas e anote dúvidas; consulte a Base de Conhecimento para os termos.
+    - Assista com pausas e anote dúvidas; consulte Tips & Insights para os termos.
   related_resources: [stanford-cme295-2025, stanford-cs229-2026]
   verified:
     verified_on: 2026-11-19
@@ -222,6 +224,8 @@
   metadata_notes: "Coleção: o conjunto de playlists do canal muda com o tempo; apenas as playlists listadas como itens filhos foram verificadas individualmente."
 
 - id: stanford-cs221-2025
+  areas: [data-science, ai-llms]
+  blurb: "Curso de Stanford sobre os fundamentos da IA: busca, raciocínio, probabilidade e aprendizado. A base conceitual por trás das ferramentas de IA atuais."
   title: "Stanford CS221: Artificial Intelligence: Principles and Techniques | Autumn 2025"
   url: https://www.youtube.com/playlist?list=PLoROMvodv4rMeDqwS1yFl3j3sR_-MQNEN
   provider: Stanford Online
@@ -271,7 +275,6 @@
     - Siga a ordem das aulas — os blocos (Learning, Search, MDP/RL, Games, Bayes, Logic) se apoiam uns nos outros.
     - Se o foco é LLMs, assista à aula 17 (Language Models) depois do bloco de Learning.
   related_resources: [stanford-cs229-2026, stanford-cs329a]
-  learning_paths: [t1-fundamentos-ia-llms]
   verified:
     verified_on: 2026-11-19
     source_title: "Stanford CS221: Artificial Intelligence: Principles and Techniques | Autumn 2025"
@@ -302,6 +305,8 @@
   metadata_status: verified
 
 - id: stanford-cs229-2026
+  areas: [data-science]
+  blurb: "O curso clássico de machine learning de Stanford. Para quem quer entender de verdade os algoritmos usados no dia a dia de Data Science."
   title: "Stanford CS229 Machine Learning | Spring 2026"
   url: https://www.youtube.com/playlist?list=PLaqpC4kq8Gpw
   provider: Stanford Online
@@ -312,7 +317,6 @@
   parent: stanford-online-playlists
   sequence: 32
   added_on: 2026-11-19
-  featured: [recent]
   tags: [stanford, cs229, machine learning, regressao, classificacao, redes neurais, pca, diffusion]
   short_description: >-
     Aulas da disciplina de pós-graduação CS229, uma introdução ampla e matemática ao machine learning —
@@ -352,7 +356,6 @@
     - Pratique implementando os algoritmos em um notebook após cada bloco.
     - "Observe que a playlist pode não conter todas as aulas numeradas (ex.: algumas numerações não aparecem)."
   related_resources: [stanford-cs230-2025, stanford-cs221-2025]
-  learning_paths: [t1-fundamentos-ia-llms]
   verified:
     verified_on: 2026-11-19
     source_title: "Stanford CS229 Machine Learning | Spring 2026"
@@ -381,6 +384,8 @@
   metadata_notes: "Os títulos das aulas 18 e 20 aparecem na playlist exatamente como 'GMM (EM), PCA' (iguais à aula 10)."
 
 - id: stanford-cs230-2025
+  areas: [data-science, ai-llms]
+  blurb: "Curso de deep learning de Stanford: redes neurais, treinamento e boas práticas de projeto. Útil para ir além do modelo que só funciona no notebook."
   title: "Stanford CS230: Deep Learning I Autumn 2025"
   url: https://www.youtube.com/playlist?list=PLoROMvodv4rNRRGdS0rBbXOUGA0wjdh1X
   provider: Stanford Online
@@ -427,7 +432,6 @@
     - As aulas 6 (estratégia) e 8 (agentes, prompts e RAG) são boas para líderes técnicos.
     - Note que a playlist não inclui uma aula 7 na data da curadoria.
   related_resources: [stanford-cs229-2026, stanford-cme295-2025]
-  learning_paths: [t1-fundamentos-ia-llms]
   verified:
     verified_on: 2026-11-19
     source_title: "Stanford CS230: Deep Learning I Autumn 2025"
@@ -447,6 +451,8 @@
   metadata_status: verified
 
 - id: stanford-cme295-2025
+  areas: [ai-llms, data-science]
+  blurb: "Curso de Stanford dedicado a Transformers e LLMs, da arquitetura às aplicações. Um caminho direto para entender a tecnologia por trás dos assistentes de IA."
   title: "Stanford CME295: Transformers and Large Language Models I Autumn 2025"
   url: https://www.youtube.com/playlist?list=PLoROMvodv4rOCXd21gf0CF4xr35yINeOy
   provider: Stanford Online
@@ -457,7 +463,6 @@
   parent: stanford-online-playlists
   sequence: 20
   added_on: 2026-11-19
-  featured: [start_here, deep_dives]
   tags: [stanford, cme295, transformer, llm, treinamento, tuning, raciocinio, agentes, avaliacao]
   short_description: >-
     Curso compacto (9 aulas) sobre Transformers e LLMs: arquitetura, modelos derivados, treinamento,
@@ -494,10 +499,9 @@
     - Preparar-se para ler papers e documentação técnica de LLMs.
   study_guide:
     - Assista na ordem; as aulas 1–3 são a base para o resto.
-    - Após a aula 1, revise Transformer e Attention na Base de Conhecimento.
-    - As aulas 7 (agentes) e 8 (avaliação) conectam-se diretamente às trilhas 3 e 4.
+    - Após a aula 1, revise Transformer e Attention em Tips & Insights.
+    - As aulas 7 (agentes) e 8 (avaliação) conectam-se diretamente aos recursos de agentes e de LLMOps da Library.
   related_resources: [llms-por-dentro, stanford-cs336-2026, dair-transformers-recipe]
-  learning_paths: [t1-fundamentos-ia-llms]
   verified:
     verified_on: 2026-11-19
     source_title: "Stanford CME295: Transformers and Large Language Models I Autumn 2025"
@@ -517,6 +521,8 @@
   metadata_status: verified
 
 - id: stanford-cs336-2026
+  areas: [ai-llms, data-science]
+  blurb: "Curso avançado de Stanford em que se constrói um modelo de linguagem do zero: dados, treino e eficiência. Para quem quer profundidade técnica real."
   title: "Stanford CS336: Language Modeling from Scratch | Spring 2026"
   url: https://www.youtube.com/playlist?list=PLoROMvodv4rMqXOcazWaTUHhq-yembLCV
   provider: Stanford Online
@@ -527,7 +533,6 @@
   parent: stanford-online-playlists
   sequence: 50
   added_on: 2026-11-19
-  featured: [deep_dives, recent]
   tags: [stanford, cs336, tokenizacao, gpu, kernels, paralelismo, scaling laws, inferencia, dados, post-training, rlvr]
   short_description: >-
     Curso avançado que percorre todo o processo de desenvolvimento de um modelo de linguagem: tokenização,
@@ -568,7 +573,6 @@
     - Para foco em produção, priorize Inference (aula 10) e Evaluation (aula 12).
     - Combine com o repositório Train LLM From Scratch para praticar em pequena escala.
   related_resources: [train-llm-from-scratch, stanford-cme295-2025]
-  learning_paths: [t1-fundamentos-ia-llms, t4-llmops-producao]
   verified:
     verified_on: 2026-11-19
     source_title: "Stanford CS336: Language Modeling from Scratch | Spring 2026"
@@ -597,6 +601,8 @@
   metadata_status: verified
 
 - id: stanford-cs329a
+  areas: [ai-llms]
+  blurb: "Seminário de Stanford sobre agentes de IA que se aprimoram: verificação, uso de ferramentas e planejamento. Uma visão de pesquisa sobre para onde os agentes estão indo."
   title: CS329A Self-Improving AI Agents
   url: https://www.youtube.com/playlist?list=PLangBM27OtEA
   provider: Stanford Online
@@ -607,7 +613,6 @@
   parent: stanford-online-playlists
   sequence: 70
   added_on: 2026-11-19
-  featured: [deep_dives, advanced]
   tags: [stanford, cs329a, agentes, test-time compute, verificacao, planejamento, rl, deep research, avaliacao]
   short_description: >-
     Disciplina de pós-graduação de Stanford sobre agentes de IA capazes de se aprimorar: computação em
@@ -647,7 +652,6 @@
     - Parts 2–5 formam o núcleo técnico; Parts 7–8 conectam com produtos e avaliação.
     - Combine com o repositório All Agentic Architectures para ver padrões implementados.
   related_resources: [all-agentic-architectures, stanford-cme295-2025]
-  learning_paths: [t3-agentes-agentic-rag]
   verified:
     verified_on: 2026-11-19
     source_title: CS329A Self-Improving AI Agents
@@ -667,6 +671,8 @@
   metadata_status: verified
 
 - id: stanford-ee292r
+  areas: [data-science, ai-llms]
+  blurb: "Palestras de Stanford sobre IA aplicada à ciência. Bom para ver aplicações de IA fora do mundo dos chatbots."
   title: Stanford EE292R AI and Data for Science
   url: https://www.youtube.com/playlist?list=PLYiycvG2rxJ0
   provider: Stanford Online
@@ -677,7 +683,6 @@
   parent: stanford-online-playlists
   sequence: 80
   added_on: 2026-11-19
-  featured: [recent]
   tags: [stanford, ee292r, ia para ciencia, world models, medicina, seminario]
   short_description: >-
     Série de seminários de Stanford sobre IA e dados aplicados à ciência — de modelos computacionais da
@@ -726,6 +731,8 @@
 # CATEGORIA B — LLM Engineering & Production
 # =====================================================================
 - id: fsdl-llm-bootcamp-2023
+  areas: [ai-llms, product, dev-backend]
+  blurb: "Bootcamp sobre como levar aplicações com LLMs do protótipo à produção: prompting, RAG, UX e operação. É de 2023; os princípios seguem úteis, algumas ferramentas mudaram."
   title: LLM Bootcamp - Spring 2023
   url: https://fullstackdeeplearning.com/llm-bootcamp/spring-2023/
   provider: The Full Stack (Full Stack Deep Learning)
@@ -771,7 +778,7 @@
     required: []
     helpful:
       - Python e noções de APIs web.
-      - Vocabulário básico de LLMs (tokens, embeddings) — veja a Trilha 1.
+      - Vocabulário básico de LLMs (tokens, embeddings) — veja os Quick Explainers em Tips & Insights.
   key_concepts: [llm, prompt-engineering, rag, embeddings, vector-database, llmops, evaluation, tool-calling]
   practical_applications:
     - Estruturar o primeiro protótipo de assistente com respostas baseadas em documentos.
@@ -782,7 +789,6 @@
     - Ao assistir, anote o princípio por trás de cada ferramenta e procure a alternativa atual equivalente.
     - Depois, pratique RAG moderno com o Production Agentic RAG Course.
   related_resources: [production-agentic-rag-course, dlai-evaluating-debugging-genai, dair-prompt-engineering-guide]
-  learning_paths: [t2-aplicacoes-llm, t4-llmops-producao]
   verified:
     verified_on: 2026-11-19
     source_title: LLM Bootcamp - Spring 2023
@@ -790,6 +796,8 @@
   metadata_notes: "Conteúdo de 2023: ferramentas citadas (ex.: Modal, Gantry, LangChain da época) podem ter mudado. Duração não informada pela fonte."
 
 - id: dlai-evaluating-debugging-genai
+  areas: [ai-llms, data-science]
+  blurb: "Curso da DeepLearning.AI sobre avaliar e depurar aplicações de IA generativa. Detalhes do currículo ainda em validação na fonte."
   title: Evaluating and Debugging Generative AI
   url: https://www.deeplearning.ai/courses/evaluating-debugging-generative-ai
   provider: DeepLearning.AI
@@ -832,15 +840,16 @@
     - Registrar experimentos de prompts para decisões baseadas em evidência.
   study_guide:
     - Abra a página oficial e confira o currículo e a duração antes de começar.
-    - Revise antes os conceitos Evaluation e Observability na Base de Conhecimento.
+    - Revise antes os conceitos Evaluation e Observability em Tips & Insights.
     - Aplique o que aprender em um projeto próprio, comparando pelo menos duas versões de prompt.
   related_resources: [fsdl-llm-bootcamp-2023, production-agentic-rag-course]
-  learning_paths: [t2-aplicacoes-llm, t4-llmops-producao]
   verified: {}
   metadata_status: pending
   metadata_notes: "Pending verification: deeplearning.ai retornou HTTP 403 (proteção anti-bot) em 19/11/2026. Currículo, lições, duração, instrutores e ferramentas não verificados."
 
 - id: production-agentic-rag-course
+  areas: [ai-llms, dev-backend, data-engineering]
+  blurb: "Curso prático para construir, semana a semana, um assistente de pesquisa sobre papers: da ingestão e busca ao RAG agêntico monitorado. Mostra como RAG é feito em produção."
   title: "The Mother of AI Project — Phase 1 RAG Systems: arXiv Paper Curator"
   url: https://github.com/jamwithai/production-agentic-rag-course
   provider: Jam With AI
@@ -851,7 +860,6 @@
   sequence: 55
   added_on: 2026-11-19
   github_repo: jamwithai/production-agentic-rag-course
-  featured: [hands_on, advanced]
   tags: [rag, agentic rag, bm25, busca hibrida, opensearch, fastapi, airflow, langgraph, langfuse, redis, docker]
   short_description: >-
     Curso prático semana a semana: construir um assistente de pesquisa sobre papers do arXiv, evoluindo de
@@ -891,7 +899,7 @@
       - 8 GB+ de RAM e 20 GB+ de disco livre (citados no README).
     helpful:
       - Noções de APIs REST e bancos de dados.
-      - Conceitos de embeddings e busca semântica (veja a Base de Conhecimento).
+      - Conceitos de embeddings e busca semântica (veja Tips & Insights).
   key_concepts: [rag, semantic-search, embeddings, vector-database, reranking, ai-agents, observability, grounding]
   practical_applications:
     - Construir um assistente interno que responde com base em documentos da empresa.
@@ -904,7 +912,6 @@
     - Execute em ambiente isolado (Docker), configurando chaves no .env — nunca exponha segredos.
     - Ao chegar à semana 7, compare com os padrões de RAG do All Agentic Architectures.
   related_resources: [all-agentic-architectures, fsdl-llm-bootcamp-2023, dlai-evaluating-debugging-genai]
-  learning_paths: [t2-aplicacoes-llm, t3-agentes-agentic-rag, t4-llmops-producao]
   github_highlights:
     - {path: notebooks/, why: Notebooks de cada semana do curso.}
     - {path: src/, why: "Serviços da aplicação (API, busca, RAG, agente)."}
@@ -923,6 +930,8 @@
 # CATEGORIA C — Agentic AI & Architectures
 # =====================================================================
 - id: all-agentic-architectures
+  areas: [ai-llms, dev-backend]
+  blurb: "Catálogo executável de dezenas de arquiteturas de agentes, com notebooks comparáveis. Referência para escolher o padrão certo em vez de seguir a moda."
   title: Agentic Architectures (all-agentic-architectures)
   url: https://github.com/FareedKhan-dev/all-agentic-architectures
   provider: Fareed Khan
@@ -933,7 +942,6 @@
   sequence: 65
   added_on: 2026-11-19
   github_repo: FareedKhan-dev/all-agentic-architectures
-  featured: [deep_dives, advanced]
   tags: [agentes, react, reflexion, tree of thoughts, lats, graphrag, memgpt, multi-agent, langgraph, benchmark]
   short_description: >-
     Biblioteca Python e "livro-texto executável" com dezenas de padrões de agentes — reflexão, busca,
@@ -972,7 +980,7 @@
       - Saber chamar um LLM via API.
     helpful:
       - Noções de LangGraph/LangChain.
-      - Conceitos de RAG e tool calling (Trilhas 2 e 3).
+      - Conceitos de RAG e tool calling (veja Tips & Insights).
   key_concepts: [ai-agents, tool-calling, multi-agent-systems, agent-orchestration, rag, evaluation]
   practical_applications:
     - Escolher entre ReAct, Planning ou Plan-Execute-Verify para um assistente que executa tarefas.
@@ -984,7 +992,6 @@
     - Leia o notebook de cada arquitetura antes de rodar código; rode só em ambiente isolado e com suas próprias chaves.
     - Consulte o leaderboard de benchmarks para comparar custo e desempenho entre padrões.
   related_resources: [production-agentic-rag-course, stanford-cs329a]
-  learning_paths: [t3-agentes-agentic-rag, t4-llmops-producao]
   github_highlights:
     - {path: notebooks/, why: Notebook executado para cada arquitetura.}
     - {path: src/, why: Biblioteca agentic_architectures com o contrato uniforme.}
@@ -1002,6 +1009,8 @@
   metadata_notes: "O README cita 36 arquiteturas e a descrição do GitHub cita 35 (nov/2026)."
 
 - id: dair-ai
+  areas: [ai-llms, data-science]
+  blurb: "Organização com guias e listas curadas sobre IA: prompting, papers explicados e cursos. Uma fonte de referências confiáveis para continuar explorando."
   title: DAIR.AI
   url: https://github.com/dair-ai
   provider: DAIR.AI
@@ -1049,6 +1058,8 @@
   metadata_notes: "Coleção: apenas os repositórios listados como itens filhos foram verificados individualmente."
 
 - id: dair-prompt-engineering-guide
+  areas: [ai-llms, product]
+  blurb: "Guia aberto e abrangente de prompt engineering, com técnicas, exemplos e tópicos como RAG e agentes. Útil para qualquer pessoa que escreve prompts no trabalho."
   title: Prompt-Engineering-Guide
   url: https://github.com/dair-ai/Prompt-Engineering-Guide
   provider: DAIR.AI
@@ -1060,7 +1071,6 @@
   sequence: 36
   added_on: 2026-11-19
   github_repo: dair-ai/Prompt-Engineering-Guide
-  featured: [beginners]
   tags: [prompt engineering, context engineering, rag, agentes, guia]
   short_description: >-
     Guias, papers, lições e notebooks sobre prompt engineering, context engineering, RAG e agentes.
@@ -1096,7 +1106,6 @@
     - Teste cada técnica em um assistente que você já usa, com uma tarefa real sua.
     - Avance para RAG e agentes quando os fundamentos estiverem confortáveis.
   related_resources: [fsdl-llm-bootcamp-2023, production-agentic-rag-course]
-  learning_paths: [t2-aplicacoes-llm]
   verified:
     verified_on: 2026-11-19
     source_title: Prompt-Engineering-Guide
@@ -1106,6 +1115,8 @@
   metadata_notes: "Verificados: descrição e linguagem via API da organização. README não analisado em detalhe; licença não conferida."
 
 - id: dair-ml-youtube-courses
+  areas: [data-science]
+  blurb: "Lista curada de cursos gratuitos de ML e IA no YouTube. Um índice para encontrar boas aulas sem perder tempo procurando."
   title: ML-YouTube-Courses
   url: https://github.com/dair-ai/ML-YouTube-Courses
   provider: DAIR.AI
@@ -1117,7 +1128,6 @@
   sequence: 37
   added_on: 2026-11-19
   github_repo: dair-ai/ML-YouTube-Courses
-  featured: [beginners]
   tags: [cursos, youtube, machine learning, lista curada]
   short_description: >-
     Lista curada de cursos de machine learning e IA disponíveis gratuitamente no YouTube.
@@ -1139,7 +1149,7 @@
     helpful: []
   key_concepts: [machine-learning, deep-learning]
   practical_applications:
-    - Selecionar cursos complementares para uma trilha da Academy.
+    - Encontrar cursos complementares sobre um tema específico.
   study_guide:
     - Use como índice; escolha no máximo um curso por vez.
     - Confira a data das aulas — a lista teve a última atualização em 2024.
@@ -1152,6 +1162,8 @@
   metadata_notes: "Verificada apenas a descrição via API; README não analisado em detalhe; licença não conferida."
 
 - id: dair-ml-papers-explained
+  areas: [data-science, ai-llms]
+  blurb: "Explicações acessíveis de papers importantes de machine learning. Ajuda a entender de onde vêm os conceitos que você usa."
   title: ML-Papers-Explained
   url: https://github.com/dair-ai/ML-Papers-Explained
   provider: DAIR.AI
@@ -1197,6 +1209,8 @@
   metadata_notes: "Verificada apenas a descrição via API; conteúdo e licença não conferidos."
 
 - id: dair-transformers-recipe
+  areas: [ai-llms]
+  blurb: "Roteiro de leituras para entender Transformers, a arquitetura por trás dos LLMs. Indica o que ler para estudar o tema sem se perder."
   title: Transformers-Recipe
   url: https://github.com/dair-ai/Transformers-Recipe
   provider: DAIR.AI
@@ -1233,7 +1247,6 @@
   study_guide:
     - Siga a ordem sugerida pelo próprio guia e complemente com a aula 1 do CME295.
   related_resources: [stanford-cme295-2025, llms-por-dentro]
-  learning_paths: [t1-fundamentos-ia-llms]
   verified:
     verified_on: 2026-11-19
     source_title: Transformers-Recipe
@@ -1245,6 +1258,8 @@
 # CATEGORIA D — AI-Assisted Software Engineering
 # =====================================================================
 - id: mattpocock-skills
+  areas: [dev-backend, product]
+  blurb: "Coleção de skills para assistentes de código que trazem processos de engenharia, como alinhamento antes de codar e revisão. Ajuda o agente de IA a construir a coisa certa."
   title: Skills For Real Engineers (mattpocock/skills)
   url: https://github.com/mattpocock/skills
   provider: Matt Pocock
@@ -1255,7 +1270,6 @@
   sequence: 85
   added_on: 2026-11-19
   github_repo: mattpocock/skills
-  featured: [start_here]
   tags: [agent skills, claude code, codex, copilot, workflows, engenharia de software, tdd, code review]
   short_description: >-
     Coleção de skills pequenas e combináveis para assistentes de código (Claude Code, Codex, Copilot,
@@ -1302,7 +1316,6 @@
     - Instale pelo método do seu agente e rode o setup uma vez por repositório.
     - Experimente uma skill por vez em uma tarefa real antes de adotar várias.
   related_resources: [sdd-emersonmendes, grill-me, grill-with-docs]
-  learning_paths: [t5-engenharia-assistida-ia]
   github_highlights:
     - {path: skills/engineering/, why: "Skills de engenharia (code-review, tdd, to-spec, triage, domain-modeling...)."}
     - {path: skills/productivity/, why: "Skills de produtividade (grilling, grill-me, handoff, teach...)."}
@@ -1319,6 +1332,8 @@
   metadata_status: verified
 
 - id: grill-with-docs
+  areas: [dev-backend, product]
+  blurb: "Um workflow de IA para revisar decisões e ideias técnicas com apoio de documentação. O plano é confrontado com o vocabulário e as decisões já registradas do projeto."
   title: grill-with-docs
   url: https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs
   provider: Matt Pocock
@@ -1373,7 +1388,6 @@
     - Leia ADR-FORMAT.md e GLOSSARY-FORMAT.md na pasta domain-modeling.
     - Teste em um plano pequeno e real; responda "yes" para aceitar as recomendações quando concordar.
   related_resources: [grill-me, sdd-emersonmendes]
-  learning_paths: [t5-engenharia-assistida-ia]
   github_highlights:
     - {path: skills/engineering/grill-with-docs/SKILL.md, why: Definição da skill.}
     - {path: skills/productivity/grilling/SKILL.md, why: Mecânica da entrevista em rodadas.}
@@ -1385,6 +1399,8 @@
   metadata_status: verified
 
 - id: grill-me
+  areas: [dev-backend, product]
+  blurb: "Skill que faz o assistente de IA entrevistar você antes de agir, testando seu plano com perguntas. Simples de usar e evita que o agente construa a coisa errada."
   title: grill-me
   url: https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me
   provider: Matt Pocock
@@ -1396,7 +1412,6 @@
   sequence: 87
   added_on: 2026-11-19
   github_repo: mattpocock/skills
-  featured: [start_here, beginners]
   tags: [agent skill, entrevista, alinhamento, planejamento, decisao]
   short_description: >-
     Skill que faz o assistente entrevistar você de forma insistente para testar e afiar um plano,
@@ -1435,7 +1450,6 @@
     - Rode em um plano pequeno; observe o formato das rodadas e das respostas recomendadas.
     - Evolua para grill-with-docs quando quiser registrar glossário e decisões.
   related_resources: [grill-with-docs, mattpocock-skills]
-  learning_paths: [t5-engenharia-assistida-ia]
   github_highlights:
     - {path: skills/productivity/grill-me/SKILL.md, why: Definição da skill.}
     - {path: skills/productivity/grilling/SKILL.md, why: Procedimento de entrevista em rodadas.}
@@ -1446,6 +1460,8 @@
   metadata_status: verified
 
 - id: sdd-emersonmendes
+  areas: [dev-backend, product]
+  blurb: "Template em português para desenvolver com assistente de IA guiado por especificação: spec, tarefas, código e revisão. Para projetos que precisam de previsibilidade."
   title: "sdd — Template de Spec-Driven Development para Claude Code"
   url: https://github.com/emersonmendes/sdd
   provider: Emerson Mendes
@@ -1456,7 +1472,6 @@
   sequence: 90
   added_on: 2026-11-19
   github_repo: emersonmendes/sdd
-  featured: [hands_on]
   tags: [spec-driven development, sdd, claude code, skills, specs, review, seguranca, owasp, template]
   short_description: >-
     Template reutilizável de skills, agentes e documentos para Claude Code que coloca o projeto em um fluxo
@@ -1504,7 +1519,6 @@
     - Experimente o fluxo completo (go) em uma feature pequena; depois avalie o express para casos simples.
     - Compare com as skills de Matt Pocock (grill-me, to-spec) para entender abordagens diferentes.
   related_resources: [mattpocock-skills, grill-with-docs]
-  learning_paths: [t5-engenharia-assistida-ia]
   github_highlights:
     - {path: README.pt-BR.md, why: Documentação completa em português.}
     - {path: template/, why: Arquivos renderizados em cada projeto.}
@@ -1523,6 +1537,8 @@
 # CATEGORIA E — Creative Coding & Visualization (ferramentas, nao cursos)
 # =====================================================================
 - id: motion
+  areas: [creative-tech, dev-backend]
+  blurb: "Biblioteca de animação para interfaces web. Útil para criar microinterações e transições que deixam produtos mais claros e agradáveis."
   title: Motion
   url: https://github.com/motiondivision/motion
   provider: Motion Division
@@ -1574,7 +1590,6 @@
     - Antes de animar algo, escreva em uma frase o que a animação comunica ao usuário.
     - Observação - Motion é uma biblioteca JavaScript e não roda nativamente dentro de apps Python como Streamlit.
   related_resources: [lottie-web, manim]
-  learning_paths: [t6-visualizacao-creative]
   github_highlights:
     - {path: packages/, why: Pacotes da biblioteca (monorepo).}
     - {path: dev/, why: Ambientes de desenvolvimento e exemplos internos.}
@@ -1591,6 +1606,8 @@
   metadata_status: verified
 
 - id: manim
+  areas: [creative-tech, data-science]
+  blurb: "Uma biblioteca Python para criar animações matemáticas. Útil para visualizar algoritmos, conceitos estatísticos e explicações técnicas."
   title: Manim (Community Edition)
   url: https://github.com/ManimCommunity/manim
   provider: Manim Community
@@ -1601,7 +1618,6 @@
   sequence: 102
   added_on: 2026-11-19
   github_repo: ManimCommunity/manim
-  featured: [hands_on]
   tags: [python, animacao matematica, 3blue1brown, video, algoritmos, educacao]
   short_description: >-
     Framework Python mantido pela comunidade para criar, por código, animações precisas de matemática e
@@ -1643,7 +1659,6 @@
     - Siga a documentação oficial para instalação local da Community Edition.
     - Explore example_scenes/ para ideias de cenas.
   related_resources: [motion, lottie-web]
-  learning_paths: [t6-visualizacao-creative]
   github_highlights:
     - {path: example_scenes/, why: Cenas de exemplo prontas para estudar.}
     - {path: manim/, why: Código-fonte da biblioteca.}
@@ -1660,6 +1675,8 @@
   metadata_status: verified
 
 - id: lottie-web
+  areas: [creative-tech]
+  blurb: "Biblioteca que reproduz na web animações criadas no After Effects e exportadas como JSON. Permite usar animações de designers sem recriá-las em código."
   title: lottie-web
   url: https://github.com/airbnb/lottie-web
   provider: Airbnb
@@ -1709,7 +1726,6 @@
     - Use um arquivo Lottie de exemplo e exiba-o com o player web.
     - Compare o resultado com uma animação equivalente feita com Motion para entender os trade-offs.
   related_resources: [motion, manim]
-  learning_paths: [t6-visualizacao-creative]
   github_highlights:
     - {path: build/, why: Builds do player e da extensão Bodymovin.}
     - {path: demo/, why: Demos de uso.}

@@ -3,6 +3,7 @@
 
 # ---------------- Fundamentos ----------------
 - id: artificial-intelligence
+  areas: [data-science, ai-llms]
   name: Artificial Intelligence (AI)
   name_pt: Inteligência Artificial
   simple: "Campo que cria sistemas capazes de realizar tarefas que normalmente exigiriam inteligência humana, como reconhecer imagens, entender texto ou tomar decisões."
@@ -12,6 +13,7 @@
   related: [machine-learning, deep-learning, generative-ai]
 
 - id: machine-learning
+  areas: [data-science]
   name: Machine Learning (ML)
   name_pt: Aprendizado de Máquina
   simple: "Em vez de programar regras à mão, mostramos muitos exemplos ao computador e ele aprende os padrões sozinho."
@@ -21,6 +23,7 @@
   related: [artificial-intelligence, deep-learning, training]
 
 - id: deep-learning
+  areas: [data-science, ai-llms]
   name: Deep Learning
   name_pt: Aprendizado Profundo
   simple: "Um tipo de machine learning que usa redes neurais com muitas camadas, capazes de aprender padrões muito complexos."
@@ -30,6 +33,7 @@
   related: [neural-networks, machine-learning, transformer]
 
 - id: neural-networks
+  areas: [data-science, ai-llms]
   name: Neural Networks
   name_pt: Redes Neurais
   simple: "Modelos inspirados vagamente no cérebro: muitos 'neurônios' simples conectados, cada um fazendo uma conta pequena."
@@ -39,6 +43,7 @@
   related: [deep-learning, training, transformer]
 
 - id: generative-ai
+  areas: [ai-llms, product]
   name: Generative AI
   name_pt: IA Generativa
   simple: "IA que cria conteúdo novo — texto, imagens, áudio ou código — em vez de apenas classificar ou prever."
@@ -49,6 +54,7 @@
 
 # ---------------- LLMs ----------------
 - id: llm
+  areas: [ai-llms]
   name: Large Language Model (LLM)
   name_pt: Modelo de Linguagem de Grande Escala
   simple: "Um modelo treinado com enormes quantidades de texto que aprendeu a prever a próxima palavra — e, com isso, consegue conversar, resumir, traduzir e escrever código."
@@ -58,6 +64,7 @@
   related: [transformer, tokens, training, inference]
 
 - id: tokens
+  areas: [ai-llms]
   name: Tokens
   name_pt: Tokens
   simple: "Os 'pedaços' de texto que o modelo realmente lê e escreve — podem ser palavras inteiras, partes de palavras ou sinais."
@@ -67,6 +74,7 @@
   related: [tokenization, embeddings, context-window]
 
 - id: tokenization
+  areas: [ai-llms]
   name: Tokenization
   name_pt: Tokenização
   simple: "O processo de quebrar o texto em tokens antes de entregá-lo ao modelo."
@@ -76,6 +84,7 @@
   related: [tokens, llm]
 
 - id: embeddings
+  areas: [ai-llms, data-science]
   name: Embeddings
   name_pt: Embeddings (vetores de representação)
   simple: "Uma forma de transformar palavras, frases ou documentos em listas de números, de modo que coisas com significado parecido fiquem 'perto' umas das outras."
@@ -85,6 +94,7 @@
   related: [semantic-search, vector-database, tokens]
 
 - id: transformer
+  areas: [ai-llms]
   name: Transformer
   name_pt: Transformer
   simple: "A arquitetura de rede neural por trás dos LLMs, que consegue olhar para todas as palavras de um texto ao mesmo tempo e decidir quais são importantes umas para as outras."
@@ -94,6 +104,7 @@
   related: [attention, llm, neural-networks]
 
 - id: attention
+  areas: [ai-llms]
   name: Attention
   name_pt: Atenção
   simple: "O mecanismo que permite ao modelo decidir em quais partes do texto 'prestar atenção' ao processar cada palavra."
@@ -103,6 +114,7 @@
   related: [transformer, context-window]
 
 - id: training
+  areas: [data-science, ai-llms]
   name: Training
   name_pt: Treinamento
   simple: "A fase em que o modelo aprende, ajustando seus parâmetros a partir de muitos exemplos."
@@ -112,6 +124,7 @@
   related: [inference, fine-tuning, machine-learning]
 
 - id: inference
+  areas: [ai-llms, dev-backend]
   name: Inference
   name_pt: Inferência
   simple: "Usar um modelo já treinado para gerar respostas — é o que acontece cada vez que você envia uma pergunta."
@@ -121,6 +134,7 @@
   related: [training, model-serving, tokens]
 
 - id: fine-tuning
+  areas: [ai-llms, data-science]
   name: Fine-tuning
   name_pt: Ajuste Fino
   simple: "Continuar o treinamento de um modelo já pronto com exemplos específicos para especializá-lo em uma tarefa ou estilo."
@@ -130,6 +144,7 @@
   related: [training, prompt-engineering, rag]
 
 - id: prompt-engineering
+  areas: [ai-llms, product]
   name: Prompt Engineering
   name_pt: Engenharia de Prompt
   simple: "A prática de escrever instruções e dar contexto ao modelo de forma clara para obter respostas melhores."
@@ -139,6 +154,7 @@
   related: [context-window, llm, evaluation]
 
 - id: context-window
+  areas: [ai-llms]
   name: Context Window
   name_pt: Janela de Contexto
   simple: "A quantidade máxima de texto (em tokens) que o modelo consegue considerar de uma vez — a sua 'memória de trabalho'."
@@ -148,6 +164,7 @@
   related: [tokens, attention, rag]
 
 - id: hallucination
+  areas: [ai-llms, product]
   name: Hallucination
   name_pt: Alucinação
   simple: "Quando o modelo responde com confiança algo que não é verdade ou que ele inventou."
@@ -157,6 +174,7 @@
   related: [grounding, rag, evaluation]
 
 - id: grounding
+  areas: [ai-llms]
   name: Grounding
   name_pt: Ancoragem em Fontes
   simple: "Fazer o modelo basear a resposta em informações fornecidas (documentos, dados), e não apenas no que 'lembra' do treino."
@@ -167,6 +185,7 @@
 
 # ---------------- RAG e busca ----------------
 - id: rag
+  areas: [ai-llms, dev-backend]
   name: Retrieval-Augmented Generation (RAG)
   name_pt: Geração Aumentada por Recuperação
   simple: "Antes de responder, o sistema busca trechos relevantes em uma base de documentos e os entrega ao modelo — como consultar o livro antes de responder a prova."
@@ -176,6 +195,7 @@
   related: [semantic-search, vector-database, reranking, grounding]
 
 - id: vector-database
+  areas: [ai-llms, data-engineering]
   name: Vector Database
   name_pt: Banco de Dados Vetorial
   simple: "Um banco especializado em guardar embeddings e encontrar rapidamente os mais parecidos com uma consulta."
@@ -185,6 +205,7 @@
   related: [embeddings, semantic-search, rag]
 
 - id: semantic-search
+  areas: [ai-llms, dev-backend]
   name: Semantic Search
   name_pt: Busca Semântica
   simple: "Busca pelo significado, e não só pelas palavras exatas."
@@ -194,6 +215,7 @@
   related: [embeddings, vector-database, reranking]
 
 - id: reranking
+  areas: [ai-llms]
   name: Reranking
   name_pt: Reordenação
   simple: "Uma segunda etapa que reavalia os resultados da busca e coloca os mais relevantes no topo."
@@ -204,6 +226,7 @@
 
 # ---------------- Agentes ----------------
 - id: ai-agents
+  areas: [ai-llms]
   name: AI Agents
   name_pt: Agentes de IA
   simple: "Sistemas em que o modelo não só responde, mas decide os próximos passos sozinho — planeja, usa ferramentas, observa o resultado e ajusta até cumprir um objetivo."
@@ -213,6 +236,7 @@
   related: [tool-calling, multi-agent-systems, agent-orchestration]
 
 - id: tool-calling
+  areas: [ai-llms, dev-backend]
   name: Tool Calling
   name_pt: Chamada de Ferramentas
   simple: "A capacidade de o modelo pedir para usar uma ferramenta externa — uma busca, uma calculadora, uma API — e usar o resultado na resposta."
@@ -222,6 +246,7 @@
   related: [ai-agents, api]
 
 - id: multi-agent-systems
+  areas: [ai-llms]
   name: Multi-Agent Systems
   name_pt: Sistemas Multiagente
   simple: "Vários agentes especializados que dividem o trabalho, colaboram ou debatem entre si."
@@ -231,6 +256,7 @@
   related: [ai-agents, agent-orchestration]
 
 - id: agent-orchestration
+  areas: [ai-llms, dev-backend]
   name: Agent Orchestration
   name_pt: Orquestração de Agentes
   simple: "A lógica que coordena quando cada agente ou ferramenta age, em que ordem e com quais informações."
@@ -241,6 +267,7 @@
 
 # ---------------- Produção ----------------
 - id: evaluation
+  areas: [ai-llms, data-science]
   name: Evaluation
   name_pt: Avaliação
   simple: "Medir de forma sistemática se as respostas do sistema de IA são boas — corretas, úteis, seguras."
@@ -250,6 +277,7 @@
   related: [llmops, observability, hallucination]
 
 - id: llmops
+  areas: [ai-llms, dev-backend]
   name: LLMOps
   name_pt: LLMOps
   simple: "As práticas para colocar e manter aplicações com LLM em produção com qualidade, custo e segurança sob controle."
@@ -259,6 +287,7 @@
   related: [evaluation, observability, model-serving]
 
 - id: observability
+  areas: [dev-backend, ai-llms]
   name: Observability
   name_pt: Observabilidade
   simple: "Registrar o que acontece dentro do sistema de IA para entender por que uma resposta saiu boa ou ruim."
@@ -268,6 +297,7 @@
   related: [llmops, evaluation, agent-orchestration]
 
 - id: model-serving
+  areas: [dev-backend, ai-llms]
   name: Model Serving
   name_pt: Disponibilização de Modelos
   simple: "Colocar um modelo no ar para que aplicações possam enviar pedidos a ele e receber respostas."
@@ -278,6 +308,7 @@
 
 # ---------------- Engenharia de software ----------------
 - id: git
+  areas: [dev-backend]
   name: Git
   name_pt: Git
   simple: "Uma ferramenta que guarda o histórico de mudanças de um projeto, permitindo voltar no tempo e trabalhar em equipe sem sobrescrever o trabalho dos outros."
@@ -287,6 +318,7 @@
   related: [github-repository, readme]
 
 - id: github-repository
+  areas: [dev-backend]
   name: GitHub Repository
   name_pt: Repositório no GitHub
   simple: "Uma pasta de projeto hospedada no GitHub, com código, documentação e todo o histórico de mudanças."
@@ -296,6 +328,7 @@
   related: [git, readme]
 
 - id: readme
+  areas: [dev-backend]
   name: README
   name_pt: README
   simple: "O arquivo de 'boas-vindas' de um projeto: explica o que é, como instalar e como usar."
@@ -305,6 +338,7 @@
   related: [github-repository, git]
 
 - id: api
+  areas: [dev-backend, product]
   name: API
   name_pt: Interface de Programação de Aplicações
   simple: "Um 'cardápio' de pedidos que um sistema aceita de outro programa, com regras claras de como pedir e o que vem de volta."
@@ -314,6 +348,7 @@
   related: [sdk, tool-calling]
 
 - id: sdk
+  areas: [dev-backend]
   name: SDK
   name_pt: Kit de Desenvolvimento de Software
   simple: "Um pacote de código pronto que facilita usar um serviço ou uma tecnologia na sua linguagem de programação."
@@ -323,6 +358,7 @@
   related: [api]
 
 - id: agent-skills
+  areas: [dev-backend, ai-llms]
   name: Agent Skills
   name_pt: Skills para Agentes
   simple: "Arquivos de instruções que ensinam um assistente de IA a seguir um procedimento específico — como uma receita que ele lê quando precisa."
@@ -332,6 +368,7 @@
   related: [ai-agents, spec-driven-development]
 
 - id: spec-driven-development
+  areas: [dev-backend, product]
   name: Spec-Driven Development (SDD)
   name_pt: Desenvolvimento Orientado a Especificação
   simple: "Escrever primeiro o que o sistema deve fazer — objetivo, regras e critérios de aceite — e só depois construir."
@@ -342,6 +379,7 @@
 
 # ---------------- Visualização ----------------
 - id: animation-library
+  areas: [creative-tech]
   name: Animation Library
   name_pt: Biblioteca de Animação
   simple: "Um conjunto de funções prontas para fazer elementos de uma interface se moverem de forma suave, sem calcular cada quadro."
@@ -350,7 +388,108 @@
   why: "Movimento bem usado comunica estado e continuidade; mal usado, distrai."
   related: [programmatic-animation]
 
+# ---------------- Dados, governanca, produto e pesquisa ----------------
+- id: data-lineage
+  areas: [data-governance, data-engineering, analytics]
+  tags: [governanca, metadados, impacto]
+  name: Data Lineage
+  name_pt: Linhagem de dados
+  simple: "O mapa de onde um dado veio, por quais transformações passou e onde ele é usado."
+  technical: "Grafo de dependências entre fontes, tabelas, colunas, jobs e relatórios, capturado automaticamente (por análise das queries ou da execução dos pipelines) ou declarado. Permite análise de impacto (o que quebra se eu mudar isto?) e de causa raiz (de onde veio este número?)."
+  example: "Um KPI do dashboard de vendas muda de repente; a linhagem mostra que ele depende de uma tabela de pedidos cujo job de ingestão falhou ontem."
+  why: "Sem linhagem, cada pergunta sobre a origem de um número vira uma investigação manual; com ela, auditoria, governança e debugging ficam muito mais rápidos."
+  related: [data-contract, observability]
+
+- id: ci-cd
+  areas: [dev-backend, data-engineering]
+  tags: [automacao, testes, deploy]
+  name: CI/CD
+  name_pt: Integração e entrega contínuas
+  simple: "Automatizar os passos de testar e publicar software, para que cada mudança seja verificada e entregue de forma rápida e segura."
+  technical: "CI: a cada push ou pull request, um servidor de build roda testes e verificações (lint, tipos, segurança). CD: artefatos aprovados são implantados automaticamente em ambientes como staging e produção, muitas vezes com aprovação manual, feature flags ou rollout gradual."
+  example: "Ao abrir um pull request, os testes rodam sozinhos; depois do merge na branch principal, a nova versão do app é publicada automaticamente."
+  why: "Reduz erros manuais e o tempo entre escrever código e ele gerar valor; problemas aparecem cedo, quando são baratos de corrigir."
+  related: [git, observability]
+
+- id: data-contract
+  areas: [data-governance, data-engineering, dev-backend]
+  tags: [governanca, schema, qualidade, arquitetura]
+  name: Data Contract
+  name_pt: Contrato de dados
+  simple: "Um acordo explícito entre quem produz e quem consome um dado: quais campos existem, o que significam, qual a qualidade esperada e quem é o dono."
+  technical: "Especificação versionada (muitas vezes em YAML) com schema, tipos, semântica, regras de qualidade, frequência de atualização e responsáveis. Pode ser validada automaticamente no pipeline do produtor, bloqueando mudanças que quebrariam os consumidores."
+  example: "O time de produto quer renomear o campo customer_id no evento de compra; o contrato faz a validação falhar e avisa que dashboards e modelos dependem desse campo."
+  why: "Mudanças silenciosas na origem estão entre as principais causas de dashboards quebrados e modelos degradados; contratos tornam a dependência visível e negociada."
+  related: [data-lineage, api]
+
+- id: product-discovery
+  areas: [product, market-research]
+  tags: [produto, pesquisa com usuarios, prototipos]
+  name: Product Discovery
+  name_pt: Descoberta de produto
+  simple: "O trabalho de descobrir qual problema vale a pena resolver, e qual solução funciona, antes de investir em construí-la por completo."
+  technical: "Práticas contínuas (entrevistas com usuários, análise de dados, protótipos, testes de usabilidade e experimentos) para reduzir quatro riscos: valor (alguém quer?), usabilidade (conseguem usar?), viabilidade técnica (conseguimos construir?) e viabilidade de negócio (faz sentido para a empresa?)."
+  example: "Antes de construir um novo relatório, o time mostra um protótipo simples para cinco usuários e descobre que eles precisavam, na verdade, de um alerta por e-mail."
+  why: "Construir a coisa errada é o desperdício mais caro em produto; discovery troca semanas de desenvolvimento por dias de aprendizado."
+  related: [ab-testing, spec-driven-development]
+
+- id: forecast-backtesting
+  areas: [data-science, analytics]
+  tags: [series temporais, previsao, validacao, metricas]
+  name: Forecast Backtesting
+  name_pt: Backtesting de previsões
+  simple: "Testar um modelo de previsão fingindo estar no passado: treinar com dados até uma data, prever o período seguinte e comparar com o que realmente aconteceu."
+  technical: "Avaliação fora da amostra com origem móvel (rolling origin, ou validação cruzada para séries temporais): o corte é repetido em várias datas, com horizonte fixo, e o erro (MAPE, MAE, RMSE) é agregado por horizonte. Ao contrário da divisão aleatória, respeita a ordem temporal e evita usar informação do futuro."
+  example: "Para avaliar uma previsão de 12 meses, treina-se o modelo com dados até dez/2023, prevê-se 2024 e compara-se com o realizado; depois repete-se com corte em dez/2022."
+  why: "O erro dentro da amostra quase sempre é otimista; o backtesting mostra como o modelo teria se saído de verdade e permite comparar modelos de forma justa."
+  related: [evaluation, data-leakage]
+
+- id: entity-resolution
+  areas: [data-governance, market-research, data-engineering]
+  tags: [dados mestres, deduplicacao, qualidade]
+  name: Entity Resolution
+  name_pt: Resolução de entidades
+  simple: "Descobrir quando registros diferentes se referem à mesma coisa do mundo real, por exemplo 'ACME Ltda.' e 'Acme Comercial Ltda'."
+  technical: "Processo com normalização (limpeza de nomes, endereços e documentos), blocking (gerar pares candidatos de forma barata), comparação (similaridade de texto, regras ou modelos de ML) e agrupamento dos pares em entidades, muitas vezes com revisão humana nos casos ambíguos."
+  example: "Um cadastro de fornecedores tem a mesma empresa registrada cinco vezes com grafias diferentes; resolver as entidades permite somar corretamente o gasto total com ela."
+  why: "Duplicidades distorcem contagens, gastos e participação de mercado; resolver entidades é a base de dados mestres confiáveis e de análises comparáveis."
+  related: [embeddings, semantic-search, data-contract]
+
+- id: data-leakage
+  areas: [data-science]
+  tags: [machine learning, validacao, armadilhas]
+  name: Data Leakage
+  name_pt: Vazamento de dados
+  simple: "Quando o modelo, durante o treino, tem acesso a uma informação que não estaria disponível no momento real da previsão, e por isso parece melhor do que é."
+  technical: "Surge de features derivadas do alvo, normalização ou seleção de features feitas antes de separar treino e teste, registros duplicados entre os conjuntos ou divisão aleatória de dados temporais. Sintoma típico: métrica de validação excelente que desaba em produção."
+  example: "Um modelo de churn usa a coluna 'data de cancelamento' como feature; no teste acerta quase tudo, mas em produção essa informação ainda não existe."
+  why: "É uma das causas mais comuns de modelos que funcionam no notebook e falham no mundo real."
+  related: [evaluation, training, forecast-backtesting]
+
+- id: sampling-bias
+  areas: [market-research, analytics, data-science]
+  tags: [pesquisa, amostragem, estatistica]
+  name: Sampling Bias
+  name_pt: Viés de amostragem
+  simple: "Quando as pessoas ou casos que entram na sua amostra não representam o público sobre o qual você quer tirar conclusões."
+  technical: "Erro sistemático, que não diminui com amostras maiores, causado por cadastro incompleto da população, autosseleção, não resposta ou viés de sobrevivência. É mitigado com desenho amostral (estratificação, cotas), ponderação e transparência sobre quem ficou de fora."
+  example: "Uma pesquisa de satisfação enviada apenas pelo app ignora clientes que usam só o site e pode superestimar a satisfação."
+  why: "Conclusões de pesquisa de mercado, analytics e ML herdam o viés dos dados; uma amostra enorme e enviesada continua errada."
+  related: [ab-testing, evaluation]
+
+- id: ab-testing
+  areas: [product, analytics, data-science]
+  tags: [experimentacao, estatistica, metricas]
+  name: A/B Testing
+  name_pt: Teste A/B
+  simple: "Comparar duas versões de algo, mostrando cada uma a um grupo aleatório de pessoas, para medir qual funciona melhor."
+  technical: "Experimento controlado e randomizado: hipótese, métrica principal e tamanho de amostra (poder estatístico) são definidos antes de começar; a randomização permite atribuir a diferença observada à mudança. Cuidados: não encerrar o teste no primeiro resultado significativo (peeking), checar se a divisão de tráfego saiu como planejado e corrigir para múltiplas comparações."
+  example: "Metade dos usuários vê um novo botão de cadastro; após duas semanas, compara-se a taxa de conversão entre os grupos."
+  why: "Separa causalidade de coincidência: decisões de produto passam a se basear em evidência, não na opinião mais forte da sala."
+  related: [product-discovery, sampling-bias, evaluation]
+
 - id: programmatic-animation
+  areas: [creative-tech]
   name: Programmatic Animation
   name_pt: Animação Programática
   simple: "Criar animações escrevendo código, em vez de desenhá-las quadro a quadro em um editor."

@@ -1,4 +1,4 @@
-from services.search import Filters, LocalSearch, search_concepts
+from services.search import Filters, LocalSearch, search_concepts, search_notes
 
 
 def ids(results):
@@ -19,9 +19,36 @@ def test_accent_insensitive(cat):
     assert a == b and "manim" in a
 
 
-def test_filters_restrict_results(cat):
-    res = LocalSearch(cat).search("", Filters(categories=("creative-coding",)))
-    assert set(ids(res)) == {"motion", "manim", "lottie-web"}
+def test_area_filter_is_multidimensional(cat):
+    res = set(ids(LocalSearch(cat).search("", Filters(areas=("creative-tech",)))))
+    assert res == {"motion", "manim", "lottie-web"}
+    ds = set(ids(LocalSearch(cat).search("", Filters(areas=("data-science",)))))
+    assert "manim" in ds  # o mesmo recurso aparece em mais de um contexto
+
+
+def test_filters_combine(cat):
+    f = Filters(areas=("dev-backend",), languages=("multi",))
+    res = ids(LocalSearch(cat).search("", f))
+    assert res == ["sdd-emersonmendes"]
+    assert LocalSearch(cat).search("", Filters(types=("tool",), difficulties=("beginner",)))
+
+
+def test_tag_filter(cat):
+    res = LocalSearch(cat).search("", Filters(tags=("portugues",)))
+    assert "llms-por-dentro" in ids(res)
+
+
+def test_diverse_default_mixes_areas(cat):
+    first = [r.areas[0] for r, _ in LocalSearch(cat).search("", sort="diverse")[:5]]
+    assert len(set(first)) >= 4
+
+
+def test_notes_search_accent_insensitive(cat):
+    a = [n.id for n in search_notes(cat.notes.values(), "linhagem")]
+    assert "data-lineage" in a
+    b = [n.id for n in search_notes(cat.notes.values(), "idempotencia")]
+    assert b and b[0] == "api-idempotencia"
+    assert [n.id for n in search_notes(cat.notes.values(), "idempotência")] == b
 
 
 def test_nonsense_returns_nothing(cat):

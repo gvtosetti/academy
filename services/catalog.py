@@ -6,13 +6,15 @@ funciona integralmente com estes arquivos locais.
 from __future__ import annotations
 
 import logging
-from collections import Counter
+import math
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Optional
 
 import yaml
 
-from services.models import Category, Concept, QuizQuestion, Resource, Track
+from services.models import Area, Category, Concept, HomeEditorial, Resource, Tip
 
 log = logging.getLogger("academy.catalog")
 
@@ -23,13 +25,81 @@ class CatalogError(ValueError):
     """Erro de consistencia no catalogo."""
 
 
+WORDS_PER_MINUTE = 200
+
+NOTE_KINDS = {
+    "explainer": "Quick Explainer",
+    "dev-tip": "Dev Tip",
+    "tool": "Tool Worth Knowing",
+    "practice": "Good Practice",
+    "in-practice": "Concept in Practice",
+}
+
+
+def reading_minutes(*texts: str) -> int:
+    """Tempo de leitura calculado a partir do texto exibido (200 palavras/min)."""
+    words = sum(len((t or "").split()) for t in texts)
+    return max(1, math.ceil(words / WORDS_PER_MINUTE))
+
+
+@dataclass
+class Note:
+    """Item de Tips & Insights (vem de glossary.yaml ou de tips.yaml)."""
+
+    id: str
+    kind: str
+    title: str
+    summary: str
+    body: str
+    areas: list[str]
+    tags: list[str] = field(default_factory=list)
+    technical: Optional[str] = None
+    level: Optional[str] = None
+    related_resources: list[str] = field(default_factory=list)
+    related_notes: list[str] = field(default_factory=list)
+    minutes: int = 1
+
+    @property
+    def kind_label(self) -> str:
+        return NOTE_KINDS[self.kind]
+
+
+def _note_from_concept(c: Concept, resources: dict[str, Resource]) -> Note:
+    body = f"**Exemplo.** {c.example}\n\n**Por que importa.** {c.why}"
+    # Evita parenteses duplos, ex.: "Machine Learning (ML)" nao vira "Machine Learning (ML) (Aprendizado...)"
+    title = c.name if not c.name_pt or c.name_pt == c.name or "(" in c.name else f"{c.name} ({c.name_pt})"
+    rel = [r.id for r in sorted(resources.values(), key=lambda r: (r.sequence, r.title)) if c.id in r.key_concepts]
+    return Note(
+        id=c.id, kind="explainer", title=title, summary=c.simple, body=body, areas=list(c.areas),
+        tags=list(c.tags), technical=c.technical, related_resources=rel, related_notes=list(c.related),
+        minutes=reading_minutes(c.simple, body),
+    )
+
+
+def _note_from_tip(t: Tip) -> Note:
+    return Note(
+        id=t.id, kind=t.kind, title=t.title, summary=t.summary, body=t.body, areas=list(t.areas),
+        tags=list(t.tags), level=t.level, related_resources=list(t.related_resources),
+        related_notes=list(t.related_concepts), minutes=reading_minutes(t.summary, t.body),
+    )
+
+
 @dataclass
 class Catalog:
     resources: dict[str, Resource]
     concepts: dict[str, Concept]
-    tracks: dict[str, Track]
     categories: dict[str, Category]
-    quizzes: list[QuizQuestion] = field(default_factory=list)
+    areas: dict[str, Area] = field(default_factory=dict)
+    tips: dict[str, Tip] = field(default_factory=dict)
+    home: HomeEditorial = field(default_factory=HomeEditorial)
+    notes: dict[str, Note] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.notes:
+            self.notes = {c.id: _note_from_concept(c, self.resources) for c in self.concepts.values()}
+            for t in self.tips.values():
+                if t.id not in self.notes:  # colisao e reportada em validate_references
+                    self.notes[t.id] = _note_from_tip(t)
 
     # ---- consultas auxiliares -------------------------------------------
     def children_of(self, resource_id: str) -> list[Resource]:
@@ -48,30 +118,51 @@ class Catalog:
             key=lambda r: (r.sequence, r.title),
         )
 
-    def tracks_for_resource(self, resource_id: str) -> list[Track]:
-        return [
-            t for t in self.tracks.values()
-            if any(resource_id in m.resources for m in t.modules)
-        ]
+    def resources_in_area(self, area_id: str) -> list[Resource]:
+        return [r for r in self.resources.values() if area_id in r.areas]
 
-    def quizzes_for_concept(self, concept_id: str) -> list[QuizQuestion]:
-        return [q for q in self.quizzes if q.concept == concept_id]
+    def notes_in_area(self, area_id: str) -> list[Note]:
+        return [n for n in self.notes.values() if area_id in n.areas]
 
-    def featured(self, section: str) -> list[Resource]:
-        return sorted(
-            (r for r in self.resources.values() if section in r.featured),
-            key=lambda r: (r.sequence, r.title),
-        )
+    def area_counts(self) -> dict[str, int]:
+        """Quantidade de itens (recursos + notas) por area."""
+        c: Counter = Counter()
+        for r in self.resources.values():
+            c.update(set(r.areas))
+        for n in self.notes.values():
+            c.update(set(n.areas))
+        return {a: c.get(a, 0) for a in self.areas}
+
+    def tag_counts(self) -> list[tuple[str, int]]:
+        c = Counter(t for r in self.resources.values() for t in set(r.tags))
+        return sorted(c.items(), key=lambda x: (-x[1], x[0]))
 
     def recent(self, n: int = 6) -> list[Resource]:
         return sorted(self.resources.values(), key=lambda r: (r.added_on, -r.sequence), reverse=True)[:n]
 
 
-def _read_yaml(path: Path) -> list[dict]:
+def diverse(resources: list[Resource]) -> list[Resource]:
+    """Ordena intercalando areas principais, para a vitrine padrao nao ficar monotematica.
+
+    Itens de topo (sem parent) vem antes dos filhos dentro de cada area.
+    """
+    buckets: dict[str, list[Resource]] = defaultdict(list)
+    for r in sorted(resources, key=lambda r: (r.parent is not None, r.sequence, r.title)):
+        buckets[r.areas[0]].append(r)
+    order = sorted(buckets, key=lambda a: -len(buckets[a]))
+    out: list[Resource] = []
+    while any(buckets.values()):
+        for a in order:
+            if buckets[a]:
+                out.append(buckets[a].pop(0))
+    return out
+
+
+def _read_yaml(path: Path, kind: type = list):
     with path.open(encoding="utf-8") as fh:
-        data = yaml.safe_load(fh) or []
-    if not isinstance(data, list):
-        raise CatalogError(f"{path.name}: esperado uma lista no topo do arquivo")
+        data = yaml.safe_load(fh) or kind()
+    if not isinstance(data, kind):
+        raise CatalogError(f"{path.name}: esperado {'uma lista' if kind is list else 'um mapa'} no topo do arquivo")
     return data
 
 
@@ -86,7 +177,11 @@ def _index(items, kind: str) -> dict:
 def validate_references(cat: Catalog) -> list[str]:
     """Retorna a lista de problemas de integridade (vazia = catalogo consistente)."""
     errs: list[str] = []
-    R, C, T, K = cat.resources, cat.concepts, cat.tracks, cat.categories
+    R, C, K, A, N = cat.resources, cat.concepts, cat.categories, cat.areas, cat.notes
+
+    for tid in cat.tips:
+        if tid in C:
+            errs.append(f"tip '{tid}' usa o mesmo id de um conceito do glossario")
 
     urls = Counter(r.url.rstrip("/").lower() for r in R.values())
     for u, n in urls.items():
@@ -108,43 +203,40 @@ def validate_references(cat: Catalog) -> list[str]:
         for x in r.key_concepts:
             if x not in C:
                 errs.append(f"{r.id}: conceito inexistente '{x}'")
-        for x in r.learning_paths:
-            if x not in T:
-                errs.append(f"{r.id}: trilha inexistente '{x}'")
-            elif not any(r.id in m.resources for m in T[x].modules):
-                errs.append(f"{r.id}: declara trilha '{x}', mas nenhum modulo dela o referencia")
+        for x in r.areas:
+            if x not in A:
+                errs.append(f"{r.id}: area inexistente '{x}'")
+        if len(r.blurb) > 260:
+            errs.append(f"{r.id}: blurb longo demais para card ({len(r.blurb)} > 260)")
         if r.type == "github" and not r.github_repo:
             errs.append(f"{r.id}: tipo github sem github_repo")
         if r.metadata_status != "verified" and not r.metadata_notes:
             errs.append(f"{r.id}: status '{r.metadata_status}' exige metadata_notes")
 
-    for c in C.values():
-        for x in c.related:
-            if x not in C:
-                errs.append(f"conceito {c.id}: related inexistente '{x}'")
+    for n in N.values():
+        for x in n.areas:
+            if x not in A:
+                errs.append(f"nota {n.id}: area inexistente '{x}'")
+        for x in n.related_resources:
+            if x not in R:
+                errs.append(f"nota {n.id}: recurso inexistente '{x}'")
+        for x in n.related_notes:
+            if x not in N:
+                errs.append(f"nota {n.id}: nota relacionada inexistente '{x}'")
 
-    for t in T.values():
-        mids = Counter(m.id for m in t.modules)
-        errs += [f"trilha {t.id}: modulo duplicado '{k}'" for k, n in mids.items() if n > 1]
-        for m in t.modules:
-            for x in m.resources:
-                if x not in R:
-                    errs.append(f"trilha {t.id}/{m.id}: recurso inexistente '{x}'")
-                elif t.id not in R[x].learning_paths:
-                    errs.append(f"trilha {t.id}/{m.id}: recurso '{x}' nao lista a trilha em learning_paths")
-            for x in m.concepts:
-                if x not in C:
-                    errs.append(f"trilha {t.id}/{m.id}: conceito inexistente '{x}'")
-            if not m.resources and not m.recommended_topics:
-                errs.append(f"trilha {t.id}/{m.id}: modulo sem recursos nem topicos recomendados")
+    # nenhuma area vazia (evita categorias sem conteudo)
+    for a, cnt in cat.area_counts().items():
+        if cnt < 2:
+            errs.append(f"area '{a}' tem {cnt} item(ns); minimo 2")
 
-    qids = Counter(q.id for q in cat.quizzes)
-    errs += [f"quiz duplicado '{k}'" for k, n in qids.items() if n > 1]
-    for q in cat.quizzes:
-        if q.concept not in C:
-            errs.append(f"quiz {q.id}: conceito inexistente '{q.concept}'")
-        if not 0 <= q.answer < len(q.options):
-            errs.append(f"quiz {q.id}: indice de resposta fora do intervalo")
+    h = cat.home
+    for sec, ids in (("explore", h.explore), ("tools", h.tools), ("worth_checking_out", [w.id for w in h.worth_checking_out])):
+        for x in ids:
+            if x not in R:
+                errs.append(f"home.{sec}: recurso inexistente '{x}'")
+    for x in h.quick_knowledge:
+        if x not in N:
+            errs.append(f"home.quick_knowledge: nota inexistente '{x}'")
     return errs
 
 
@@ -153,9 +245,10 @@ def load_catalog(data_dir: Path | str = DATA_DIR, strict: bool = True) -> Catalo
     cat = Catalog(
         resources=_index([Resource(**x) for x in _read_yaml(d / "resources.yaml")], "resources"),
         concepts=_index([Concept(**x) for x in _read_yaml(d / "glossary.yaml")], "glossary"),
-        tracks=_index([Track(**x) for x in _read_yaml(d / "tracks.yaml")], "tracks"),
         categories=_index([Category(**x) for x in _read_yaml(d / "categories.yaml")], "categories"),
-        quizzes=[QuizQuestion(**x) for x in _read_yaml(d / "quizzes.yaml")],
+        areas=_index([Area(**x) for x in _read_yaml(d / "areas.yaml")], "areas"),
+        tips=_index([Tip(**x) for x in _read_yaml(d / "tips.yaml")], "tips"),
+        home=HomeEditorial(**_read_yaml(d / "home.yaml", dict)),
     )
     errs = validate_references(cat)
     if errs:

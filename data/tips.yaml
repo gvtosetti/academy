@@ -1,0 +1,390 @@
+# Tips & Insights — notas curtas, independentes e praticas (texto autoral da curadoria).
+# Quick Explainers vem do glossary.yaml; aqui ficam os demais tipos:
+#   dev-tip | tool | practice | in-practice
+# O tempo de leitura e CALCULADO a partir do texto (200 palavras/min); nao informe manualmente.
+
+# ======================= Dev Tips =======================
+- id: commits-pequenos
+  kind: dev-tip
+  title: Commits pequenos, mensagens que explicam o porquê
+  summary: Um commit por mudança lógica torna revisão, histórico e reversão muito mais simples.
+  areas: [dev-backend, data-engineering]
+  tags: [git, versionamento, colaboracao]
+  level: beginner
+  related_concepts: [git, ci-cd]
+  body: |
+    Um commit deve conter **uma mudança lógica**: corrigir um bug, renomear uma função, adicionar um teste. Misturar tudo num commit enorme dificulta a revisão e impede reverter só a parte problemática.
+
+    Na mensagem, a primeira linha resume *o que* mudou, curta e no imperativo ("Corrige cálculo de desconto"). O corpo explica **por que** a mudança foi necessária; o diff já mostra o *como*.
+
+    **Na prática**
+    - Use `git add -p` para escolher trechos e separar mudanças misturadas.
+    - Antes do push, revise com `git log --oneline` e `git diff --staged`.
+    - Se a mensagem precisa de "e" para descrever o commit, provavelmente são dois commits.
+
+- id: reproduzir-antes-de-corrigir
+  kind: dev-tip
+  title: "Debugging: reproduza antes de corrigir"
+  summary: Um bug que você consegue reproduzir sempre está meio resolvido. Um palpite corrigido às cegas, não.
+  areas: [dev-backend, data-science]
+  tags: [debugging, testes]
+  level: beginner
+  related_concepts: [git]
+  body: |
+    A tentação é mudar o código assim que surge um palpite. Resista: **primeiro reproduza o problema de forma confiável**, de preferência com o menor exemplo possível.
+
+    1. Escreva os passos (ou um teste) que fazem o erro aparecer sempre.
+    2. Reduza: remova dados, parâmetros e código até sobrar o mínimo que ainda falha.
+    3. Formule uma hipótese e teste uma coisa de cada vez.
+    4. Depois de corrigir, mantenha o teste: ele impede que o bug volte.
+
+    Se o bug só aparece às vezes, registre entradas, versões e horários; intermitência quase sempre tem uma causa concreta (concorrência, cache, dados específicos, ambiente). Para bugs que surgiram entre duas versões, `git bisect` encontra o commit responsável por busca binária.
+
+- id: testar-comportamento
+  kind: dev-tip
+  title: Teste o comportamento, não a implementação
+  summary: Testes presos a detalhes internos quebram a cada refatoração e deixam de inspirar confiança.
+  areas: [dev-backend, data-engineering]
+  tags: [testes, qualidade, refatoracao]
+  level: intermediate
+  related_concepts: [ci-cd]
+  body: |
+    Bons testes descrevem **o que** o código deve fazer, não **como** ele faz por dentro. Um teste que verifica chamadas internas quebra a cada refatoração, mesmo quando o comportamento continua correto.
+
+    **Prefira**
+    - Entradas e saídas observáveis: "dado este pedido, o total é 90".
+    - Casos de borda explícitos: lista vazia, valores nulos, datas na virada do mês.
+    - Um motivo para falhar por teste, com um nome que diz o que se espera.
+
+    **Evite** mocks de tudo, verificações da ordem de chamadas internas e testes que apenas repetem a implementação.
+
+    Em pipelines de dados, o equivalente é testar a tabela resultante (contagens, unicidade de chaves, nulos) a partir de um pequeno conjunto de entrada conhecido.
+
+- id: api-idempotencia
+  kind: dev-tip
+  title: "APIs: retries seguros exigem idempotência"
+  summary: Repetir uma chamada que falhou pode criar o mesmo pedido duas vezes, a menos que a operação seja idempotente.
+  areas: [dev-backend, data-engineering]
+  tags: [api, http, confiabilidade, integracao]
+  level: intermediate
+  related_concepts: [api]
+  body: |
+    Redes falham, e toda integração séria faz *retry*. O perigo: se a primeira chamada chegou ao servidor mas a resposta se perdeu, repetir pode **executar a operação duas vezes**.
+
+    Uma operação é **idempotente** quando repeti-la produz o mesmo efeito que executá-la uma vez. Em HTTP, `GET`, `PUT` e `DELETE` são idempotentes por definição; `POST` normalmente não é.
+
+    **Como se proteger**
+    - Envie uma *idempotency key* (identificador único por operação) e faça o servidor ignorar repetições com a mesma chave.
+    - Prefira operações do tipo "definir valor" (upsert) a "incrementar".
+    - Use backoff exponencial com limite de tentativas e só repita erros transitórios (timeouts, 429, 5xx), nunca 400 ou 401.
+
+    O mesmo vale para jobs de dados: reprocessar um dia deve substituir os dados daquele dia, não duplicá-los.
+
+- id: prs-pequenos
+  kind: dev-tip
+  title: "Code review: PRs pequenos e com contexto"
+  summary: Revisões funcionam melhor quando o PR cabe na cabeça de quem revisa e explica o porquê.
+  areas: [dev-backend, product]
+  tags: [code review, colaboracao, git]
+  level: beginner
+  related_concepts: [git]
+  body: |
+    Acima de algumas centenas de linhas, a revisão tende a virar uma leitura superficial, e o "aprovado" passa a significar "não tive tempo".
+
+    **Para quem abre o PR**
+    - Uma mudança por PR; refatorações separadas de mudanças de comportamento.
+    - Descrição com o **porquê**, como testar e o que merece atenção.
+    - Revise o próprio diff antes de pedir revisão.
+
+    **Para quem revisa**
+    - Comece pelo desenho geral (a abordagem faz sentido?) antes dos detalhes.
+    - Separe o que é bloqueante do que é sugestão.
+    - Pergunte em vez de afirmar quando não tiver certeza: "o que acontece se a lista vier vazia?"
+
+    Revisão também é transferência de conhecimento: mais pessoas passam a entender cada parte do sistema.
+
+# ======================= Tools Worth Knowing =======================
+- id: pytest
+  kind: tool
+  title: pytest
+  summary: O framework de testes mais usado em Python, com testes que são funções simples e asserts nativos.
+  areas: [dev-backend, data-science]
+  tags: [python, testes]
+  level: beginner
+  body: |
+    No pytest, testes são funções comuns cujo nome começa com `test_`, e as verificações usam o `assert` do Python. Quando algo falha, o pytest mostra os valores envolvidos.
+
+    **Vale conhecer**
+    - **Fixtures**: preparam dados ou recursos reutilizáveis, injetados pelo nome do parâmetro.
+    - **`@pytest.mark.parametrize`**: roda o mesmo teste com várias entradas.
+    - **`-k` e `-x`**: filtram testes por nome e param no primeiro erro.
+    - **`tmp_path`**: diretório temporário para testar código que lê e grava arquivos.
+
+    Também é útil em Data Science: teste funções de limpeza e de feature engineering com pequenos DataFrames de resultado conhecido.
+
+- id: pre-commit
+  kind: tool
+  title: pre-commit
+  summary: Roda verificações automáticas antes de cada commit, com a mesma configuração para todo o time.
+  areas: [dev-backend, data-engineering]
+  tags: [git, automacao, qualidade]
+  level: beginner
+  related_concepts: [git, ci-cd]
+  body: |
+    O pre-commit executa *hooks* antes de cada commit: formatação, lint, detecção de chaves privadas, arquivos grandes, YAML inválido. A configuração fica no arquivo `.pre-commit-config.yaml`, versionado com o código, então todo o time usa as mesmas regras.
+
+    **Por que vale a pena**
+    - Problemas triviais são corrigidos na máquina de quem escreveu, não na revisão.
+    - Ajuda a evitar que credenciais cheguem ao repositório.
+    - Os mesmos hooks podem rodar no CI com `pre-commit run --all-files`.
+
+    Comece pequeno: um formatador, um linter e uma verificação de segredos já cobrem boa parte dos ganhos.
+
+- id: duckdb
+  kind: tool
+  title: DuckDB
+  summary: Banco analítico que roda dentro do seu processo e consulta CSV, Parquet e DataFrames com SQL, sem servidor.
+  areas: [data-science, analytics, data-engineering]
+  tags: [sql, parquet, analise local]
+  level: beginner
+  body: |
+    O DuckDB é um banco de dados analítico **embutido**: como o SQLite, não há servidor para instalar, mas ele é otimizado para análise. Você executa SQL direto sobre arquivos CSV, Parquet ou JSON, ou sobre DataFrames do pandas.
+
+    **Quando ajuda**
+    - Explorar um Parquet grande no notebook sem subir um cluster.
+    - Fazer joins e agregações que ficariam lentos ou verbosos em pandas.
+    - Prototipar transformações em SQL antes de levá-las para o data warehouse.
+
+    **Limite:** foi pensado para uma máquina. Para volumes que exigem processamento distribuído, ou para muitos usuários simultâneos, um warehouse ou uma engine distribuída continua sendo a escolha certa.
+
+- id: manim-explicacoes
+  kind: tool
+  title: Manim para explicações visuais
+  summary: Descreva uma animação em Python e obtenha um vídeo que explica um algoritmo ou conceito estatístico.
+  areas: [creative-tech, data-science]
+  tags: [python, animacao, visualizacao, comunicacao]
+  level: intermediate
+  related_resources: [manim]
+  related_concepts: [programmatic-animation]
+  body: |
+    Com o Manim você descreve em Python formas, equações, gráficos e transformações, e a biblioteca renderiza um vídeo. É o estilo de animação popularizado pelo canal 3Blue1Brown.
+
+    **Bons usos no trabalho**
+    - Mostrar um algoritmo passo a passo (ordenar, buscar, treinar um modelo).
+    - Explicar uma distribuição ou um intervalo de confiança de forma visual.
+    - Criar trechos curtos para apresentações técnicas e onboarding.
+
+    Como é código, a animação pode ser versionada, revisada e ajustada como qualquer outro arquivo.
+
+# ======================= Good Practices =======================
+- id: baseline-primeiro
+  kind: practice
+  title: Comece por um baseline simples
+  summary: Antes do modelo sofisticado, meça uma solução trivial. Ela vira a régua de tudo que vem depois.
+  areas: [data-science, analytics]
+  tags: [modelagem, avaliacao, series temporais]
+  level: beginner
+  related_concepts: [evaluation, forecast-backtesting]
+  body: |
+    Antes de treinar algo complexo, meça o desempenho de uma solução trivial: prever a média, repetir o último valor, escolher a classe mais frequente, uma regressão linear.
+
+    **Por quê**
+    - Dá uma régua: um modelo complexo que ganha do baseline por muito pouco talvez não compense o custo de manutenção.
+    - Detecta problemas: se o modelo perde para o baseline, há algo errado com dados, features ou validação.
+    - Às vezes o baseline já resolve o problema de negócio.
+
+    Em séries temporais, baselines ingênuos (repetir o último valor, ou o do mesmo mês do ano anterior) costumam ser surpreendentemente difíceis de bater em horizontes curtos.
+
+- id: split-temporal
+  kind: practice
+  title: Em séries temporais, separe treino e teste pelo tempo
+  summary: Divisão aleatória coloca o futuro no treino e deixa a métrica otimista demais.
+  areas: [data-science]
+  tags: [series temporais, validacao, previsao]
+  level: intermediate
+  related_concepts: [data-leakage, forecast-backtesting]
+  body: |
+    Dividir dados temporais aleatoriamente coloca pontos do futuro no treino e do passado no teste. O modelo aprende com informação que não teria no momento da previsão.
+
+    **Regra:** treine com tudo até uma data de corte e avalie no período seguinte. Melhor ainda, repita o corte em várias datas (backtesting) para ver se o desempenho é estável.
+
+    **Cuidados extras**
+    - Features como médias móveis devem usar apenas dados anteriores ao ponto previsto.
+    - Normalizações e imputações devem ser ajustadas somente no treino.
+    - Se os dados são revisados depois de publicados, use a versão que estaria disponível na data de corte.
+
+- id: metricas-com-dono
+  kind: practice
+  title: Toda métrica precisa de definição e dono
+  summary: Quando dois dashboards mostram números diferentes, o problema quase sempre é definição, não cálculo.
+  areas: [data-governance, analytics, product]
+  tags: [metricas, governanca, glossario]
+  level: beginner
+  related_concepts: [data-lineage, data-contract]
+  body: |
+    "Receita", "cliente ativo" e "churn" parecem óbvios até dois relatórios discordarem.
+
+    **Para cada métrica importante, registre**
+    - A definição em linguagem de negócio e a fórmula exata.
+    - Filtros e exclusões (devoluções? contas de teste?).
+    - A fonte oficial dos dados e a frequência de atualização.
+    - Um **dono**: a pessoa ou área que decide quando a definição muda.
+
+    Guarde isso onde todos encontram (catálogo de dados, glossário, camada semântica), e não em slides. Quando a definição mudar, registre a data: comparações históricas dependem disso.
+
+- id: problema-antes-da-solucao
+  kind: practice
+  title: Escreva o problema antes da solução
+  summary: Poucas linhas sobre quem sofre, quanto custa e como medir a melhora alinham o time e evitam retrabalho.
+  areas: [product, dev-backend]
+  tags: [produto, especificacao, alinhamento]
+  level: beginner
+  related_concepts: [product-discovery, spec-driven-development]
+  body: |
+    Pedidos costumam chegar como soluções: "precisamos de um dashboard", "vamos usar um agente de IA". Antes de construir, escreva:
+
+    - **Quem** tem o problema e em que situação.
+    - **O que** acontece hoje e quanto isso custa (tempo, dinheiro, erros).
+    - **Como saberemos** que melhorou: um sinal observável.
+    - **O que está fora** do escopo.
+
+    Esse texto curto alinha produto, design, dados e engenharia, e muitas vezes revela uma solução mais simples do que a pedida. Também é o melhor ponto de partida para trabalhar com assistentes de código: um agente com um problema bem descrito erra muito menos.
+
+- id: fonte-e-data-de-cada-numero
+  kind: practice
+  title: "Pesquisa de mercado: registre fonte e data de cada número"
+  summary: Números sem fonte não podem ser verificados nem atualizados, e fontes diferentes raramente medem a mesma coisa.
+  areas: [market-research, analytics]
+  tags: [pesquisa, fontes, rastreabilidade]
+  level: beginner
+  related_concepts: [sampling-bias, entity-resolution]
+  body: |
+    **Hábitos que evitam erros**
+    - Anote fonte, data de publicação, data de coleta e a definição usada (mercado em receita ou em volume? com ou sem impostos?).
+    - **Triangule**: busque ao menos duas fontes independentes para números que sustentam decisões; se divergirem, entenda o porquê antes de escolher.
+    - Diferencie dado observado, estimativa e projeção, e deixe claro qual é qual no relatório.
+    - Ao comparar empresas ou fornecedores, padronize nomes e unidades antes de somar.
+
+    Transparência sobre a incerteza aumenta, e não diminui, a confiança no seu trabalho.
+
+- id: metrica-antes-do-experimento
+  kind: practice
+  title: Defina a métrica de sucesso antes do experimento
+  summary: Escolher a métrica depois de ver os dados quase garante encontrar uma "melhora" que é só acaso.
+  areas: [product, analytics, data-science]
+  tags: [experimentacao, metricas, estatistica]
+  level: intermediate
+  related_concepts: [ab-testing]
+  body: |
+    Com várias métricas, alguma vai variar por acaso. Por isso, **antes de começar**, documente:
+
+    - A métrica principal e a direção esperada.
+    - Métricas de proteção (*guardrails*) que não podem piorar: tempo de carregamento, cancelamentos, reclamações.
+    - O tamanho de efeito que importa para o negócio e a duração do teste.
+
+    Depois, analise o que foi combinado. Descobertas inesperadas são bem-vindas, mas viram hipóteses para o próximo teste, não conclusões deste.
+
+# ======================= Concepts in Practice =======================
+- id: rag-politicas-internas
+  kind: in-practice
+  title: "RAG na prática: um assistente de políticas internas"
+  summary: Como responder perguntas sobre dezenas de PDFs de políticas sem que o modelo invente regras.
+  areas: [ai-llms, dev-backend, data-governance]
+  tags: [rag, llm, documentos, permissoes]
+  level: intermediate
+  related_resources: [production-agentic-rag-course]
+  related_concepts: [rag, grounding, hallucination, evaluation]
+  body: |
+    **Cenário:** pessoas perguntam todos os dias sobre viagens, reembolsos e férias. As respostas estão espalhadas em dezenas de PDFs.
+
+    **Como o RAG resolve**
+    1. Os documentos são divididos em trechos e indexados (por palavras-chave e/ou embeddings).
+    2. Para cada pergunta, o sistema recupera os trechos mais relevantes.
+    3. O LLM responde **usando esses trechos** e cita de onde tirou cada informação.
+
+    **O que faz diferença**
+    - Atualizar o índice quando a política muda e remover versões antigas.
+    - Respeitar permissões: quem não pode ler um documento não deve recebê-lo como contexto.
+    - Avaliar com perguntas reais e respostas esperadas antes de liberar.
+    - Permitir que o assistente diga "não encontrei" em vez de inventar.
+
+- id: backtesting-previsao-precos
+  kind: in-practice
+  title: "Backtesting na prática: escolhendo um modelo de previsão de preços"
+  summary: Como comparar modelos de forma justa e chegar a uma expectativa realista de erro.
+  areas: [data-science, analytics]
+  tags: [previsao, series temporais, avaliacao]
+  level: intermediate
+  related_concepts: [forecast-backtesting, data-leakage, evaluation]
+  body: |
+    **Cenário:** um time precisa prever 12 meses de um índice de preços e tem três candidatos: repetir o último valor, suavização exponencial e ARIMA.
+
+    **Como comparar de forma justa**
+    1. Escolha várias datas de corte no passado (por exemplo, o fim de cada um dos últimos quatro anos).
+    2. Em cada corte, treine os três modelos só com dados até ali e preveja os 12 meses seguintes.
+    3. Compare com o realizado e calcule o erro por horizonte (mês 1, mês 6, mês 12).
+
+    **O que se costuma descobrir**
+    - O modelo que vence no mês 1 nem sempre vence no mês 12.
+    - O erro varia bastante entre cortes; a média pode esconder anos ruins.
+    - O baseline ingênuo pode ser difícil de bater, e isso é informação valiosa.
+
+    O resultado é uma escolha defensável e uma expectativa realista de erro para comunicar a quem usa a previsão.
+
+- id: unificando-fornecedores
+  kind: in-practice
+  title: "Entity resolution na prática: unificando um cadastro de fornecedores"
+  summary: O mesmo fornecedor com cinco grafias distorce o gasto total. Um caminho em cinco passos para resolver.
+  areas: [data-governance, market-research, data-engineering]
+  tags: [dados mestres, deduplicacao, compras]
+  level: intermediate
+  related_concepts: [entity-resolution, data-contract]
+  body: |
+    **Cenário:** compras quer saber quanto gasta com cada fornecedor, mas o mesmo fornecedor aparece com nomes, CNPJs de filiais e endereços diferentes em sistemas distintos.
+
+    1. **Normalizar:** caixa, acentos, pontuação e sufixos como "Ltda" e "S.A."; padronizar documentos.
+    2. **Blocking:** comparar só pares plausíveis (mesma raiz de CNPJ, mesma cidade, início do nome), em vez de todos contra todos.
+    3. **Comparar:** regras (mesmo documento, mesma entidade) e similaridade de texto para os demais casos.
+    4. **Revisar:** pares com pontuação intermediária vão para revisão humana; as decisões viram regras ou dados de treino.
+    5. **Manter:** novos cadastros passam pelo mesmo processo, e cada entidade unificada recebe um identificador estável.
+
+    O ganho aparece em todo lugar: gasto consolidado correto, negociação com visão real do fornecedor e análises de mercado comparáveis.
+
+- id: contrato-de-eventos
+  kind: in-practice
+  title: "Data contract na prática: eventos de produto que não quebram dashboards"
+  summary: Uma mudança inocente no app zerou um gráfico por uma semana. Com um contrato, a quebra aparece antes do deploy.
+  areas: [data-engineering, data-governance, product]
+  tags: [eventos, schema, governanca]
+  level: intermediate
+  related_concepts: [data-contract, data-lineage, ci-cd]
+  body: |
+    **Cenário:** o app emite eventos de uso que alimentam dashboards de produto e um modelo de churn. Renomear um campo no app zera um gráfico importante, e ninguém percebe por uma semana.
+
+    **Com um contrato**
+    1. Produto e dados combinam o schema do evento: campos, tipos, significado e obrigatoriedade.
+    2. O contrato fica versionado no repositório do app.
+    3. O CI do app valida exemplos de eventos contra o contrato; mudanças incompatíveis falham o build.
+    4. Mudanças necessárias viram uma nova versão, com prazo para os consumidores migrarem.
+
+    **Resultado:** a quebra é detectada antes do deploy, por quem a causaria, e a conversa sobre a mudança acontece antes do incidente.
+
+- id: alinhar-antes-de-codar
+  kind: in-practice
+  title: "Alinhamento na prática: deixe o assistente de IA entrevistar você"
+  summary: Antes de pedir código, peça perguntas. Poucos minutos de conversa evitam refazer a implementação.
+  areas: [dev-backend, product, ai-llms]
+  tags: [agentes de codigo, especificacao, produtividade]
+  level: beginner
+  related_resources: [grill-me, sdd-emersonmendes]
+  related_concepts: [agent-skills, spec-driven-development]
+  body: |
+    **Cenário:** você pede a um assistente de código "adicione exportação para CSV". Ele entrega algo que funciona, mas exporta as colunas erradas, ignora os filtros e quebra com acentos.
+
+    **Alternativa:** antes do código, peça ao assistente que **entreviste você** sobre o plano, que é o que skills como grill-me fazem:
+    - Quem usa a exportação e para quê?
+    - Quais colunas, em que ordem e com que formato de data?
+    - Os filtros da tela se aplicam?
+    - Qual codificação de caracteres e qual separador?
+
+    As respostas viram uma especificação curta, que pode ficar no repositório e gerar tarefas e testes. A conversa extra costuma custar menos que refazer a implementação.

@@ -1,0 +1,41 @@
+# Areas (disciplinas) da Academy. Recursos e notas podem ter VARIAS areas.
+# A ordem aqui define a ordem dos chips. chip: false = aparece so nos filtros da Library.
+# O validador exige pelo menos 2 itens por area (evita categorias vazias).
+- id: data-science
+  name: Data Science
+  icon: ":material/query_stats:"
+  description: Modelagem, estatística, machine learning, previsão e avaliação.
+- id: dev-backend
+  name: Dev & Backend
+  icon: ":material/code:"
+  description: Engenharia de software, APIs, testes, Git e desenvolvimento assistido por IA.
+- id: product
+  name: Produto
+  icon: ":material/lightbulb:"
+  description: Discovery, definição de problemas, experimentação e produtos com IA.
+- id: data-governance
+  name: Data Governance
+  icon: ":material/verified_user:"
+  description: Linhagem, contratos, definições de métricas e qualidade de dados.
+- id: market-research
+  name: Market Research
+  icon: ":material/travel_explore:"
+  description: Pesquisa, amostragem, fontes e inteligência de mercado.
+- id: ai-llms
+  name: AI & LLMs
+  icon: ":material/neurology:"
+  description: Como LLMs funcionam, RAG, agentes, avaliação e operação em produção.
+- id: creative-tech
+  name: Creative Tech
+  icon: ":material/palette:"
+  description: Animação, visualização e interfaces que explicam melhor.
+- id: data-engineering
+  name: Data Engineering
+  icon: ":material/database:"
+  description: Pipelines, ingestão, armazenamento e automação de dados.
+  chip: false
+- id: analytics
+  name: Analytics
+  icon: ":material/monitoring:"
+  description: Métricas, experimentos e análise para decisão.
+  chip: false

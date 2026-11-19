@@ -1,5 +1,6 @@
-"""Academy — plataforma de aprendizado em IA (Streamlit).
+"""Academy — Knowledge & Discovery Hub (Streamlit).
 
+Descobrir -> entender em 30 segundos -> acessar o conteudo original.
 Execute com:  streamlit run app.py
 """
 from __future__ import annotations
@@ -13,21 +14,19 @@ if str(ROOT) not in sys.path:
 
 import streamlit as st  # noqa: E402
 
-st.set_page_config(page_title="Academy", page_icon=":material/school:", layout="wide")
-
-from components import nav  # noqa: E402
-from components.styles import inject_css  # noqa: E402
-from services.catalog import CatalogError, load_catalog  # noqa: E402
-from services.progress import get_repository  # noqa: E402
-from views import (  # noqa: E402
-    about, explore, github_explorer, home, knowledge, my_learning, paths, resource_detail, videos,
+st.set_page_config(
+    page_title="Academy · Knowledge & Discovery Hub",
+    page_icon=":material/auto_awesome:",
+    layout="wide",
+    initial_sidebar_state="collapsed",
 )
 
-VIEWS = {
-    "home": home, "paths": paths, "explore": explore, "resource": resource_detail,
-    "github": github_explorer, "videos": videos, "knowledge": knowledge,
-    "my_learning": my_learning, "about": about,
-}
+from components import layout  # noqa: E402
+from components.styles import inject_css  # noqa: E402
+from services.catalog import CatalogError, load_catalog  # noqa: E402
+from views import discover, library, note, resource, tips  # noqa: E402
+
+VIEWS = {"discover": discover, "library": library, "tips": tips, "resource": resource, "note": note}
 
 
 @st.cache_resource(show_spinner=False)
@@ -43,9 +42,10 @@ def main() -> None:
         st.error("Não foi possível carregar o catálogo. Verifique os arquivos em data/.")
         st.code(str(exc)[:2000])
         st.stop()
-    repo = get_repository()
-    nav.sidebar()
-    VIEWS[nav.current_page()].render(cat, repo)
+    page = layout.current_page()
+    layout.header(page)
+    VIEWS[page].render(cat)
+    layout.footer()
 
 
 main()
