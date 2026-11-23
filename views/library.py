@@ -14,6 +14,9 @@ from services.catalog import Catalog
 from services.search import Filters, LocalSearch, search_notes, search_playbooks
 
 MAX_TAGS = 40
+MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+RELEASE_LABEL = {"ga": "GA", "public_preview": "Public Preview", "private_preview": "Private Preview",
+                 "beta": "Beta", "retired": "Retired", "deprecated": "Deprecated", "other": "Outro"}
 
 
 @st.cache_resource(show_spinner=False)
@@ -29,6 +32,7 @@ def render(cat: Catalog) -> None:
     q0 = param("q") or ""
     area0 = param("area") if param("area") in cat.areas else None
     section0 = param("section")
+    sub0 = param("subcategory") if param("subcategory") in cat.taxonomy.subcategory_ids else None
     col0 = param("collection") if param("collection") in cat.collections else None
     res_cols = [c for c in cat.collections.values() if any(i.id in cat.resources for i in c.items)]
 
@@ -36,7 +40,7 @@ def render(cat: Catalog) -> None:
     st.caption("Ferramentas, repositórios, referências e cursos em um só catálogo.")
 
     # Hint de busca por problema
-    if not q0 and not section0:
+    if not q0 and not section0 and not sub0:
         st.info("Dica: busque pelo que precisa fazer, como \"automatizar relatório\" ou \"validar dados de entrada\".",
                 icon=":material/tips_and_updates:")
 
@@ -51,13 +55,14 @@ def render(cat: Catalog) -> None:
     if q != q0:
         st.query_params["q"] = q  # URL compartilhavel
 
-    sfx = f"{area0 or 'all'}-{col0 or 'all'}"
+    sfx = f"{area0 or 'all'}-{col0 or 'all'}-{section0 or 'all'}-{sub0 or 'all'}"
     with c2.popover("Filtros", icon=":material/tune:"):
         sec_opts = [(s.id, s.title) for s in cat.taxonomy.sections]
         sections = _multi("Seção", [s[0] for s in sec_opts], lambda s: dict(sec_opts).get(s, s), f"f-sec-{sfx}",
                           [section0] if section0 else None)
         sub_opts = [(s.id, s.title) for sec in cat.taxonomy.sections for s in sec.subcategories]
-        subcats = _multi("Subcategoria", [s[0] for s in sub_opts], lambda s: dict(sub_opts).get(s, s), f"f-sub-{sfx}")
+        subcats = _multi("Subcategoria", [s[0] for s in sub_opts], lambda s: dict(sub_opts).get(s, s), f"f-sub-{sfx}",
+                         [sub0] if sub0 else None)
         cols_sel = _multi("Coleção", [c.id for c in res_cols], lambda c: cat.collections[c].title, f"f-col-{sfx}",
                           [col0] if col0 else None)
         areas = _multi("Área", list(cat.areas), lambda a: cat.areas[a].name, f"f-area-{sfx}", [area0] if area0 else None)
@@ -66,6 +71,15 @@ def render(cat: Catalog) -> None:
         levels = _multi("Nível", list(LEVEL_LABEL), LEVEL_LABEL.get, f"f-level-{sfx}")
         langs = _multi("Idioma", sorted({r.language for r in cat.resources.values()}), LANG_LABEL.get, f"f-lang-{sfx}")
         tags = _multi("Tags", [t for t, _ in cat.tag_counts()[:MAX_TAGS]], str, f"f-tags-{sfx}")
+        # Novidades Databricks aprovadas (Release Watch): ano, mês e status de lançamento
+        released = [r for r in cat.resources.values() if r.announced_on]
+        if released:
+            years = _multi("Ano do anúncio", sorted({r.announced_on.year for r in released}, reverse=True), str, f"f-year-{sfx}")
+            months = _multi("Mês do anúncio", list(range(1, 13)), lambda m: MONTHS[m - 1], f"f-month-{sfx}")
+            rstatus = _multi("Status de lançamento", sorted({r.release_status for r in released if r.release_status}),
+                             lambda s: RELEASE_LABEL.get(s, s), f"f-rstatus-{sfx}")
+        else:
+            years, months, rstatus = (), (), ()
 
     f = Filters(areas=areas, types=types, difficulties=levels, languages=langs, tags=tags,
                 sections=sections, subcategories=subcats)
@@ -78,9 +92,16 @@ def render(cat: Catalog) -> None:
             results.sort(key=lambda r: keep.index(r.id))
     elif not q:  # Tools & Resources primeiro; cursos longos depois
         results.sort(key=lambda r: r.type in COURSE_TYPES)
+    if years or months or rstatus:
+        results = [r for r in results if r.announced_on
+                   and (not years or r.announced_on.year in years)
+                   and (not months or r.announced_on.month in months)
+                   and (not rstatus or r.release_status in rstatus)]
+        results.sort(key=lambda r: r.announced_on, reverse=True)
 
     active = [cat.collections[c].title for c in cols_sel] + [cat.areas[a].name for a in areas] + [TYPE_LABEL[t][0] for t in types] + \
-        [LEVEL_LABEL[x] for x in levels] + [LANG_LABEL[x] for x in langs] + list(tags)
+        [LEVEL_LABEL[x] for x in levels] + [LANG_LABEL[x] for x in langs] + list(tags) + \
+        [str(y) for y in years] + [MONTHS[m - 1] for m in months] + [RELEASE_LABEL.get(s, s) for s in rstatus]
     info = f"{len(results)} recurso(s)"
     if q:
         info += f" para “{q}”"
@@ -88,7 +109,7 @@ def render(cat: Catalog) -> None:
         info += " · filtros: " + ", ".join(active)
     cc1, cc2 = st.columns([4, 1], vertical_alignment="center")
     cc1.caption(info)
-    if (q or f.active or cols_sel) and cc2.button("Limpar", icon=":material/close:", type="tertiary", key="clear"):
+    if (q or f.active or cols_sel or years or months or rstatus) and cc2.button("Limpar", icon=":material/close:", type="tertiary", key="clear"):
         go("library")
 
     if results:

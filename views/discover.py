@@ -1,10 +1,10 @@
-"""Discover: home editorial com 4 seções derivadas da taxonomia.
+"""Discover: vitrine editorial compacta (não é o catálogo completo — isso é a Library).
 
-Ordem: hero compacto com busca -> chips de area -> 4 seções:
-1. Make Your Work Easier (subcategorias: automacao, IA, templates, validacao)
-2. Tools & Resources (subcategorias: ferramentas, dev, ai/data, pesquisa)
-3. Deep Dives & Courses (subcategorias: plataformas, cursos, guias)
-4. Quick Knowledge (topic collections: technology + practical)
+Ordem: hero com busca -> chips de área -> novidades Databricks (máx. 3, só aprovadas) ->
+1. Make Your Work Easier: subcategorias como cards-resumo (clique abre a Library filtrada)
+2. Tools & Resources: até 2 itens por grupo
+3. Deep Dives & Courses: até 2 itens por grupo
+4. Quick Knowledge: 6 coleções em destaque, Databricks primeiro
 
 Com um chip ativo, cada seção mostra só itens da área e some se ficar vazia.
 """
@@ -12,17 +12,23 @@ from __future__ import annotations
 
 import streamlit as st
 
-from components.cards import (
-    item_card, note_card, playbook_card, resource_card, topic_card,
-)
+from components.cards import resource_card, topic_card
 from components.layout import go, param, section_title
-from services.catalog import Catalog, diverse
+from services.catalog import Catalog
 from services.models import Resource
+from utils.safe import esc
 
 HERO_TITLE = "Resource Library"
 ALL = "all"
-SECTION_LIMIT = 6  # itens por seção na home
-QK_LIMIT = 8       # topic collections no Quick Knowledge
+ITEMS_PER_GROUP = 2   # recursos por subcategoria na Home
+SECTION_MAX = 6       # teto de recursos por seção na Home
+QK_FEATURED = 6       # coleções em destaque no Quick Knowledge
+RELEASES_MAX = 3      # novidades Databricks aprovadas na Home
+QK_PRIORITY = (
+    "databricks-fundamentals", "databricks-jobs-workflows", "unity-catalog-governance",
+)
+STATUS_LABEL = {"ga": "GA", "public_preview": "Public Preview", "private_preview": "Private Preview",
+                "beta": "Beta", "retired": "Retired", "deprecated": "Deprecated"}
 
 
 def _hero() -> None:
@@ -58,8 +64,52 @@ def _area_filter(resources: list[Resource], area: str | None) -> list[Resource]:
     return [r for r in resources if area in r.areas]
 
 
-def _section_resources(cat: Catalog, section_id: str, area: str | None) -> None:
-    """Renderiza uma seção editorial com subcategorias agrupadas."""
+def _see_all(label: str, key: str, **target: str | None) -> None:
+    if st.button(label, key=key, icon=":material/arrow_forward:", type="tertiary"):
+        go("library", **target)
+
+
+def _release_updates(cat: Catalog) -> None:
+    """No máximo 3 novidades Databricks APROVADAS, em uma faixa discreta (sem nova seção grande)."""
+    items = sorted((r for r in cat.resources.values() if r.announced_on and r.release_status),
+                   key=lambda r: r.announced_on, reverse=True)[:RELEASES_MAX]
+    if not items:
+        return
+    with st.container(key="releases"):
+        st.markdown('<div class="ac-rel-label">Novidades Databricks</div>', unsafe_allow_html=True)
+        cols = st.columns(RELEASES_MAX, gap="small")
+        for i, r in enumerate(items):
+            with cols[i]:
+                status = STATUS_LABEL.get(r.release_status or "", r.release_status or "")
+                st.markdown(
+                    f'<div class="ac-rel"><span class="ac-rel-meta">{r.announced_on:%d %b %Y} · {esc(status)}</span>'
+                    f'<a href="{esc(r.url)}" target="_blank" rel="noopener noreferrer">{esc(r.title)}</a></div>',
+                    unsafe_allow_html=True)
+
+
+def _make_work_easier(cat: Catalog, area: str | None) -> None:
+    """Subcategorias como cards-resumo; o clique abre a Library filtrada pela subcategoria."""
+    sec = cat.taxonomy.section("make-your-work-easier")
+    if not sec:
+        return
+    all_res = _area_filter(cat.resources_in_section(sec.id), area)
+    subs = [(s, sum(1 for r in all_res if r.editorial_subcategory == s.id)) for s in sec.subcategories]
+    subs = [(s, n) for s, n in subs if n]
+    if not subs:
+        return
+    section_title(sec.title)
+    cols = st.columns(len(subs), gap="small")
+    for i, (sub, n) in enumerate(subs):
+        with cols[i]:
+            with st.container(border=True, key=f"sub-{sub.id}"):
+                st.markdown(f"{sub.icon} **{esc(sub.title)}**")
+                st.caption(f"{esc(sub.scope)} · {n} {'recurso' if n == 1 else 'recursos'}")
+                if st.button("Explorar", key=f"go-{sub.id}", icon=":material/arrow_forward:", type="tertiary"):
+                    go("library", subcategory=sub.id, area=area)
+
+
+def _compact_section(cat: Catalog, section_id: str, area: str | None) -> None:
+    """Até 2 recursos por subcategoria (máx. 6 por seção); o resto fica na Library."""
     sec = cat.taxonomy.section(section_id)
     if not sec:
         return
@@ -67,47 +117,34 @@ def _section_resources(cat: Catalog, section_id: str, area: str | None) -> None:
     if not all_res:
         return
     section_title(sec.title)
-    # Mostrar por subcategoria
-    shown = 0
+    picks: list[Resource] = []
     for sub in sec.subcategories:
-        sub_res = [r for r in all_res if r.editorial_subcategory == sub.id]
-        if not sub_res:
-            continue
-        display = sub_res[:SECTION_LIMIT - shown] if shown < SECTION_LIMIT else []
-        if not display:
-            continue
-        st.caption(f"{sub.icon} **{sub.title}**")
-        cols = st.columns(3, gap="medium")
-        for i, r in enumerate(display):
-            with cols[i % 3]:
-                resource_card(r, cat, f"home-{section_id}", variant="grid")
-        shown += len(display)
-    # Link para a Library filtrada
-    total = len(all_res)
-    if total > shown:
-        if st.button(f"Ver todos ({total})", key=f"more-{section_id}", icon=":material/grid_view:", type="tertiary"):
-            go("library", section=section_id, area=area)
+        sub_res = [r for r in all_res if r.editorial_subcategory == sub.id][:ITEMS_PER_GROUP]
+        picks.extend(sub_res[:max(0, SECTION_MAX - len(picks))])
+    cols = st.columns(3, gap="medium")
+    for i, r in enumerate(picks):
+        with cols[i % 3]:
+            resource_card(r, cat, f"home-{section_id}", variant="grid")
+    if len(all_res) > len(picks):
+        _see_all(f"Ver todos ({len(all_res)})", f"more-{section_id}", section=section_id, area=area)
 
 
-def _quick_knowledge(cat: Catalog, area: str | None) -> None:
-    """Seção Quick Knowledge: topic collections (technology + practical)."""
-    tech = [t for t in cat.topics.values() if t.kind == "technology"]
-    prac = [t for t in cat.topics.values() if t.kind == "practical"]
-    if not tech and not prac:
+def _quick_knowledge(cat: Catalog) -> None:
+    """Só coleções em destaque: 3 Databricks + 3 não-Databricks."""
+    if not cat.topics:
         return
     section_title("Quick Knowledge")
-    if tech:
-        st.caption(":material/school: **Technology Collections**")
-        cols = st.columns(4, gap="medium")
-        for i, t in enumerate(tech[:QK_LIMIT]):
-            with cols[i % 4]:
-                topic_card(t, cat, "qk-tech")
-    if prac:
-        st.caption(":material/build: **Practical Collections**")
-        cols = st.columns(4, gap="medium")
-        for i, t in enumerate(prac[:QK_LIMIT]):
-            with cols[i % 4]:
-                topic_card(t, cat, "qk-prac")
+    dbx = [cat.topics[t] for t in QK_PRIORITY if t in cat.topics]
+    others = [t for t in cat.topics.values() if t.id not in QK_PRIORITY and not t.id.startswith(("databricks-", "mlflow-", "unity-catalog-"))]
+    featured = (dbx + others)[:QK_FEATURED]
+    cols = st.columns(3, gap="medium")
+    for i, t in enumerate(featured):
+        with cols[i % 3]:
+            topic_card(t, cat, "qk")
+    if len(cat.topics) > len(featured):
+        if st.button(f"Ver todas as coleções ({len(cat.topics)})", key="more-qk",
+                     icon=":material/arrow_forward:", type="tertiary"):
+            go("tips")
 
 
 def render(cat: Catalog) -> None:
@@ -116,15 +153,12 @@ def render(cat: Catalog) -> None:
         area = None
     _hero()
     _chips(cat, area)
+    _release_updates(cat)
 
-    # 1. Make Your Work Easier
-    _section_resources(cat, "make-your-work-easier", area)
-    # 2. Tools & Resources
-    _section_resources(cat, "tools-resources", area)
-    # 3. Deep Dives & Courses
-    _section_resources(cat, "deep-dives-courses", area)
-    # 4. Quick Knowledge
-    _quick_knowledge(cat, area)
+    _make_work_easier(cat, area)
+    _compact_section(cat, "tools-resources", area)
+    _compact_section(cat, "deep-dives-courses", area)
+    _quick_knowledge(cat)
 
     st.write("")
     with st.container(horizontal=True, gap="medium", key="home-more"):

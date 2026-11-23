@@ -422,6 +422,11 @@ def load_catalog(data_dir: Path | str = DATA_DIR, strict: bool = True) -> Catalo
     if (d / "taxonomy.yaml").exists():
         cat.taxonomy = load_taxonomy(d / "taxonomy.yaml")
     cat = _overlay_published(cat)
+    try:  # novidades Databricks APROVADAS no Release Watch (nunca derruba o catalogo)
+        from services.release_watch.publish import overlay as _overlay_releases
+        cat = _overlay_releases(cat)
+    except Exception as exc:  # pragma: no cover - defensivo
+        log.info("release watch overlay skipped: %s", type(exc).__name__)
     cat.derive_sections()
     errs = validate_references(cat)
     if errs:

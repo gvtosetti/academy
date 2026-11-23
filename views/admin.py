@@ -147,6 +147,9 @@ def render(cat: Catalog) -> None:
     if not ident.is_admin:
         st.info("Leitura do catálogo continua aberta. Publicação e edição só aparecem para administradores autorizados.")
         return
+    if st.button("Databricks Release Watch", icon=":material/new_releases:", key="to-release-watch",
+                 help="Novidades oficiais do Azure Databricks aguardando revisão editorial."):
+        go("release-watch")
 
     with st.form("admin-add-resource", clear_on_submit=False):
         url = st.text_input("URL da fonte", value=st.query_params.get("url", ""), placeholder="https://...")

@@ -150,7 +150,7 @@ def render(cat: Catalog) -> None:
             st.caption(r.metadata_notes)
         if r.github_repo:
             _live_github(r.github_repo)
-        st.caption("Explicações e níveis são texto autoral da curadoria da Academy; o material pertence aos seus autores.")
+        st.caption("Explicações e níveis são texto autoral da curadoria da Resource Library; o material pertence aos seus autores.")
 
     kids = cat.children_of(r.id)
     if kids:

@@ -2,6 +2,47 @@
 # kind: technology (por tecnologia/assunto) ou practical (por finalidade prática).
 # items: IDs de notas (tips.yaml / glossary.yaml) ou playbooks (playbooks.yaml), na ordem de leitura.
 
+# ---- Databricks Collections ------------------------------------------------
+- id: databricks-fundamentals
+  title: Databricks Fundamentals
+  kind: technology
+  icon: ":material/cloud:"
+  scope: Workspaces, notebooks, clusters, compute, SQL warehouses
+  items: [databricks-workspace, databricks-compute, databricks-sql-warehouse]
+  use_cases: [orchestrate_workflow, analyze_information]
+
+- id: databricks-jobs-workflows
+  title: Databricks Jobs & Workflows
+  kind: technology
+  icon: ":material/schedule:"
+  scope: Agendamento, dependências, retries, monitoramento
+  items: [databricks-jobs, databricks-jobs-vs-notebooks, building-databricks-job, monitoring-automated-processes, api-idempotencia]
+  use_cases: [orchestrate_workflow, automate_repetitive_tasks, monitor_operations]
+
+- id: unity-catalog-governance
+  title: Unity Catalog & Governance
+  kind: technology
+  icon: ":material/verified_user:"
+  scope: Catálogos, schemas, permissões, linhagem, auditoria
+  items: [databricks-unity-catalog, data-lineage, data-contract, metricas-com-dono, traceability-automated-workflows]
+  use_cases: [improve_data_quality, document_process]
+
+- id: mlflow-experiment-tracking
+  title: MLflow & Experiment Tracking
+  kind: technology
+  icon: ":material/science:"
+  scope: Experiments, runs, model registry, avaliação, tracing
+  items: [databricks-mlflow, evaluation, llmops, observability]
+  use_cases: [evaluate_model_outputs, monitor_operations]
+
+- id: databricks-apps-serving
+  title: Databricks Apps & Serving
+  kind: technology
+  icon: ":material/rocket_launch:"
+  scope: Apps, serving endpoints, deploy, integração via API
+  items: [databricks-apps, databricks-model-serving, api-idempotencia]
+  use_cases: [develop_ai_application, integrate_systems]
+
 # ---- Technology Collections -------------------------------------------------
 - id: llm-fundamentals
   title: LLM Fundamentals

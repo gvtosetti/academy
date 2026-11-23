@@ -15,6 +15,9 @@ scope) no app.yaml; no Streamlit Community Cloud, use Secrets do app.
 | YOUTUBE_API_KEY            | opcional: YouTube Data API v3                                    |
 | ACADEMY_ENV                | `dev` habilita backend local (nao duravel) e admin de dev        |
 | ACADEMY_DEV_ADMIN          | e-mail do admin local (so com ACADEMY_ENV=dev)                   |
+| RELEASE_WATCH_TABLE_PREFIX | `catalogo.schema.prefixo` das tabelas Delta do Release Watch     |
+| RELEASE_WATCH_JOB_ID       | opcional: Lakeflow Job disparado pelo botao "Executar agora"     |
+| RELEASE_WATCH_SQLITE_PATH  | opcional: SQLite local do Release Watch (dev/testes)             |
 """
 from __future__ import annotations
 

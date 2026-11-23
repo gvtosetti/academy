@@ -1536,7 +1536,7 @@
   metadata_status: verified
 
 - id: sdd-emersonmendes
-  editorial_subcategory: templates-standards
+  editorial_subcategory: documentation-runbooks
   use_cases: [manage_requirements, document_process]
   related_collections: [technical-documentation]
   tagline: "Template em português para desenvolvimento assistido por IA guiado por especificação (spec-driven development)."
@@ -2209,7 +2209,7 @@
   metadata_status: verified
 
 - id: openapi-specification
-  editorial_subcategory: templates-standards
+  editorial_subcategory: documentation-runbooks
   use_cases: [document_process, integrate_systems]
   title: OpenAPI Specification
   url: https://spec.openapis.org/oas/latest.html

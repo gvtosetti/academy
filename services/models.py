@@ -25,7 +25,7 @@ ResourceType = Literal["github", "course", "video", "playlist", "documentation",
 CurationStatus = Literal["published", "needs_review", "draft"]
 Difficulty = Literal["beginner", "intermediate", "advanced"]
 MetadataStatus = Literal["verified", "partial", "pending"]
-TipKind = Literal["dev-tip", "tool", "practice", "in-practice"]
+TipKind = Literal["dev-tip", "tool", "practice", "in-practice", "explainer"]
 CollectionLayout = Literal["grid", "list", "feature", "notes", "shelf"]
 TAGLINE_MAX = 160  # descricao do card: 100-160 caracteres, ate 3 linhas
 
@@ -82,6 +82,15 @@ class VerifiedMetadata(_Strict):
     duration: Optional[str] = None
 
 
+class ReleaseEvent(_Strict):
+    """Uma mudanca de status anunciada oficialmente (ex.: Public Preview -> GA)."""
+
+    status: str
+    announced_on: date
+    url: str
+    title: str = ""
+
+
 class Resource(_Strict):
     id: str
     title: str
@@ -127,6 +136,10 @@ class Resource(_Strict):
     verified: VerifiedMetadata = Field(default_factory=VerifiedMetadata)
     metadata_status: MetadataStatus
     metadata_notes: Optional[str] = None
+    # ---- Databricks Release Watch (preenchidos so por novidades APROVADAS) -----
+    release_status: Optional[str] = Field(default=None, description="ga|public_preview|private_preview|beta|retired|deprecated|other")
+    announced_on: Optional[date] = Field(default=None, description="Data do anuncio oficial mais recente")
+    release_history: list[ReleaseEvent] = Field(default_factory=list, description="Historico de status (mais antigo primeiro)")
 
     @field_validator("id")
     @classmethod

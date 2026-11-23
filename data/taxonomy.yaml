@@ -67,6 +67,10 @@ sections:
         title: Validation & Quality
         icon: ":material/verified:"
         scope: Testes, schemas, checks de dados
+      - id: documentation-runbooks
+        title: Documentation & Runbooks
+        icon: ":material/article:"
+        scope: READMEs, runbooks, checklists, knowledge transfer
   - id: tools-resources
     title: Tools & Resources
     icon: ":material/handyman:"

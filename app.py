@@ -1,4 +1,4 @@
-"""Academy — Knowledge & Discovery Hub (Streamlit).
+"""Resource Library — vitrine editorial de ferramentas, cursos e conhecimento (Streamlit).
 
 Descobrir -> entender em 30 segundos -> acessar o conteudo original.
 Execute com:  streamlit run app.py
@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
 import streamlit as st  # noqa: E402
 
 st.set_page_config(
-    page_title="Academy · Knowledge & Discovery Hub",
+    page_title="Resource Library",
     page_icon=":material/auto_awesome:",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -24,12 +24,12 @@ st.set_page_config(
 from components import layout  # noqa: E402
 from components.styles import inject_css  # noqa: E402
 from services.catalog import CatalogError, load_catalog  # noqa: E402
-from views import admin, discover, library, note, playbook, resource, tips, topic  # noqa: E402
+from views import admin, discover, library, note, playbook, release_watch, resource, tips, topic  # noqa: E402
 
 VIEWS = {
     "discover": discover, "library": library, "tips": tips,
     "resource": resource, "note": note, "admin": admin,
-    "playbook": playbook, "topic": topic,
+    "playbook": playbook, "topic": topic, "release-watch": release_watch,
 }
 
 
