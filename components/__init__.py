@@ -1,1 +1,1 @@
-"""Componentes de interface reutilizaveis da Academy."""
+"""Componentes de interface reutilizaveis da Resource Library."""

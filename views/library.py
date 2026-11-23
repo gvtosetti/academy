@@ -11,7 +11,7 @@ import streamlit as st
 from components.cards import COURSE_TYPES, LANG_LABEL, LEVEL_LABEL, TYPE_LABEL, note_grid, resource_grid
 from components.layout import go, param, section_title
 from services.catalog import Catalog
-from services.search import Filters, LocalSearch, search_notes, search_playbooks
+from services.search import Filters, LocalSearch, search_notes
 
 MAX_TAGS = 40
 MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]

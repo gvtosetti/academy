@@ -4,7 +4,7 @@ Ordem: hero com busca -> chips de área -> novidades Databricks (máx. 3, só ap
 1. Make Your Work Easier: subcategorias como cards-resumo (clique abre a Library filtrada)
 2. Tools & Resources: até 2 itens por grupo
 3. Deep Dives & Courses: até 2 itens por grupo
-4. Quick Knowledge: 6 coleções em destaque, Databricks primeiro
+4. Quick Knowledge: 6 coleções em destaque (4 Databricks fixas + as 2 seguintes na ordem do arquivo)
 
 Com um chip ativo, cada seção mostra só itens da área e some se ficar vazia.
 """
@@ -26,6 +26,7 @@ QK_FEATURED = 6       # coleções em destaque no Quick Knowledge
 RELEASES_MAX = 3      # novidades Databricks aprovadas na Home
 QK_PRIORITY = (
     "databricks-fundamentals", "databricks-jobs-workflows", "unity-catalog-governance",
+    "mlflow-experiment-tracking",
 )
 STATUS_LABEL = {"ga": "GA", "public_preview": "Public Preview", "private_preview": "Private Preview",
                 "beta": "Beta", "retired": "Retired", "deprecated": "Deprecated"}
@@ -102,10 +103,11 @@ def _make_work_easier(cat: Catalog, area: str | None) -> None:
     for i, (sub, n) in enumerate(subs):
         with cols[i]:
             with st.container(border=True, key=f"sub-{sub.id}"):
-                st.markdown(f"{sub.icon} **{esc(sub.title)}**")
-                st.caption(f"{esc(sub.scope)} · {n} {'recurso' if n == 1 else 'recursos'}")
+                st.markdown(f"{sub.icon} **{sub.title}**")
+                st.caption(f"{sub.scope} · {n} {'recurso' if n == 1 else 'recursos'}")
                 if st.button("Explorar", key=f"go-{sub.id}", icon=":material/arrow_forward:", type="tertiary"):
                     go("library", subcategory=sub.id, area=area)
+    _see_all(f"Ver todos ({len(all_res)})", f"more-{sec.id}", section=sec.id, area=area)
 
 
 def _compact_section(cat: Catalog, section_id: str, area: str | None) -> None:
@@ -117,32 +119,40 @@ def _compact_section(cat: Catalog, section_id: str, area: str | None) -> None:
     if not all_res:
         return
     section_title(sec.title)
-    picks: list[Resource] = []
+    groups: list[tuple] = []  # (subcategoria, ate 2 recursos); no maximo SECTION_MAX recursos no total
+    shown = 0
     for sub in sec.subcategories:
-        sub_res = [r for r in all_res if r.editorial_subcategory == sub.id][:ITEMS_PER_GROUP]
-        picks.extend(sub_res[:max(0, SECTION_MAX - len(picks))])
-    cols = st.columns(3, gap="medium")
-    for i, r in enumerate(picks):
-        with cols[i % 3]:
-            resource_card(r, cat, f"home-{section_id}", variant="grid")
-    if len(all_res) > len(picks):
+        room = min(ITEMS_PER_GROUP, SECTION_MAX - shown)
+        sub_res = [r for r in all_res if r.editorial_subcategory == sub.id][:room]
+        if sub_res:
+            groups.append((sub, sub_res))
+            shown += len(sub_res)
+    # cada coluna e um grupo: legenda da subcategoria + seus cards empilhados
+    for row in range(0, len(groups), 3):
+        cols = st.columns(3, gap="medium")
+        for col, (sub, items) in zip(cols, groups[row:row + 3]):
+            with col:
+                st.caption(f"{sub.icon} {sub.title}")
+                for r in items:
+                    resource_card(r, cat, f"home-{section_id}", variant="grid")
+    if len(all_res) > shown:
         _see_all(f"Ver todos ({len(all_res)})", f"more-{section_id}", section=section_id, area=area)
 
 
 def _quick_knowledge(cat: Catalog) -> None:
-    """Só coleções em destaque: 3 Databricks + 3 não-Databricks."""
+    """Só 6 coleções em destaque: as 4 Databricks de QK_PRIORITY e depois as seguintes na ordem do arquivo."""
     if not cat.topics:
         return
     section_title("Quick Knowledge")
-    dbx = [cat.topics[t] for t in QK_PRIORITY if t in cat.topics]
-    others = [t for t in cat.topics.values() if t.id not in QK_PRIORITY and not t.id.startswith(("databricks-", "mlflow-", "unity-catalog-"))]
-    featured = (dbx + others)[:QK_FEATURED]
+    first = [cat.topics[t] for t in QK_PRIORITY if t in cat.topics]
+    rest = [t for t in cat.topics.values() if t.id not in QK_PRIORITY]
+    featured = (first + rest)[:QK_FEATURED]
     cols = st.columns(3, gap="medium")
     for i, t in enumerate(featured):
         with cols[i % 3]:
             topic_card(t, cat, "qk")
     if len(cat.topics) > len(featured):
-        if st.button(f"Ver todas as coleções ({len(cat.topics)})", key="more-qk",
+        if st.button(f"Ver todas ({len(cat.topics)} coleções)", key="more-qk",
                      icon=":material/arrow_forward:", type="tertiary"):
             go("tips")
 

@@ -66,6 +66,26 @@ def test_playbooks_have_human_checkpoints(cat):
         assert any(s.human_checkpoint for s in p.steps), f"playbook {p.id} sem human_checkpoint"
 
 
+def test_documentation_runbooks_subcategory(cat):
+    sec = cat.taxonomy.section("make-your-work-easier")
+    assert [s.id for s in sec.subcategories] == [
+        "automation-workflows", "ai-assisted-work", "templates-standards", "validation-quality", "documentation-runbooks"]
+    ids = {r.id for r in cat.resources_in_subcategory("documentation-runbooks")}
+    assert {"sdd-emersonmendes", "openapi-specification"} <= ids
+
+
+def test_databricks_notes_are_explainers(cat):
+    core = ["databricks-workspace", "databricks-compute", "databricks-jobs", "databricks-unity-catalog",
+            "databricks-mlflow", "databricks-sql-warehouse"]
+    for n in core:
+        assert cat.notes[n].kind == "explainer", n
+
+
+def test_databricks_topic_collections_lead_quick_knowledge(cat):
+    assert list(cat.topics)[:4] == ["databricks-fundamentals", "databricks-jobs-workflows",
+                                    "unity-catalog-governance", "mlflow-experiment-tracking"]
+
+
 def test_topic_collections_non_empty(cat):
     for t in cat.topics.values():
         items = cat.topic_items(t.id)

@@ -31,6 +31,7 @@ CASES = [
     {"page": "topic", "topic": "nao-existe"},
     {"page": "topic", "topic": "databricks-fundamentals"},
     {"page": "note", "note": "databricks-jobs-vs-notebooks"},
+    {"page": "library", "subcategory": "documentation-runbooks"},
     {"page": "library", "section": "make-your-work-easier", "subcategory": "documentation-runbooks"},
     {"page": "release-watch"},
     # rotas antigas continuam funcionando
@@ -107,14 +108,51 @@ def test_home_is_a_compact_showcase(monkeypatch):
     # vitrine: no maximo 6 recursos por secao de recursos (+3 novidades), nunca o catalogo inteiro
     assert 3 <= len(links) <= 15 < len(cat.resources)
     md = " ".join(m.value for m in at.markdown)
-    assert "Documentation &amp; Runbooks" in md or "Documentation & Runbooks" in md
-    # Databricks em destaque no Quick Knowledge: as 3 colecoes prioritarias aparecem na vitrine
+    assert "**Documentation & Runbooks**" in md and "&amp;" not in " ".join(c.value for c in at.caption)
+    # Databricks em destaque no Quick Knowledge: as 4 colecoes prioritarias + as 2 seguintes na ordem do arquivo
     labels = [b.label for b in at.button]
     for t in ("Databricks Fundamentals", "Databricks Jobs & Workflows", "Unity Catalog & Governance"):
         assert t in labels, t
-    topic_titles = {t.title for t in cat.topics.values()}
-    assert len([x for x in labels if x in topic_titles]) <= 6, "Quick Knowledge da Home mostra so uma selecao"
+    qk = [b.key.removeprefix("topic-qk-") for b in at.button if b.key and b.key.startswith("topic-qk-")]
+    prio = ["databricks-fundamentals", "databricks-jobs-workflows", "unity-catalog-governance", "mlflow-experiment-tracking"]
+    expected = (prio + [t for t in cat.topics if t not in prio])[:6]
+    assert sorted(qk) == sorted(expected), qk
+    assert any(b.label == f"Ver todas ({len(cat.topics)} coleções)" for b in at.button)
     assert any(b.label.startswith("Ver todos") for b in at.button)
+    assert {"to-library", "to-tips"} <= {b.key for b in at.button}
+
+
+def test_home_documentation_runbooks_subcategory_card(monkeypatch):
+    _offline(monkeypatch)
+    at = _run()
+    from services.catalog import load_catalog
+
+    cat = load_catalog()
+    # 5 subcategorias de Make Your Work Easier como cards-resumo (sem resource cards dessa secao)
+    subs = [b for b in at.button if b.key and b.key.startswith("go-")]
+    assert [b.key for b in subs] == [f"go-{s.id}" for s in cat.taxonomy.section("make-your-work-easier").subcategories]
+    assert all(b.label == "Explorar" for b in subs)
+    assert not [b for b in at.button if b.key and b.key.startswith("more-home-make-your-work-easier-")]
+    n = len(cat.resources_in_subcategory("documentation-runbooks"))
+    caps = " ".join(c.value for c in at.caption)
+    assert f"{n} recursos" in caps or f"{n} recurso" in caps
+    at = next(b for b in subs if b.key == "go-documentation-runbooks").click().run()
+    assert dict(at.query_params) == {"page": "library", "subcategory": "documentation-runbooks"}
+    urls = {b.proto.url for b in at.get("link_button")}
+    assert urls == {r.url for r in cat.resources_in_subcategory("documentation-runbooks")}
+
+
+def test_no_academy_branding(monkeypatch):
+    _offline(monkeypatch)
+    for params in ({}, {"page": "library"}, {"page": "tips"}):
+        at = _run(**params)
+        assert all(t.value.strip() != "Academy" for t in at.title)
+        brand = next(b for b in at.button if b.key == "brand")
+        assert brand.label == "Resource Library"
+        assert all(b.label.strip() != "Academy" for b in at.button)
+        text = " ".join([m.value for m in at.markdown] + [c.value for c in at.caption])
+        assert "A Resource Library é um espaço" in text  # rodape (st.caption)
+        assert "Academy é um espaço" not in text
 
 
 def test_release_watch_admin_queue(monkeypatch, tmp_path):

@@ -226,7 +226,7 @@ def _prompt(x: Extraction) -> list[dict]:
     }
     return [
         {"role": "system", "content": (
-            "Você é um curador editorial da Academy. Responda APENAS com JSON válido, sem markdown. "
+            "Você é um curador editorial da Resource Library. Responda APENAS com JSON válido, sem markdown. "
             "Escreva em português brasileiro. Preserve termos técnicos conhecidos. Não invente informações. "
             "Distingua claramente o que veio da fonte do que é inferência editorial. Se algo essencial estiver ausente, "
             "registre em missing_information e reduza metadata_confidence. Não classifique tudo como IA automaticamente. "
@@ -297,10 +297,10 @@ def _plain_summary_pt(x: Extraction, title: str) -> str:
     if x.kind == "channel":
         return f"{title} reúne várias playlists públicas. Em vez de um curso único, funciona como um catálogo de aulas que você escolhe conforme o tema."
     if x.kind == "playlist":
-        return f"{title} é uma playlist organizada para estudar um tema específico em sequência, sem depender de trilha interna da Academy."
+        return f"{title} é uma playlist organizada para estudar um tema específico em sequência, sem depender de trilha interna da Resource Library."
     if x.kind == "roadmap":
         return f"{title} organiza o caminho de estudo em níveis progressivos, do básico até tópicos de produção e projetos."
-    return f"{title} é um recurso técnico que a Academy pode contextualizar, resumir e organizar para facilitar a descoberta."
+    return f"{title} é um recurso técnico que a Resource Library pode contextualizar, resumir e organizar para facilitar a descoberta."
 
 
 def _tech_summary_pt(x: Extraction, title: str) -> str:
@@ -331,7 +331,7 @@ def _guess_outcomes(lower: str, kind: str) -> list[str]:
 
 def _guess_study_guide(kind: str) -> list[str]:
     if kind == "roadmap":
-        return ["Comece pelo nível mais próximo do seu repertório atual.", "Use a Academy para entrar no recurso certo, não para impor sequência fixa."]
+        return ["Comece pelo nível mais próximo do seu repertório atual.", "Use a Resource Library para entrar no recurso certo, não para impor sequência fixa."]
     if kind in ("playlist", "course", "video", "collection"):
         return ["Leia a descrição e os tópicos antes de começar.", "Use 'Saiba mais' para decidir se vale seguir para a fonte original."]
     return ["Abra a fonte original para validar detalhes específicos antes de adotar o material."]
