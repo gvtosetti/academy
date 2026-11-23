@@ -1,0 +1,125 @@
+# Topic Collections do Quick Knowledge: compilados de notas técnicas e playbooks.
+# kind: technology (por tecnologia/assunto) ou practical (por finalidade prática).
+# items: IDs de notas (tips.yaml / glossary.yaml) ou playbooks (playbooks.yaml), na ordem de leitura.
+
+# ---- Technology Collections -------------------------------------------------
+- id: llm-fundamentals
+  title: LLM Fundamentals
+  kind: technology
+  icon: ":material/neurology:"
+  scope: Tokens, embeddings, transformer, janela de contexto
+  items: [llm, tokens, tokenization, embeddings, transformer, attention, context-window, inference, hallucination]
+  use_cases: [develop_ai_application]
+
+- id: rag-retrieval
+  title: RAG & Retrieval
+  kind: technology
+  icon: ":material/manage_search:"
+  scope: Busca semântica, vetores, reranking, grounding
+  items: [rag, semantic-search, vector-database, reranking, grounding, rag-politicas-internas]
+  use_cases: [develop_ai_application]
+
+- id: ai-agents
+  title: AI Agents
+  kind: technology
+  icon: ":material/smart_toy:"
+  scope: Agentes, ferramentas, orquestração
+  items: [ai-agents, tool-calling, agent-orchestration, multi-agent-systems, agent-skills]
+  use_cases: [develop_ai_application, automate_repetitive_tasks]
+
+- id: working-with-claude
+  title: Working with Claude
+  kind: technology
+  icon: ":material/chat:"
+  scope: Prompts, skills, tool use, alinhamento
+  items: [prompt-engineering, context-window, agent-skills, tool-calling, alinhar-antes-de-codar, spec-driven-development, ai-assisted-code-review]
+  use_cases: [review_code, manage_requirements, develop_ai_application]
+
+- id: mlops-observability
+  title: MLOps & Observability
+  kind: technology
+  icon: ":material/monitoring:"
+  scope: Avaliação, serving, observabilidade
+  items: [evaluation, llmops, observability, model-serving, ci-cd, monitoring-automated-processes]
+  use_cases: [monitor_operations, evaluate_model_outputs]
+
+- id: data-governance
+  title: Data Governance
+  kind: technology
+  icon: ":material/verified_user:"
+  scope: Linhagem, contratos, métricas com dono
+  items: [data-lineage, data-contract, metricas-com-dono, contrato-de-eventos, traceability-automated-workflows]
+  use_cases: [improve_data_quality, document_process]
+
+- id: software-engineering-practices
+  title: Software Engineering Practices
+  kind: technology
+  icon: ":material/code:"
+  scope: Commits, PRs, testes, debugging, APIs
+  items: [commits-pequenos, prs-pequenos, testar-comportamento, reproduzir-antes-de-corrigir, api-idempotencia, pre-commit, pytest]
+  use_cases: [review_code]
+
+# ---- Practical Collections --------------------------------------------------
+- id: data-process-automation
+  title: Data Process Automation
+  kind: practical
+  icon: ":material/autorenew:"
+  scope: Relatórios, jobs, análise local
+  items: [automating-recurring-reports, building-databricks-job, duckdb, api-idempotencia]
+  use_cases: [automate_repetitive_tasks, orchestrate_workflow]
+
+- id: workflow-orchestration
+  title: Workflow Orchestration
+  kind: practical
+  icon: ":material/account_tree:"
+  scope: Dependências, gatilhos, retries
+  items: [building-databricks-job, monitoring-automated-processes, api-idempotencia, ci-cd]
+  use_cases: [orchestrate_workflow, monitor_operations]
+
+- id: from-manual-to-automated
+  title: From Manual to Automated
+  kind: practical
+  icon: ":material/swap_horiz:"
+  scope: Mapeamento, exceções, aprovações
+  items: [manual-to-automated-workflow, automating-recurring-reports, problema-antes-da-solucao, reproduzir-antes-de-corrigir]
+  use_cases: [automate_repetitive_tasks, document_process]
+
+- id: validation-quality
+  title: Validation & Quality Assurance
+  kind: practical
+  icon: ":material/fact_check:"
+  scope: Testes, schemas, hooks
+  items: [validating-input-data, testar-comportamento, pytest, pre-commit]
+  use_cases: [validate_data, review_code]
+
+- id: data-quality
+  title: Data Quality
+  kind: practical
+  icon: ":material/rule:"
+  scope: Validação, deduplicação, vazamento
+  items: [validating-input-data, unificando-fornecedores, entity-resolution, data-leakage, data-contract]
+  use_cases: [improve_data_quality, validate_data]
+
+- id: data-contracts-handoffs
+  title: Data Contracts & Handoffs
+  kind: practical
+  icon: ":material/handshake:"
+  scope: Contratos, APIs, repasses
+  items: [documenting-handoffs, data-contract, contrato-de-eventos, api, api-idempotencia]
+  use_cases: [integrate_systems, document_process]
+
+- id: technical-documentation
+  title: Technical Documentation
+  kind: practical
+  icon: ":material/description:"
+  scope: README, especificações, rastreabilidade
+  items: [readme, spec-driven-development, problema-antes-da-solucao, documenting-handoffs, traceability-automated-workflows]
+  use_cases: [document_process, manage_requirements]
+
+- id: model-evaluation
+  title: Model Evaluation
+  kind: practical
+  icon: ":material/analytics:"
+  scope: Baseline, backtesting, experimentos
+  items: [evaluation, baseline-primeiro, split-temporal, forecast-backtesting, backtesting-previsao-precos, data-leakage, metrica-antes-do-experimento, ab-testing]
+  use_cases: [evaluate_model_outputs]

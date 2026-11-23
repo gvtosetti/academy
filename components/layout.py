@@ -14,7 +14,7 @@ PAGES = {
     "library": ("Library", ":material/grid_view:"),
     "tips": ("Tips & Insights", ":material/lightbulb:"),
 }
-DETAIL_PAGES = {"resource", "note", "admin"}
+DETAIL_PAGES = {"resource", "note", "admin", "playbook", "topic"}
 
 # Rotas da versao anterior (LMS) -> novas secoes. Mantem links antigos funcionando.
 LEGACY = {
@@ -52,7 +52,8 @@ def go(page: str, **params: Optional[str]) -> None:
 
 
 def header(active: str) -> None:
-    section = active if active in PAGES else {"resource": "library", "note": "tips", "admin": "discover"}.get(active)
+    section = active if active in PAGES else {"resource": "library", "note": "tips", "admin": "discover",
+                                                "playbook": "discover", "topic": "discover"}.get(active)
     with st.container(key="topbar"):
         left, right = st.columns([1, 2], vertical_alignment="center")
         with left:

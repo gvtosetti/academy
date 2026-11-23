@@ -18,7 +18,7 @@ PRESERVED = [
 
 def test_all_previous_resources_preserved(cat):
     assert set(PRESERVED) <= set(cat.resources)
-    assert len(cat.resources) == 26
+    assert len(cat.resources) >= 26  # 26 originais + novos recursos verificados
 
 
 def test_no_lms_structures_left(cat):
@@ -33,18 +33,15 @@ def test_cards_have_short_descriptions(cat):
         assert 40 <= len(r.blurb) <= 260, r.id  # texto de abertura do Saiba mais
 
 
-EDITORIAL = ["Tools worth knowing", "Make your work easier", "Interesting discoveries", "Quick knowledge", "Deep dives"]
-
-
-def test_editorial_collections(cat):
-    assert [c.title for c in cat.collections.values()] == EDITORIAL
-    # transversais: o mesmo item pode estar em mais de uma colecao
-    from collections import Counter
-
-    counts = Counter(i.id for c in cat.collections.values() for i in c.items)
-    assert any(n > 1 for n in counts.values())
-    # nenhum recurso fica de fora da curadoria
-    assert set(cat.resources) <= set(counts)
+def test_editorial_sections(cat):
+    """Todos os recursos publicados pertencem a uma secao editorial via taxonomy."""
+    for r in cat.resources.values():
+        assert r.editorial_section, f"{r.id} sem editorial_section"
+        assert r.editorial_subcategory, f"{r.id} sem editorial_subcategory"
+    sec_ids = {s.id for s in cat.taxonomy.sections}
+    for r in cat.resources.values():
+        if r.editorial_section not in sec_ids | {"quick-knowledge"}:  # QK nao tem subcats de recurso
+            assert r.editorial_section in sec_ids, f"{r.id}: secao {r.editorial_section} desconhecida"
 
 
 def test_main_collections_are_tools_not_courses(cat):
@@ -63,10 +60,16 @@ def test_areas_are_multidimensional_and_populated(cat):
         assert cat.areas[a].chip
 
 
-def test_collection_notes_preserved(cat):
-    notes = {i.id: i.note for i in cat.collections["interesting-discoveries"].items}
-    assert notes["grill-me"].startswith("Uma ideia simples")
-    assert notes["dair-ml-papers-explained"] == "Um atalho para entender os papers que todo mundo cita."
+def test_playbooks_have_human_checkpoints(cat):
+    """Todo playbook deve ter ao menos uma etapa com revisao humana."""
+    for p in cat.playbooks.values():
+        assert any(s.human_checkpoint for s in p.steps), f"playbook {p.id} sem human_checkpoint"
+
+
+def test_topic_collections_non_empty(cat):
+    for t in cat.topics.values():
+        items = cat.topic_items(t.id)
+        assert len(items) >= 2, f"topic {t.id} com {len(items)} itens"
 
 
 def test_all_urls_are_https(cat):
@@ -86,9 +89,12 @@ def test_pending_course_is_flagged(cat):
     assert cat.resources["dlai-evaluating-debugging-genai"].metadata_status == "pending"
 
 
-def test_every_theme_has_resources(cat):
-    for c in cat.categories:
-        assert cat.resources_in_category(c), c
+def test_every_subcategory_has_resources(cat):
+    """Nenhuma subcategoria da Home fica vazia."""
+    for sec in cat.taxonomy.sections:
+        for sub in sec.subcategories:
+            res = cat.resources_in_subcategory(sub.id)
+            assert res, f"subcategoria {sub.id} sem recursos"
 
 
 def test_collections_have_children(cat):

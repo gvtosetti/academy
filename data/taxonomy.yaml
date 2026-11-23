@@ -1,0 +1,126 @@
+# Taxonomia editorial da Resource Library.
+#
+# - use_cases: dimensao de descoberta por PROBLEMA (nao por tecnologia). `keywords` sao
+#   termos (pt/en, sem acento) que, presentes na busca, ativam o caso de uso.
+# - sections: as quatro secoes da Home, na ordem de exibicao. Cada recurso pertence a uma
+#   subcategoria (editorial_subcategory); a secao e derivada dela. Quick Knowledge nao tem
+#   subcategorias de recurso: e composto por notas, topic collections e playbooks.
+# - technologies: nomes reconhecidos na deteccao de integracoes. A deteccao so SUGERE;
+#   "Works with" exige evidencia (source_evidence) e revisao editorial.
+
+use_cases:
+  - id: automate_repetitive_tasks
+    label: Automatizar tarefas repetitivas
+    keywords: [automatizar, automacao, automatizacao, automate, automation, repetitiva, repetitivas, repetitive, manual, manuais, script, scripts, agendar, agendamento, schedule, cron, rotina]
+  - id: validate_data
+    label: Validar dados
+    keywords: [validar, validacao, validate, validation, schema, assertion, assertions, checagem, check, checks, conferir]
+  - id: review_code
+    label: Revisar código
+    keywords: [revisar, revisao, review, code review, pull request, pr, prs, lint]
+  - id: document_process
+    label: Documentar processos e sistemas
+    keywords: [documentar, documentacao, document, documentation, docs, readme, especificacao, spec, template, templates]
+  - id: orchestrate_workflow
+    label: Orquestrar fluxos de trabalho
+    keywords: [orquestrar, orquestracao, orchestrate, orchestration, workflow, workflows, pipeline, pipelines, jobs, job, dag, dependencias]
+  - id: integrate_systems
+    label: Integrar sistemas
+    keywords: [integrar, integracao, integrate, integration, api, apis, rest, sdk, webhook, contrato, contract, handoff]
+  - id: analyze_information
+    label: Analisar informações
+    keywords: [analisar, analise, analyze, analysis, sql, consulta, consultar, explorar, exploracao, pesquisa, research, papers, estatistica]
+  - id: monitor_operations
+    label: Monitorar operações
+    keywords: [monitorar, monitoramento, monitor, monitoring, observabilidade, observability, logging, logs, alerta, alertas, tracing]
+  - id: improve_data_quality
+    label: Melhorar a qualidade de dados
+    keywords: [qualidade, quality, limpeza, cleaning, deduplicar, duplicidade, consistencia, lineage, governanca, governance]
+  - id: manage_requirements
+    label: Gerenciar requisitos
+    keywords: [requisito, requisitos, requirements, escopo, alinhar, alinhamento, discovery, especificar]
+  - id: develop_ai_application
+    label: Desenvolver aplicações de IA
+    keywords: [llm, llms, rag, agente, agentes, agent, agents, ia, ai, genai, prompt, prompts, embeddings, claude, modelo de linguagem]
+  - id: evaluate_model_outputs
+    label: Avaliar resultados de modelos
+    keywords: [avaliar, avaliacao, evaluate, evaluation, evals, eval, metrica, metricas, backtesting, benchmark, alucinacao]
+
+sections:
+  - id: make-your-work-easier
+    title: Make Your Work Easier
+    icon: ":material/bolt:"
+    subcategories:
+      - id: automation-workflows
+        title: Automation & Workflows
+        icon: ":material/autorenew:"
+        scope: Python, Jobs, agendamento, APIs
+      - id: ai-assisted-work
+        title: AI-Assisted Work
+        icon: ":material/smart_toy:"
+        scope: Claude, skills, revisão, requisitos
+      - id: templates-standards
+        title: Templates & Standards
+        icon: ":material/description:"
+        scope: Especificações, convenções, contratos
+      - id: validation-quality
+        title: Validation & Quality
+        icon: ":material/verified:"
+        scope: Testes, schemas, checks de dados
+  - id: tools-resources
+    title: Tools & Resources
+    icon: ":material/handyman:"
+    subcategories:
+      - id: tools-libraries
+        title: Tools & Libraries
+        icon: ":material/widgets:"
+        scope: Bibliotecas e ferramentas
+      - id: developer-tools
+        title: Developer Tools
+        icon: ":material/code:"
+        scope: Editor, versionamento, hooks
+      - id: ai-data-tools
+        title: AI & Data Tools
+        icon: ":material/database:"
+        scope: Databricks, MLflow, Claude
+      - id: research-resources
+        title: Research Resources
+        icon: ":material/science:"
+        scope: Papers e literatura técnica
+  - id: deep-dives-courses
+    title: Deep Dives & Courses
+    icon: ":material/school:"
+    subcategories:
+      - id: learning-platforms
+        title: Learning Platforms
+        icon: ":material/account_balance:"
+        scope: Catálogos de cursos
+      - id: courses-lectures
+        title: Courses & Lectures
+        icon: ":material/play_circle:"
+        scope: Cursos e aulas gravadas
+      - id: guides-roadmaps
+        title: Technical Guides & Roadmaps
+        icon: ":material/route:"
+        scope: Guias, roteiros e repositórios didáticos
+  - id: quick-knowledge
+    title: Quick Knowledge
+    icon: ":material/menu_book:"
+    subcategories: []
+
+technologies:
+  - {id: python, name: Python, aliases: [python]}
+  - {id: sql, name: SQL, aliases: [sql]}
+  - {id: spark, name: Apache Spark, aliases: [spark, pyspark]}
+  - {id: databricks, name: Databricks, aliases: [databricks]}
+  - {id: mlflow, name: MLflow, aliases: [mlflow]}
+  - {id: unity-catalog, name: Unity Catalog, aliases: [unity catalog]}
+  - {id: claude, name: Claude, aliases: [claude]}
+  - {id: claude-code, name: Claude Code, aliases: [claude code]}
+  - {id: github, name: GitHub, aliases: [github]}
+  - {id: git, name: Git, aliases: [git]}
+  - {id: jupyter, name: Jupyter, aliases: [jupyter, notebook, notebooks]}
+  - {id: pandas, name: pandas, aliases: [pandas]}
+  - {id: javascript, name: JavaScript, aliases: [javascript, typescript, react]}
+  - {id: docker, name: Docker, aliases: [docker]}
+  - {id: vscode, name: VS Code, aliases: [vs code, vscode, visual studio code]}

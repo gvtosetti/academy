@@ -1,0 +1,203 @@
+# Practical Playbooks: abordagens genéricas e reutilizáveis para tipos de problema.
+#
+# Não descrevem processos internos específicos. Qualquer adaptação a um processo real
+# exige documentação atualizada e aprovação editorial. Cada playbook marca as etapas
+# que dependem de julgamento, autorização ou revisão humana (human_checkpoint: true).
+
+- id: automating-recurring-reports
+  title: Automatizar relatórios recorrentes
+  summary: "Transformar um relatório montado manualmente em uma execução agendada, reprodutível e verificável."
+  when_to_use: "Quando o mesmo relatório é refeito periodicamente com passos manuais de extração, ajuste e envio."
+  steps:
+    - title: Registrar o processo atual
+      detail: "Liste fontes, filtros, cálculos, formato de saída e destinatários. Inclua os ajustes feitos à mão: são eles que costumam quebrar a automação."
+    - title: Fixar definições com quem usa o relatório
+      detail: "Confirme a definição de cada métrica, o período de referência e quem é responsável por ela."
+      human_checkpoint: true
+    - title: Separar extração, transformação e publicação
+      detail: "Escreva cada etapa como função ou consulta independente, parametrizada por data. Isso permite reprocessar um período sem refazer tudo."
+    - title: Validar a entrada antes de calcular
+      detail: "Verifique volume, datas e campos obrigatórios. Se a entrada estiver incompleta, interrompa a execução em vez de publicar números errados."
+    - title: Comparar com a versão manual
+      detail: "Rode as duas versões em paralelo por alguns ciclos e explique cada diferença antes de desligar o processo manual."
+      human_checkpoint: true
+    - title: Agendar e monitorar
+      detail: "Agende a execução em um orquestrador, configure notificação de falha e registre data de referência e versão do código em cada saída."
+  considerations:
+    - "Relatórios com dados sensíveis exigem revisão de permissões dos destinatários."
+  use_cases: [automate_repetitive_tasks, validate_data, orchestrate_workflow]
+  areas: [analytics, data-engineering, data-science]
+  tags: [relatorios, agendamento, automacao]
+  related_notes: [fonte-e-data-de-cada-numero, metricas-com-dono, duckdb]
+  related_resources: [databricks-lakeflow-jobs, automate-the-boring-stuff, duckdb-org]
+
+- id: manual-to-automated-workflow
+  title: Converter um processo manual em fluxo automatizado
+  summary: "Decidir o que automatizar, o que manter manual e onde inserir aprovações, a partir do mapeamento do fluxo."
+  when_to_use: "Quando um processo tem muitas etapas manuais, repasses entre pessoas e retrabalho por erros de digitação ou cópia."
+  steps:
+    - title: Mapear etapas, entradas e saídas
+      detail: "Desenhe o fluxo atual com responsável, entrada, saída e tempo de cada etapa. Use documentação atualizada; diagramas antigos podem não refletir o processo vigente."
+      human_checkpoint: true
+    - title: Classificar cada etapa
+      detail: "Separe etapas determinísticas (regras claras, automáveis), etapas de julgamento (exigem pessoa) e etapas de aprovação (exigem autorização formal)."
+    - title: Automatizar primeiro as etapas determinísticas
+      detail: "Comece pela etapa de maior volume e menor risco. Mantenha a etapa manual disponível como alternativa até a automação se provar estável."
+    - title: Tratar exceções explicitamente
+      detail: "Defina o que acontece quando um registro não se encaixa nas regras: fila de revisão, notificação e prazo. Exceções não devem ser descartadas em silêncio."
+    - title: Manter aprovações humanas onde há responsabilidade
+      detail: "Decisões com impacto financeiro, contratual ou regulatório continuam com uma pessoa autorizada; a automação prepara a informação e registra a decisão."
+      human_checkpoint: true
+    - title: Medir antes e depois
+      detail: "Compare tempo de ciclo, taxa de retrabalho e volume de exceções para confirmar o ganho."
+  considerations:
+    - "Automatizar um processo mal definido acelera os erros; esclareça regras antes de codificar."
+  use_cases: [automate_repetitive_tasks, orchestrate_workflow, document_process]
+  areas: [data-engineering, product, analytics]
+  tags: [processos, automacao, excecoes, aprovacao]
+  related_notes: [problema-antes-da-solucao, reproduzir-antes-de-corrigir]
+  related_resources: [databricks-lakeflow-jobs, automate-the-boring-stuff]
+
+- id: building-databricks-job
+  title: Estruturar um job no Databricks
+  summary: "Organizar tarefas, parâmetros, gatilhos, tentativas e notificações de um job no Lakeflow Jobs."
+  when_to_use: "Quando um notebook ou script precisa rodar sem intervenção, em horário fixo ou após a chegada de dados."
+  steps:
+    - title: Dividir o trabalho em tarefas
+      detail: "Cada tarefa faz uma coisa (ingestão, transformação, publicação) e declara de quais depende. Tarefas menores facilitam reexecutar apenas o que falhou."
+    - title: Parametrizar
+      detail: "Passe data de referência, ambiente e caminhos como parâmetros do job, em vez de valores fixos no código."
+    - title: Escolher o gatilho
+      detail: "Agendamento para rotinas periódicas; gatilhos por chegada de arquivo ou atualização de tabela quando a execução depende de dados novos."
+    - title: Definir tentativas, timeout e notificações
+      detail: "Tentativas automáticas só são seguras se a tarefa for idempotente. Configure quem recebe aviso de falha ou atraso."
+    - title: Revisar compute e permissões
+      detail: "Confirme com a administração da plataforma o tipo de compute disponível, a identidade de execução e quem pode editar ou disparar o job."
+      human_checkpoint: true
+    - title: Acompanhar as execuções
+      detail: "Use o histórico de execuções para acompanhar duração e falhas; investigue tendências de aumento de duração antes que virem falhas."
+  considerations:
+    - "Opções de compute, gatilhos e permissões variam por workspace e plano."
+  use_cases: [orchestrate_workflow, automate_repetitive_tasks, monitor_operations]
+  areas: [data-engineering, data-science]
+  tags: [databricks, jobs, lakeflow, orquestracao]
+  related_notes: [api-idempotencia, ci-cd]
+  related_resources: [databricks-lakeflow-jobs, databricks-academy]
+  references:
+    - {label: Lakeflow Jobs, url: "https://docs.databricks.com/aws/en/jobs/"}
+
+- id: validating-input-data
+  title: Validar dados de entrada
+  summary: "Definir e aplicar regras sobre os dados recebidos antes que eles alimentem cálculos, modelos ou relatórios."
+  when_to_use: "Quando dados chegam de outra equipe, de um sistema externo ou de planilhas preenchidas manualmente."
+  steps:
+    - title: Escrever as regras como schema
+      detail: "Tipos, campos obrigatórios, intervalos válidos, valores permitidos e chaves únicas, em código versionado."
+    - title: Combinar as regras com quem produz os dados
+      detail: "Regras que o produtor desconhece geram falhas recorrentes; registre-as como contrato entre as partes."
+      human_checkpoint: true
+    - title: Validar na entrada do fluxo
+      detail: "Execute a validação antes de qualquer transformação. Registre quantos registros passaram e quantos falharam em cada regra."
+    - title: Decidir entre bloquear e isolar
+      detail: "Falhas estruturais (coluna ausente, tipo errado) bloqueiam a execução; falhas pontuais podem isolar os registros em uma área de quarentena para revisão."
+    - title: Revisar a quarentena
+      detail: "Uma pessoa responsável decide se o registro é corrigido, descartado ou se a regra precisa mudar."
+      human_checkpoint: true
+  use_cases: [validate_data, improve_data_quality]
+  areas: [data-engineering, data-science, data-governance]
+  tags: [validacao, schema, qualidade de dados, quarentena]
+  related_notes: [data-contract, contrato-de-eventos, testar-comportamento]
+  related_resources: [pandera, pytest-docs]
+
+- id: monitoring-automated-processes
+  title: Monitorar processos automatizados
+  summary: "Saber quando um processo automatizado falhou, atrasou ou produziu resultado anormal, e o que fazer em cada caso."
+  when_to_use: "Depois de colocar uma rotina automatizada em produção, antes que alguém dependa dela para decidir."
+  steps:
+    - title: Registrar logs estruturados
+      detail: "Cada execução registra início, fim, parâmetros, volume processado e erros, com um identificador de execução."
+    - title: Monitorar três sinais
+      detail: "Falha (a execução não terminou), atraso (não rodou no prazo) e anomalia (rodou, mas o volume ou os valores fogem do esperado)."
+    - title: Direcionar alertas a responsáveis
+      detail: "Cada alerta tem um destinatário definido e uma ação esperada. Alertas sem dono tendem a ser ignorados."
+      human_checkpoint: true
+    - title: Documentar a resposta
+      detail: "Para as falhas mais comuns, registre o diagnóstico e a correção em um runbook curto."
+    - title: Revisar periodicamente
+      detail: "Remova alertas que nunca levam a ação e ajuste limites que geram falsos positivos."
+  use_cases: [monitor_operations]
+  areas: [data-engineering, ai-llms, dev-backend]
+  tags: [monitoramento, logs, alertas, observabilidade, runbook]
+  related_notes: [observability, llmops]
+  related_resources: [databricks-lakeflow-jobs, mlflow-docs]
+
+- id: ai-assisted-code-review
+  title: Revisão de código assistida por IA
+  summary: "Usar um assistente de IA como primeira leitura de um pull request, mantendo a aprovação com uma pessoa."
+  when_to_use: "Quando revisões demoram ou deixam passar problemas recorrentes de estilo, testes ausentes ou casos de borda."
+  steps:
+    - title: Confirmar o uso permitido
+      detail: "Verifique quais assistentes de IA são autorizados para o repositório e que tipo de código ou dado pode ser enviado a eles."
+      human_checkpoint: true
+    - title: Dar contexto ao assistente
+      detail: "Inclua o objetivo da mudança, as convenções do projeto e o que deve ser verificado (testes, tratamento de erros, segurança)."
+    - title: Pedir achados verificáveis
+      detail: "Solicite que cada comentário aponte arquivo, linha e motivo. Comentários genéricos dificultam a triagem."
+    - title: Triar os achados
+      detail: "Quem revisa confirma cada achado no código; sugestões do assistente podem estar erradas ou fora de contexto."
+      human_checkpoint: true
+    - title: Manter a aprovação humana
+      detail: "A decisão de aprovar e o merge continuam com revisores responsáveis pelo código."
+      human_checkpoint: true
+  considerations:
+    - "Pull requests pequenos produzem revisões melhores, com ou sem assistência."
+  use_cases: [review_code]
+  areas: [dev-backend, ai-llms]
+  tags: [code review, pull request, claude, assistente de codigo]
+  related_notes: [prs-pequenos, testar-comportamento, alinhar-antes-de-codar]
+  related_resources: [claude-code-docs, grill-with-docs, github-docs]
+
+- id: documenting-handoffs
+  title: Documentar repasses entre equipes
+  summary: "Registrar o que uma etapa entrega à seguinte para que o repasse não dependa de conhecimento informal."
+  when_to_use: "Quando um fluxo passa por mais de uma equipe ou sistema e problemas só aparecem na etapa seguinte."
+  steps:
+    - title: Identificar os pontos de repasse
+      detail: "Liste onde dados, arquivos ou decisões mudam de responsável ao longo do fluxo."
+    - title: Descrever cada entrega
+      detail: "Formato, campos, significado de cada campo, frequência, prazo e critério de completude."
+    - title: Definir aceite e devolução
+      detail: "Quem recebe verifica a entrega com critérios combinados e sabe para quem devolver quando algo está incompleto."
+      human_checkpoint: true
+    - title: Versionar a documentação
+      detail: "Mantenha a descrição junto ao código ou em local versionado e atualize-a na mesma mudança que altera a entrega."
+    - title: Revisar com as duas equipes
+      detail: "A documentação só é válida quando quem entrega e quem recebe concordam com ela."
+      human_checkpoint: true
+  use_cases: [document_process, integrate_systems]
+  areas: [data-engineering, product, data-governance]
+  tags: [handoff, documentacao, contrato, processos]
+  related_notes: [data-contract, contrato-de-eventos, readme]
+  related_resources: [openapi-specification, sdd-emersonmendes]
+
+- id: traceability-automated-workflows
+  title: Rastreabilidade em fluxos automatizados
+  summary: "Garantir que cada resultado possa ser ligado às entradas, à versão do código e à execução que o produziu."
+  when_to_use: "Quando resultados são auditados, questionados ou usados em decisões que precisam ser explicadas depois."
+  steps:
+    - title: Atribuir identificador a cada execução
+      detail: "Grave o identificador junto aos resultados, com data de referência e parâmetros usados."
+    - title: Registrar a versão do código
+      detail: "Associe cada execução ao commit ou versão publicada que a executou."
+    - title: Preservar a origem dos dados
+      detail: "Registre fontes e versões das tabelas de entrada; ferramentas de linhagem automatizam parte disso."
+    - title: Registrar decisões humanas
+      detail: "Aprovações, correções manuais e exceções aceitas ficam registradas com autor, data e motivo."
+      human_checkpoint: true
+    - title: Testar a reconstrução
+      detail: "Periodicamente, escolha um resultado e verifique se é possível reconstruir como ele foi produzido."
+  use_cases: [document_process, improve_data_quality, monitor_operations]
+  areas: [data-governance, data-engineering]
+  tags: [rastreabilidade, linhagem, auditoria, versionamento]
+  related_notes: [data-lineage, fonte-e-data-de-cada-numero, commits-pequenos]
+  related_resources: [unity-catalog-docs, mlflow-docs]

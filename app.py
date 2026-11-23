@@ -24,20 +24,44 @@ st.set_page_config(
 from components import layout  # noqa: E402
 from components.styles import inject_css  # noqa: E402
 from services.catalog import CatalogError, load_catalog  # noqa: E402
-from views import admin, discover, library, note, resource, tips  # noqa: E402
+from views import admin, discover, library, note, playbook, resource, tips, topic  # noqa: E402
 
-VIEWS = {"discover": discover, "library": library, "tips": tips, "resource": resource, "note": note, "admin": admin}
+VIEWS = {
+    "discover": discover, "library": library, "tips": tips,
+    "resource": resource, "note": note, "admin": admin,
+    "playbook": playbook, "topic": topic,
+}
 
 
-@st.cache_resource(show_spinner=False)
-def get_catalog():
+def _content_version() -> str:
+    """Assinatura do codigo + dados do catalogo.
+
+    `st.cache_resource` so invalida quando o corpo da funcao muda; sem esta chave, um
+    redeploy reaproveita o objeto Catalog criado pela versao anterior do codigo
+    (ex.: sem o atributo `collections`) e quebra a pagina.
+    """
+    import hashlib
+
+    h = hashlib.sha1()
+    for p in sorted([*ROOT.glob("services/**/*.py"), *ROOT.glob("data/*.yaml")]):
+        try:
+            h.update(p.as_posix().encode())
+            h.update(p.read_bytes())
+        except OSError:
+            continue
+    return h.hexdigest()[:16]
+
+
+# ttl: recursos publicados por outra instancia/replica aparecem sem reiniciar o app
+@st.cache_resource(show_spinner=False, ttl=300, max_entries=2)
+def get_catalog(version: str):
     return load_catalog()
 
 
 def main() -> None:
     inject_css()
     try:
-        cat = get_catalog()
+        cat = get_catalog(_content_version())
     except (CatalogError, ValueError) as exc:
         st.error("Não foi possível carregar o catálogo. Verifique os arquivos em data/.")
         st.code(str(exc)[:2000])

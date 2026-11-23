@@ -1,49 +1,38 @@
-"""Discover: home editorial centrada em Tools & Resources.
+"""Discover: home editorial com 4 seções derivadas da taxonomia.
 
-Ordem: hero compacto com busca -> chips de area (filtros transversais) -> bloco central
-"Tools & Resources" (colecoes `home: main`) -> demais colecoes editoriais, cada uma com
-um layout proprio. Cursos longos ficam em "Deep dives", secundario, no fim da pagina.
+Ordem: hero compacto com busca -> chips de area -> 4 seções:
+1. Make Your Work Easier (subcategorias: automacao, IA, templates, validacao)
+2. Tools & Resources (subcategorias: ferramentas, dev, ai/data, pesquisa)
+3. Deep Dives & Courses (subcategorias: plataformas, cursos, guias)
+4. Quick Knowledge (topic collections: technology + practical)
 
-Com um chip ativo, cada colecao mostra so itens da area e some se ficar vazia. Um item
-aparece no maximo uma vez na home, mesmo que pertenca a varias colecoes.
+Com um chip ativo, cada seção mostra só itens da área e some se ficar vazia.
 """
 from __future__ import annotations
 
 import streamlit as st
 
-from components.cards import COURSE_TYPES, item_grid
-from components.layout import go, param, section_title, subhead
+from components.cards import (
+    item_card, note_card, playbook_card, resource_card, topic_card,
+)
+from components.layout import go, param, section_title
 from services.catalog import Catalog, diverse
-from services.models import Collection, Resource
+from services.models import Resource
 
-HERO_TITLE = "Um lugar para descobrir algo novo."
-HERO_SUBTITLE = "Ferramentas, repositórios e conhecimento prático, com curadoria."
+HERO_TITLE = "Resource Library"
 ALL = "all"
-
-# layout da colecao -> (colunas, variante do card)
-LAYOUTS = {
-    "grid": (3, "grid"),
-    "list": (2, "row"),
-    "feature": (2, "feature"),
-    "notes": (4, "tile"),
-    "shelf": (4, "shelf"),
-}
-EYEBROW = {
-    "interesting-discoveries": "Curadoria",
-    "quick-knowledge": "Para ler em 1 minuto",
-    "deep-dives": "Para estudar com calma",
-}
+SECTION_LIMIT = 6  # itens por seção na home
+QK_LIMIT = 8       # topic collections no Quick Knowledge
 
 
 def _hero() -> None:
     with st.container(key="hero"):
         st.title(HERO_TITLE, anchor=False)
-        st.markdown(HERO_SUBTITLE)
         with st.form("global-search", border=False, clear_on_submit=False):
             c1, c2 = st.columns([6, 1], vertical_alignment="bottom", gap="small")
             q = c1.text_input(
                 "Buscar",
-                placeholder="Busque uma ferramenta, tema ou conceito — ex.: forecast, RAG, Git, data contract",
+                placeholder="Buscar ferramentas, cursos, conceitos...",
                 label_visibility="collapsed",
             )
             sent = c2.form_submit_button("Buscar", icon=":material/search:", type="primary", width="stretch")
@@ -63,28 +52,62 @@ def _chips(cat: Catalog, area: str | None) -> None:
         go("discover", area=None if choice == ALL else choice)
 
 
-def _pick(cat: Catalog, col: Collection, area: str | None, shown: set[str]) -> list:
-    out = []
-    for obj, note in cat.collection_items(col.id):
-        if obj.id in shown or (area and area not in obj.areas):
+def _area_filter(resources: list[Resource], area: str | None) -> list[Resource]:
+    if not area:
+        return resources
+    return [r for r in resources if area in r.areas]
+
+
+def _section_resources(cat: Catalog, section_id: str, area: str | None) -> None:
+    """Renderiza uma seção editorial com subcategorias agrupadas."""
+    sec = cat.taxonomy.section(section_id)
+    if not sec:
+        return
+    all_res = _area_filter(cat.resources_in_section(section_id), area)
+    if not all_res:
+        return
+    section_title(sec.title)
+    # Mostrar por subcategoria
+    shown = 0
+    for sub in sec.subcategories:
+        sub_res = [r for r in all_res if r.editorial_subcategory == sub.id]
+        if not sub_res:
             continue
-        out.append((obj, note))
-        if len(out) >= col.home_limit:
-            break
-    return out
+        display = sub_res[:SECTION_LIMIT - shown] if shown < SECTION_LIMIT else []
+        if not display:
+            continue
+        st.caption(f"{sub.icon} **{sub.title}**")
+        cols = st.columns(3, gap="medium")
+        for i, r in enumerate(display):
+            with cols[i % 3]:
+                resource_card(r, cat, f"home-{section_id}", variant="grid")
+        shown += len(display)
+    # Link para a Library filtrada
+    total = len(all_res)
+    if total > shown:
+        if st.button(f"Ver todos ({total})", key=f"more-{section_id}", icon=":material/grid_view:", type="tertiary"):
+            go("library", section=section_id, area=area)
 
 
-def _render(cat: Catalog, col: Collection, items: list, total: int) -> None:
-    cols, variant = LAYOUTS[col.layout]
-    item_grid(items, cat, col.id, cols=cols, variant=variant)
-    if total > len(items):
-        target = ("tips", {}) if col.layout == "notes" else ("library", {"collection": col.id})
-        if st.button(f"Ver tudo em {col.title} →", key=f"all-{col.id}", type="tertiary"):
-            go(target[0], **target[1])
-
-
-def _in_area(obj, area: str | None) -> bool:
-    return not area or area in obj.areas
+def _quick_knowledge(cat: Catalog, area: str | None) -> None:
+    """Seção Quick Knowledge: topic collections (technology + practical)."""
+    tech = [t for t in cat.topics.values() if t.kind == "technology"]
+    prac = [t for t in cat.topics.values() if t.kind == "practical"]
+    if not tech and not prac:
+        return
+    section_title("Quick Knowledge")
+    if tech:
+        st.caption(":material/school: **Technology Collections**")
+        cols = st.columns(4, gap="medium")
+        for i, t in enumerate(tech[:QK_LIMIT]):
+            with cols[i % 4]:
+                topic_card(t, cat, "qk-tech")
+    if prac:
+        st.caption(":material/build: **Practical Collections**")
+        cols = st.columns(4, gap="medium")
+        for i, t in enumerate(prac[:QK_LIMIT]):
+            with cols[i % 4]:
+                topic_card(t, cat, "qk-prac")
 
 
 def render(cat: Catalog) -> None:
@@ -94,42 +117,14 @@ def render(cat: Catalog) -> None:
     _hero()
     _chips(cat, area)
 
-    shown: set[str] = set()
-    main = [c for c in cat.collections.values() if c.home == "main"]
-    rest = [c for c in cat.collections.values() if c.home == "section"]
-
-    # ---- Tools & Resources (bloco central) ---------------------------------
-    blocks = []
-    for col in main:
-        items = _pick(cat, col, area, shown)
-        shown |= {o.id for o, _ in items}
-        blocks.append((col, items))
-    if area and blocks and len(blocks[0][1]) < 3:
-        # completa com outras ferramentas/repositorios da area (nunca cursos longos)
-        extra = [r for r in diverse(cat.resources_in_area(area))
-                 if r.id not in shown and r.type not in COURSE_TYPES and r.parent is None]
-        need = blocks[0][0].home_limit - len(blocks[0][1])
-        blocks[0][1].extend((r, None) for r in extra[:need])
-        shown |= {r.id for r in extra[:need]}
-    if any(items for _, items in blocks):
-        section_title("Tools & Resources", "Ferramentas, repositórios e referências para usar no trabalho.",
-                      eyebrow="Em destaque")
-        for col, items in blocks:
-            if items:
-                subhead(col.title, col.tagline)
-                total = sum(1 for o, _ in cat.collection_items(col.id) if _in_area(o, area))
-                _render(cat, col, items, total)
-
-    # ---- colecoes editoriais ------------------------------------------------
-    for col in rest:
-        items = _pick(cat, col, area, shown)
-        if not items:
-            continue
-        shown |= {o.id for o, _ in items if isinstance(o, Resource)}
-        with st.container(key=f"sec-{col.id}"):
-            section_title(col.title, col.tagline, eyebrow=EYEBROW.get(col.id))
-            total = sum(1 for o, _ in cat.collection_items(col.id) if _in_area(o, area))
-            _render(cat, col, items, total)
+    # 1. Make Your Work Easier
+    _section_resources(cat, "make-your-work-easier", area)
+    # 2. Tools & Resources
+    _section_resources(cat, "tools-resources", area)
+    # 3. Deep Dives & Courses
+    _section_resources(cat, "deep-dives-courses", area)
+    # 4. Quick Knowledge
+    _quick_knowledge(cat, area)
 
     st.write("")
     with st.container(horizontal=True, gap="medium", key="home-more"):
