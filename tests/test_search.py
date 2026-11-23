@@ -29,7 +29,10 @@ def test_area_filter_is_multidimensional(cat):
 def test_filters_combine(cat):
     f = Filters(areas=("dev-backend",), languages=("multi",))
     res = ids(LocalSearch(cat).search("", f))
-    assert res == ["sdd-emersonmendes"]
+    assert "sdd-emersonmendes" in res
+    # todos os resultados atendem aos DOIS filtros ao mesmo tempo
+    assert all("dev-backend" in cat.resources[i].areas and cat.resources[i].language == "multi" for i in res)
+    assert len(res) < len([r for r in cat.resources.values() if "dev-backend" in r.areas])
     assert LocalSearch(cat).search("", Filters(types=("tool",), difficulties=("beginner",)))
 
 

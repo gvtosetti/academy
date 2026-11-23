@@ -388,3 +388,152 @@
     - Qual codificação de caracteres e qual separador?
 
     As respostas viram uma especificação curta, que pode ficar no repositório e gerar tarefas e testes. A conversa extra costuma custar menos que refazer a implementação.
+
+# ---- Databricks Fundamentals ------------------------------------------------
+- id: databricks-workspace
+  kind: explainer
+  title: "Databricks Workspace: notebooks, repos e arquivos"
+  summary: "O workspace organiza notebooks, repositórios Git e arquivos em pastas com permissões Unity Catalog."
+  body: |
+    Um workspace Databricks é o ambiente central onde equipes escrevem código, exploram dados e gerenciam artefatos.
+
+    **Notebooks** suportam Python, SQL, Scala e R com execução interativa. **Repos** sincronizam com GitHub/GitLab para versionamento. **Files** armazenam scripts auxiliares e configurações.
+
+    Permissões seguem o modelo Unity Catalog: quem pode ler, editar ou executar depende do nível de acesso concedido ao objeto.
+  areas: [data-engineering, data-science]
+  tags: [databricks, workspace, notebooks, repos]
+  related_resources: [databricks-academy]
+
+- id: databricks-compute
+  kind: explainer
+  title: "Clusters, Serverless e SQL Warehouses"
+  summary: "Databricks oferece três modos de compute: clusters interativos, serverless e SQL warehouses para consultas."
+  body: |
+    **Clusters** (All-Purpose) são máquinas configuráveis para notebooks e jobs — o usuário escolhe tipo e quantidade de nós.
+
+    **Serverless** aloca compute automaticamente, sem configuração de cluster. Disponível para notebooks, jobs e SQL.
+
+    **SQL Warehouses** são endpoints otimizados para consultas SQL e dashboards, com escalonamento automático.
+
+    A escolha depende do caso: interativo (cluster), produção sem gestão (serverless), ou BI/analytics (SQL warehouse).
+  areas: [data-engineering, data-science, analytics]
+  tags: [databricks, clusters, serverless, sql warehouse, compute]
+  related_resources: [databricks-academy]
+
+- id: databricks-jobs
+  kind: explainer
+  title: "Lakeflow Jobs: agendamento e orquestração"
+  summary: "Jobs são a unidade de execução agendada no Databricks — uma ou mais tarefas com dependências, retries e alertas."
+  body: |
+    Um job contém **tarefas** (notebooks, scripts Python, JARs, pipelines) organizadas em DAG. Cada tarefa declara de quem depende.
+
+    **Gatilhos**: agendamento (cron), chegada de arquivo, atualização de tabela ou execução manual. **Retries** são configuráveis por tarefa e só são seguros se a tarefa for idempotente.
+
+    **Monitoramento**: o histórico de execuções mostra duração, status e logs. Alertas notificam falha ou atraso por email, Slack ou webhook.
+
+    **Parametrização**: passe data de referência, ambiente e caminhos como parâmetros do job, não valores fixos no código.
+  areas: [data-engineering, data-science]
+  tags: [databricks, jobs, lakeflow, agendamento, orquestracao, retries]
+  related_resources: [databricks-lakeflow-jobs]
+  related_concepts: [ci-cd]
+
+- id: databricks-unity-catalog
+  kind: explainer
+  title: "Unity Catalog: governança centralizada"
+  summary: "Unity Catalog organiza dados e modelos em catálogo → schema → tabela, com permissões, auditoria e linhagem."
+  body: |
+    O modelo de objetos segue três níveis: **catálogo** (namespace amplo, como produção/dev), **schema** (agrupamento lógico) e **tabela/view/volume/modelo**.
+
+    **Permissões** são concedidas por nível (GRANT SELECT ON SCHEMA) e herdadas para baixo. **Ownership** define quem administra o objeto.
+
+    **Linhagem** é rastreada automaticamente: o Unity Catalog registra de quais tabelas cada job ou query lê e onde escreve.
+
+    **Auditoria**: todas as operações ficam em `system.access.audit`, com quem, quando e o quê.
+  areas: [data-governance, data-engineering]
+  tags: [databricks, unity catalog, permissoes, linhagem, auditoria, governanca]
+  related_resources: [unity-catalog-docs]
+  related_concepts: [data-lineage]
+
+- id: databricks-mlflow
+  kind: explainer
+  title: "MLflow no Databricks: tracking, avaliação e registro"
+  summary: "MLflow registra parâmetros, métricas e artefatos de experimentos. No Databricks, é integrado ao Unity Catalog."
+  body: |
+    **Tracking**: cada execução (run) registra parâmetros, métricas e artefatos em um experimento. Runs são comparáveis na UI.
+
+    **Model Registry**: modelos registrados ganham versões, estágios (staging/production) e permissões via Unity Catalog.
+
+    **Avaliação**: `mlflow.evaluate()` calcula métricas sobre o output de modelos, incluindo LLMs (relevância, fidelidade, toxicidade).
+
+    **Tracing**: rastreia chamadas de agentes e chains, registrando entrada, saída e latência de cada etapa.
+  areas: [data-science, ai-llms]
+  tags: [mlflow, tracking, model registry, avaliacao, tracing, databricks]
+  related_resources: [mlflow-docs]
+  related_concepts: [evaluation, llmops]
+
+- id: databricks-sql-warehouse
+  kind: explainer
+  title: "SQL Warehouses: compute otimizado para analytics"
+  summary: "SQL warehouses são endpoints para consultas SQL e dashboards, com escalonamento automático e cache de resultados."
+  body: |
+    Um SQL warehouse é um cluster pré-configurado e otimizado para workloads de leitura (SELECT, dashboards, BI).
+
+    **Tipos**: Classic (máquinas dedicadas), Pro (Serverless com funcionalidades extras como tags de governança) e Serverless (alocação sob demanda).
+
+    **Escalonamento**: o warehouse aumenta e reduz clusters automaticamente conforme a carga de queries.
+
+    **Cache**: resultados são cacheados em disco local — queries repetidas retornam instantaneamente sem re-executar.
+  areas: [analytics, data-engineering]
+  tags: [databricks, sql warehouse, analytics, bi, cache, escalonamento]
+  related_resources: [databricks-academy]
+
+- id: databricks-jobs-vs-notebooks
+  kind: explainer
+  title: "Jobs vs notebooks: quando cada um faz sentido"
+  summary: "Notebook é onde o código é escrito e explorado; job é como esse código roda em produção, com agenda, retries e alertas."
+  body: |
+    Um **notebook** é ótimo para explorar, prototipar e documentar o raciocínio. Rodá-lo à mão, porém, depende de alguém lembrar, ter acesso e conferir o resultado.
+
+    Um **job** transforma o mesmo código em uma execução operacional: gatilho definido, parâmetros explícitos, compute próprio, histórico de execuções, retries e notificações.
+
+    **Regra prática**
+    - Exploração e análise pontual: notebook.
+    - Qualquer coisa que outra pessoa ou processo espera receber em data certa: job.
+    - Ao promover, extraia valores fixos para parâmetros e garanta que reprocessar uma data não duplique dados.
+  areas: [data-engineering, data-science]
+  tags: [databricks, jobs, notebooks, producao, agendamento]
+  related_resources: [databricks-lakeflow-jobs]
+  related_concepts: [ci-cd]
+
+- id: databricks-apps
+  kind: explainer
+  title: "Databricks Apps: aplicações de dados dentro do workspace"
+  summary: "Databricks Apps hospeda aplicações web (por exemplo Streamlit, Dash, Gradio ou Flask) junto aos dados e à governança do workspace."
+  body: |
+    Um app é código Python ou Node.js com um arquivo de configuração (`app.yaml`) que define o comando de execução e variáveis de ambiente.
+
+    **Identidade**: o app roda com um service principal próprio; o acesso a tabelas, warehouses e endpoints é concedido a essa identidade, como a qualquer usuário.
+
+    **Deploy básico**: o código fica em uma pasta do workspace ou repositório; cada deploy cria uma nova versão do app.
+
+    **Cuidado**: segredos vêm de secret scopes via `valueFrom`, nunca escritos no código. Disponibilidade e recursos variam por região e plano.
+  areas: [data-engineering, dev-backend]
+  tags: [databricks, apps, deploy, streamlit, service principal]
+  related_concepts: [api]
+
+- id: databricks-model-serving
+  kind: explainer
+  title: "Model Serving: modelos como endpoints REST"
+  summary: "Serving endpoints expõem modelos (MLflow, foundation models ou modelos externos) por uma API REST com autenticação e escalonamento."
+  body: |
+    Um **serving endpoint** recebe requisições HTTP e devolve previsões ou respostas de um modelo registrado. Pode servir modelos próprios registrados no MLflow, foundation models ou modelos externos de outros provedores.
+
+    **Integração**: chamadas usam autenticação do workspace (token ou OAuth). Para LLMs, há formato compatível com chat completions.
+
+    **Operação**: o endpoint escala conforme a carga e pode reduzir a zero quando ocioso, o que adiciona latência na primeira chamada.
+
+    **Boas práticas**: registre requisições para avaliação, trate erros 429/5xx com retry e backoff e não presuma que um modelo em preview esteja habilitado no seu workspace.
+  areas: [ai-llms, data-science, dev-backend]
+  tags: [databricks, model serving, endpoints, api, llm, deploy]
+  related_resources: [mlflow-docs]
+  related_concepts: [api, llmops]

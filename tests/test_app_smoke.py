@@ -29,6 +29,10 @@ CASES = [
     {"page": "playbook", "playbook": "nao-existe"},
     {"page": "topic", "topic": "llm-fundamentals"},
     {"page": "topic", "topic": "nao-existe"},
+    {"page": "topic", "topic": "databricks-fundamentals"},
+    {"page": "note", "note": "databricks-jobs-vs-notebooks"},
+    {"page": "library", "section": "make-your-work-easier", "subcategory": "documentation-runbooks"},
+    {"page": "release-watch"},
     # rotas antigas continuam funcionando
     {"page": "paths"},
     {"page": "explore", "q": "rag"},
@@ -91,6 +95,46 @@ def test_discover_has_hero_chips_and_sections(monkeypatch):
     md = " ".join(m.value for m in at.markdown)
     low = md.lower()
     assert "progresso" not in low and "quiz" not in low and "trilha" not in low
+
+
+def test_home_is_a_compact_showcase(monkeypatch):
+    _offline(monkeypatch)
+    at = _run()
+    from services.catalog import load_catalog
+
+    cat = load_catalog()
+    links = at.get("link_button")
+    # vitrine: no maximo 6 recursos por secao de recursos (+3 novidades), nunca o catalogo inteiro
+    assert 3 <= len(links) <= 15 < len(cat.resources)
+    md = " ".join(m.value for m in at.markdown)
+    assert "Documentation &amp; Runbooks" in md or "Documentation & Runbooks" in md
+    # Databricks em destaque no Quick Knowledge: as 3 colecoes prioritarias aparecem na vitrine
+    labels = [b.label for b in at.button]
+    for t in ("Databricks Fundamentals", "Databricks Jobs & Workflows", "Unity Catalog & Governance"):
+        assert t in labels, t
+    topic_titles = {t.title for t in cat.topics.values()}
+    assert len([x for x in labels if x in topic_titles]) <= 6, "Quick Knowledge da Home mostra so uma selecao"
+    assert any(b.label.startswith("Ver todos") for b in at.button)
+
+
+def test_release_watch_admin_queue(monkeypatch, tmp_path):
+    _offline(monkeypatch)
+    db = tmp_path / "rw.db"
+    monkeypatch.setenv("ACADEMY_ENV", "dev")
+    monkeypatch.setenv("ACADEMY_DEV_ADMIN", "editor@example.com")
+    monkeypatch.setenv("RELEASE_WATCH_SQLITE_PATH", str(db))
+    from services.release_watch import store as rw_store
+    from services.release_watch.runner import run
+    from tests.test_release_watch import GA, NOV, NOW, FakeFetcher, page
+
+    rw_store.set_store(None)
+    run("weekly", now=NOW, store=rw_store.SQLiteStore(db), fetcher=FakeFetcher({NOV: page(GA)}), include_blog=False)
+    at = _run(page="release-watch")
+    assert not at.exception, [e.message for e in at.exception]
+    md = " ".join(m.value for m in at.markdown)
+    assert "Widget API is now generally available" in md
+    assert any(b.proto.label == "Open official source" for b in at.get("link_button"))
+    rw_store.set_store(None)
 
 
 def test_cards_have_two_distinct_actions(monkeypatch):

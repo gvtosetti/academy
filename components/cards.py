@@ -1,10 +1,10 @@
-"""Cards editoriais da Academy (recurso e nota).
+"""Cards editoriais da Resource Library (recurso e nota).
 
 Cada card mostra pouco e sempre no mesmo lugar: identidade visual discreta (avatar do
 autor no GitHub ou monograma do provedor), area + formato, titulo (ate 3 linhas),
 descricao curta (ate 3 linhas) e duas acoes distintas:
   - "Open resource ↗": abre o material original em um clique;
-  - "Saiba mais": explicacao complementar dentro da Academy.
+  - "Saiba mais": explicacao complementar dentro da Resource Library.
 
 Todo texto do catalogo e escapado antes de ir para o HTML (utils.safe.esc).
 """

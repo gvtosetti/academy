@@ -14,7 +14,7 @@ PAGES = {
     "library": ("Library", ":material/grid_view:"),
     "tips": ("Tips & Insights", ":material/lightbulb:"),
 }
-DETAIL_PAGES = {"resource", "note", "admin", "playbook", "topic"}
+DETAIL_PAGES = {"resource", "note", "admin", "playbook", "topic", "release-watch"}
 
 # Rotas da versao anterior (LMS) -> novas secoes. Mantem links antigos funcionando.
 LEGACY = {
@@ -52,12 +52,12 @@ def go(page: str, **params: Optional[str]) -> None:
 
 
 def header(active: str) -> None:
-    section = active if active in PAGES else {"resource": "library", "note": "tips", "admin": "discover",
+    section = active if active in PAGES else {"resource": "library", "note": "tips", "admin": "discover", "release-watch": "discover",
                                                 "playbook": "discover", "topic": "discover"}.get(active)
     with st.container(key="topbar"):
         left, right = st.columns([1, 2], vertical_alignment="center")
         with left:
-            if st.button("Academy", icon=":material/auto_awesome:", type="tertiary", key="brand"):
+            if st.button("Resource Library", icon=":material/auto_awesome:", type="tertiary", key="brand"):
                 go("discover")
         with right:
             choice = st.segmented_control(
@@ -102,7 +102,7 @@ def subhead(title: str, tagline: str | None = None) -> None:
 def footer() -> None:
     st.divider()
     st.caption(
-        "Academy é um espaço de curadoria: os materiais pertencem aos seus autores e cada card leva "
+        "A Resource Library é um espaço de curadoria: os materiais pertencem aos seus autores e cada card leva "
         "direto à fonte original. Explicações e notas são texto autoral da curadoria. Nada aqui exige "
         "inscrição, ordem de estudo ou acompanhamento de progresso."
     )
