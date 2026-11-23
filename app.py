@@ -24,9 +24,9 @@ st.set_page_config(
 from components import layout  # noqa: E402
 from components.styles import inject_css  # noqa: E402
 from services.catalog import CatalogError, load_catalog  # noqa: E402
-from views import discover, library, note, resource, tips  # noqa: E402
+from views import admin, discover, library, note, resource, tips  # noqa: E402
 
-VIEWS = {"discover": discover, "library": library, "tips": tips, "resource": resource, "note": note}
+VIEWS = {"discover": discover, "library": library, "tips": tips, "resource": resource, "note": note, "admin": admin}
 
 
 @st.cache_resource(show_spinner=False)

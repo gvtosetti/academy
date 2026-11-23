@@ -59,7 +59,7 @@ def _resource_fields(r: Resource, cat: Catalog) -> dict[str, str]:
         "concepts": " ".join(cnames),
         "provider": r.provider,
         "areas": " ".join(cat.areas[a].name for a in r.areas if a in cat.areas),
-        "short": f"{r.blurb} {r.short_description}",
+        "short": f"{r.tagline} {r.blurb} {r.short_description}",
         "body": " ".join(
             [r.plain_language_explanation, r.why_it_matters, r.technical_explanation]
             + r.learning_outcomes + r.practical_applications

@@ -8,6 +8,7 @@
 # CATEGORIA A — AI Foundations & Understanding LLMs
 # =====================================================================
 - id: llms-por-dentro
+  tagline: "Como um LLM transforma texto em resposta, explicado em português e sem matemática pesada."
   areas: [ai-llms, data-science]
   blurb: "Série em português que explica, sem matemática pesada, como um LLM transforma texto em tokens e gera respostas. Bom ponto de partida para quem usa IA e quer entender o que acontece por dentro."
   title: LLMs por Dentro
@@ -86,6 +87,7 @@
   metadata_notes: "Segundo o README (nov/2026), apenas o episódio 01 tem apresentação e roteiro prontos; 02–04 têm plano de aula definido."
 
 - id: train-llm-from-scratch
+  tagline: "Código passo a passo para treinar um pequeno modelo de linguagem do zero, do dataset ao modelo."
   areas: [ai-llms, data-science]
   blurb: "Código passo a passo para treinar um pequeno modelo de linguagem do zero, do dataset ao modelo final. Para quem quer entender LLMs construindo um; ajuda ter Python e noções de deep learning."
   title: Train LLM From Scratch
@@ -169,6 +171,7 @@
   metadata_status: verified
 
 - id: stanford-online-playlists
+  tagline: "Cursos completos de Stanford sobre IA, machine learning e LLMs, gratuitos no YouTube."
   areas: [data-science, ai-llms]
   blurb: "Cursos completos de Stanford no YouTube sobre IA, machine learning e LLMs. Aulas de nível universitário, gratuitas, para assistir no seu ritmo."
   title: Stanford Online — Playlists
@@ -224,6 +227,7 @@
   metadata_notes: "Coleção: o conjunto de playlists do canal muda com o tempo; apenas as playlists listadas como itens filhos foram verificadas individualmente."
 
 - id: stanford-cs221-2025
+  tagline: "Fundamentos da IA: busca, raciocínio, probabilidade e aprendizado."
   areas: [data-science, ai-llms]
   blurb: "Curso de Stanford sobre os fundamentos da IA: busca, raciocínio, probabilidade e aprendizado. A base conceitual por trás das ferramentas de IA atuais."
   title: "Stanford CS221: Artificial Intelligence: Principles and Techniques | Autumn 2025"
@@ -305,6 +309,7 @@
   metadata_status: verified
 
 - id: stanford-cs229-2026
+  tagline: "O curso clássico de machine learning de Stanford, base para quem faz Data Science."
   areas: [data-science]
   blurb: "O curso clássico de machine learning de Stanford. Para quem quer entender de verdade os algoritmos usados no dia a dia de Data Science."
   title: "Stanford CS229 Machine Learning | Spring 2026"
@@ -384,6 +389,7 @@
   metadata_notes: "Os títulos das aulas 18 e 20 aparecem na playlist exatamente como 'GMM (EM), PCA' (iguais à aula 10)."
 
 - id: stanford-cs230-2025
+  tagline: "Deep learning na prática: redes neurais, treinamento e boas práticas de projeto."
   areas: [data-science, ai-llms]
   blurb: "Curso de deep learning de Stanford: redes neurais, treinamento e boas práticas de projeto. Útil para ir além do modelo que só funciona no notebook."
   title: "Stanford CS230: Deep Learning I Autumn 2025"
@@ -451,6 +457,7 @@
   metadata_status: verified
 
 - id: stanford-cme295-2025
+  tagline: "Transformers e LLMs, da arquitetura às aplicações."
   areas: [ai-llms, data-science]
   blurb: "Curso de Stanford dedicado a Transformers e LLMs, da arquitetura às aplicações. Um caminho direto para entender a tecnologia por trás dos assistentes de IA."
   title: "Stanford CME295: Transformers and Large Language Models I Autumn 2025"
@@ -521,6 +528,7 @@
   metadata_status: verified
 
 - id: stanford-cs336-2026
+  tagline: "Construa um modelo de linguagem do zero: dados, treino e eficiência. Profundo e avançado."
   areas: [ai-llms, data-science]
   blurb: "Curso avançado de Stanford em que se constrói um modelo de linguagem do zero: dados, treino e eficiência. Para quem quer profundidade técnica real."
   title: "Stanford CS336: Language Modeling from Scratch | Spring 2026"
@@ -601,6 +609,7 @@
   metadata_status: verified
 
 - id: stanford-cs329a
+  tagline: "Seminário sobre agentes que se aprimoram: verificação, uso de ferramentas e planejamento."
   areas: [ai-llms]
   blurb: "Seminário de Stanford sobre agentes de IA que se aprimoram: verificação, uso de ferramentas e planejamento. Uma visão de pesquisa sobre para onde os agentes estão indo."
   title: CS329A Self-Improving AI Agents
@@ -671,6 +680,7 @@
   metadata_status: verified
 
 - id: stanford-ee292r
+  tagline: "Palestras sobre IA aplicada à ciência, longe do mundo dos chatbots."
   areas: [data-science, ai-llms]
   blurb: "Palestras de Stanford sobre IA aplicada à ciência. Bom para ver aplicações de IA fora do mundo dos chatbots."
   title: Stanford EE292R AI and Data for Science
@@ -731,6 +741,7 @@
 # CATEGORIA B — LLM Engineering & Production
 # =====================================================================
 - id: fsdl-llm-bootcamp-2023
+  tagline: "Do protótipo à produção com LLMs: prompting, RAG, UX e operação. Edição de 2023."
   areas: [ai-llms, product, dev-backend]
   blurb: "Bootcamp sobre como levar aplicações com LLMs do protótipo à produção: prompting, RAG, UX e operação. É de 2023; os princípios seguem úteis, algumas ferramentas mudaram."
   title: LLM Bootcamp - Spring 2023
@@ -796,6 +807,7 @@
   metadata_notes: "Conteúdo de 2023: ferramentas citadas (ex.: Modal, Gantry, LangChain da época) podem ter mudado. Duração não informada pela fonte."
 
 - id: dlai-evaluating-debugging-genai
+  tagline: "Como avaliar e depurar aplicações de IA generativa."
   areas: [ai-llms, data-science]
   blurb: "Curso da DeepLearning.AI sobre avaliar e depurar aplicações de IA generativa. Detalhes do currículo ainda em validação na fonte."
   title: Evaluating and Debugging Generative AI
@@ -848,6 +860,7 @@
   metadata_notes: "Pending verification: deeplearning.ai retornou HTTP 403 (proteção anti-bot) em 19/11/2026. Currículo, lições, duração, instrutores e ferramentas não verificados."
 
 - id: production-agentic-rag-course
+  tagline: "Construa, semana a semana, um assistente de pesquisa com RAG agêntico em produção."
   areas: [ai-llms, dev-backend, data-engineering]
   blurb: "Curso prático para construir, semana a semana, um assistente de pesquisa sobre papers: da ingestão e busca ao RAG agêntico monitorado. Mostra como RAG é feito em produção."
   title: "The Mother of AI Project — Phase 1 RAG Systems: arXiv Paper Curator"
@@ -930,6 +943,7 @@
 # CATEGORIA C — Agentic AI & Architectures
 # =====================================================================
 - id: all-agentic-architectures
+  tagline: "Dezenas de arquiteturas de agentes em notebooks comparáveis, para escolher o padrão certo."
   areas: [ai-llms, dev-backend]
   blurb: "Catálogo executável de dezenas de arquiteturas de agentes, com notebooks comparáveis. Referência para escolher o padrão certo em vez de seguir a moda."
   title: Agentic Architectures (all-agentic-architectures)
@@ -1009,6 +1023,7 @@
   metadata_notes: "O README cita 36 arquiteturas e a descrição do GitHub cita 35 (nov/2026)."
 
 - id: dair-ai
+  tagline: "Guias e listas curadas sobre IA: prompting, papers explicados e cursos."
   areas: [ai-llms, data-science]
   blurb: "Organização com guias e listas curadas sobre IA: prompting, papers explicados e cursos. Uma fonte de referências confiáveis para continuar explorando."
   title: DAIR.AI
@@ -1058,6 +1073,7 @@
   metadata_notes: "Coleção: apenas os repositórios listados como itens filhos foram verificados individualmente."
 
 - id: dair-prompt-engineering-guide
+  tagline: "O guia aberto de prompt engineering, com técnicas e exemplos para o dia a dia."
   areas: [ai-llms, product]
   blurb: "Guia aberto e abrangente de prompt engineering, com técnicas, exemplos e tópicos como RAG e agentes. Útil para qualquer pessoa que escreve prompts no trabalho."
   title: Prompt-Engineering-Guide
@@ -1115,6 +1131,7 @@
   metadata_notes: "Verificados: descrição e linguagem via API da organização. README não analisado em detalhe; licença não conferida."
 
 - id: dair-ml-youtube-courses
+  tagline: "Índice curado de cursos gratuitos de ML e IA no YouTube."
   areas: [data-science]
   blurb: "Lista curada de cursos gratuitos de ML e IA no YouTube. Um índice para encontrar boas aulas sem perder tempo procurando."
   title: ML-YouTube-Courses
@@ -1162,6 +1179,7 @@
   metadata_notes: "Verificada apenas a descrição via API; README não analisado em detalhe; licença não conferida."
 
 - id: dair-ml-papers-explained
+  tagline: "Papers importantes de machine learning explicados de forma acessível."
   areas: [data-science, ai-llms]
   blurb: "Explicações acessíveis de papers importantes de machine learning. Ajuda a entender de onde vêm os conceitos que você usa."
   title: ML-Papers-Explained
@@ -1209,6 +1227,7 @@
   metadata_notes: "Verificada apenas a descrição via API; conteúdo e licença não conferidos."
 
 - id: dair-transformers-recipe
+  tagline: "Roteiro de leituras para entender Transformers sem se perder."
   areas: [ai-llms]
   blurb: "Roteiro de leituras para entender Transformers, a arquitetura por trás dos LLMs. Indica o que ler para estudar o tema sem se perder."
   title: Transformers-Recipe
@@ -1258,6 +1277,7 @@
 # CATEGORIA D — AI-Assisted Software Engineering
 # =====================================================================
 - id: mattpocock-skills
+  tagline: "Skills que dão processo de engenharia ao assistente de código: alinhar antes de codar e revisar."
   areas: [dev-backend, product]
   blurb: "Coleção de skills para assistentes de código que trazem processos de engenharia, como alinhamento antes de codar e revisão. Ajuda o agente de IA a construir a coisa certa."
   title: Skills For Real Engineers (mattpocock/skills)
@@ -1332,6 +1352,7 @@
   metadata_status: verified
 
 - id: grill-with-docs
+  tagline: "Revise decisões técnicas com IA, confrontando o plano com a documentação do projeto."
   areas: [dev-backend, product]
   blurb: "Um workflow de IA para revisar decisões e ideias técnicas com apoio de documentação. O plano é confrontado com o vocabulário e as decisões já registradas do projeto."
   title: grill-with-docs
@@ -1399,6 +1420,7 @@
   metadata_status: verified
 
 - id: grill-me
+  tagline: "Faça o assistente de IA entrevistar você antes de agir e evite construir a coisa errada."
   areas: [dev-backend, product]
   blurb: "Skill que faz o assistente de IA entrevistar você antes de agir, testando seu plano com perguntas. Simples de usar e evita que o agente construa a coisa errada."
   title: grill-me
@@ -1460,6 +1482,7 @@
   metadata_status: verified
 
 - id: sdd-emersonmendes
+  tagline: "Template em português para desenvolver com IA guiado por especificação."
   areas: [dev-backend, product]
   blurb: "Template em português para desenvolver com assistente de IA guiado por especificação: spec, tarefas, código e revisão. Para projetos que precisam de previsibilidade."
   title: "sdd — Template de Spec-Driven Development para Claude Code"
@@ -1537,6 +1560,7 @@
 # CATEGORIA E — Creative Coding & Visualization (ferramentas, nao cursos)
 # =====================================================================
 - id: motion
+  tagline: "Animação para interfaces web: microinterações e transições que deixam produtos mais claros."
   areas: [creative-tech, dev-backend]
   blurb: "Biblioteca de animação para interfaces web. Útil para criar microinterações e transições que deixam produtos mais claros e agradáveis."
   title: Motion
@@ -1606,6 +1630,7 @@
   metadata_status: verified
 
 - id: manim
+  tagline: "Animações matemáticas em Python para explicar algoritmos e conceitos estatísticos."
   areas: [creative-tech, data-science]
   blurb: "Uma biblioteca Python para criar animações matemáticas. Útil para visualizar algoritmos, conceitos estatísticos e explicações técnicas."
   title: Manim (Community Edition)
@@ -1675,6 +1700,7 @@
   metadata_status: verified
 
 - id: lottie-web
+  tagline: "Use na web animações do After Effects exportadas como JSON, sem recriá-las em código."
   areas: [creative-tech]
   blurb: "Biblioteca que reproduz na web animações criadas no After Effects e exportadas como JSON. Permite usar animações de designers sem recriá-las em código."
   title: lottie-web

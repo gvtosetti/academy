@@ -18,10 +18,13 @@ from utils.safe import is_safe_url
 
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 
-ResourceType = Literal["github", "course", "video", "playlist", "documentation", "tool", "collection"]
+ResourceType = Literal["github", "course", "video", "playlist", "documentation", "tool", "collection",
+                       "roadmap", "article"]
 Difficulty = Literal["beginner", "intermediate", "advanced"]
 MetadataStatus = Literal["verified", "partial", "pending"]
 TipKind = Literal["dev-tip", "tool", "practice", "in-practice"]
+CollectionLayout = Literal["grid", "list", "feature", "notes", "shelf"]
+TAGLINE_MAX = 125
 
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
@@ -86,7 +89,8 @@ class Resource(_Strict):
     difficulty: Difficulty
     language: Literal["pt", "en", "multi"]
     areas: list[str] = Field(min_length=1, description="Areas/disciplinas (multidimensional); a primeira e a principal")
-    blurb: str = Field(description="1-2 frases para o card: o que e e por que me interessa")
+    tagline: str = Field(description="Frase curta do card (ate ~120 caracteres): para que serve")
+    blurb: str = Field(description="1-2 frases de abertura da pagina Saiba mais")
     short_description: str
     plain_language_explanation: str
     technical_explanation: str
@@ -177,18 +181,36 @@ class Area(_Strict):
         return _check_id(v)
 
 
-class WorthItem(_Strict):
+class CollectionItem(_Strict):
+    """Um recurso ou uma nota, com comentario editorial opcional."""
+
     id: str
-    note: str
+    note: Optional[str] = None
 
 
-class HomeEditorial(_Strict):
-    """Selecao editorial da pagina Discover (ids de recursos e de notas)."""
+class Collection(_Strict):
+    """Agrupamento editorial independente (nao e trilha nem curso).
 
-    explore: list[str] = Field(default_factory=list)
-    worth_checking_out: list[WorthItem] = Field(default_factory=list)
-    quick_knowledge: list[str] = Field(default_factory=list)
-    tools: list[str] = Field(default_factory=list)
+    Um mesmo item pode estar em varias colecoes. A ordem dos itens e a ordem de exibicao.
+    """
+
+    id: str
+    title: str
+    tagline: str
+    layout: CollectionLayout = "grid"
+    home: Literal["main", "section", "hidden"] = "section"
+    home_limit: int = Field(default=6, ge=1, le=12)
+    items: list[CollectionItem] = Field(min_length=1)
+
+    @field_validator("id")
+    @classmethod
+    def v_id(cls, v: str) -> str:
+        return _check_id(v)
+
+    @field_validator("items", mode="before")
+    @classmethod
+    def v_items(cls, v):
+        return [{"id": x} if isinstance(x, str) else x for x in (v or [])]
 
 
 class Category(_Strict):

@@ -81,7 +81,14 @@ def render(cat: Catalog) -> None:
     st.title(r.title, anchor=False)
     with st.container(key="lead"):
         st.markdown(r.blurb)
-    st.link_button("Acessar material", r.url, icon=":material/open_in_new:", type="primary")
+    st.link_button("Open resource ↗", r.url, type="primary")
+    cols = cat.collections_of(r.id)
+    if cols:
+        with st.container(horizontal=True, gap="small", key="in-collections"):
+            st.caption("Nas coleções:")
+            for c in cols:
+                if st.button(c.title, key=f"col-{c.id}", type="tertiary"):
+                    go("library", collection=c.id)
     if r.metadata_status in STATUS_NOTE:
         st.caption(f":material/info: {STATUS_NOTE[r.metadata_status]}")
     if r.parent and r.parent in cat.resources:

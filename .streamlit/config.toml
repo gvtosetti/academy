@@ -1,10 +1,16 @@
 [theme]
 base = "light"
-primaryColor = "#4F46E5"
+primaryColor = "#4338CA"
 backgroundColor = "#FAFAF9"
-secondaryBackgroundColor = "#F4F4F5"
-textColor = "#18181B"
-font = "sans serif"
+secondaryBackgroundColor = "#F4F4F2"
+textColor = "#1C1917"
+borderColor = "#E7E5E4"
+baseRadius = "10px"
+linkColor = "#4338CA"
+# Inter (texto) e Fraunces (titulos editoriais), com fallback do sistema.
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+headingFont = "Fraunces:https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap, serif"
+headingFontWeights = [650, 600, 600, 600, 600, 600]
 
 [server]
 headless = true

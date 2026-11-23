@@ -14,7 +14,7 @@ PAGES = {
     "library": ("Library", ":material/grid_view:"),
     "tips": ("Tips & Insights", ":material/lightbulb:"),
 }
-DETAIL_PAGES = {"resource", "note"}
+DETAIL_PAGES = {"resource", "note", "admin"}
 
 # Rotas da versao anterior (LMS) -> novas secoes. Mantem links antigos funcionando.
 LEGACY = {
@@ -52,7 +52,7 @@ def go(page: str, **params: Optional[str]) -> None:
 
 
 def header(active: str) -> None:
-    section = active if active in PAGES else {"resource": "library", "note": "tips"}.get(active)
+    section = active if active in PAGES else {"resource": "library", "note": "tips", "admin": "discover"}.get(active)
     with st.container(key="topbar"):
         left, right = st.columns([1, 2], vertical_alignment="center")
         with left:
@@ -67,14 +67,35 @@ def header(active: str) -> None:
                 label_visibility="collapsed",
                 key=f"nav-{active}",
             )
+            is_admin = False
+            try:
+                from services.auth import current_identity
+                is_admin = current_identity().is_admin
+            except Exception:
+                is_admin = False
+            if is_admin:
+                st.link_button("Admin", "?page=admin", icon=":material/admin_panel_settings:")
     if choice and choice != section:
         go(choice)
 
 
-def section_title(title: str, subtitle: str | None = None) -> None:
+def section_title(title: str, subtitle: str | None = None, eyebrow: str | None = None) -> None:
+    """Cabecalho editorial: rotulo pequeno opcional, titulo e uma linha de apoio."""
+    if eyebrow:
+        from utils.safe import esc
+
+        st.markdown(f'<div class="ac-eyebrow">{esc(eyebrow)}</div>', unsafe_allow_html=True)
     st.subheader(title, anchor=False)
     if subtitle:
         st.caption(subtitle)
+
+
+def subhead(title: str, tagline: str | None = None) -> None:
+    """Titulo de colecao dentro de uma secao maior."""
+    from utils.safe import esc
+
+    tag = f"<span>{esc(tagline)}</span>" if tagline else ""
+    st.markdown(f'<div class="ac-subhead"><b>{esc(title)}</b>{tag}</div>', unsafe_allow_html=True)
 
 
 def footer() -> None:

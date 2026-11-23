@@ -78,11 +78,50 @@ def test_discover_has_hero_chips_and_sections(monkeypatch):
     for name in ["Todos", "Data Science", "Dev & Backend", "Produto", "Data Governance", "Market Research", "AI & LLMs", "Creative Tech"]:
         assert name in text, name
     subs = [s.value for s in at.subheader]
-    for sec in ["Explore & Discover", "Worth Checking Out", "Quick Knowledge", "Tools & Resources"]:
-        assert sec in subs, sec
+    # Tools & Resources e a secao principal; cursos longos ficam em Deep dives, no fim
+    assert subs == ["Tools & Resources", "Interesting discoveries", "Quick knowledge", "Deep dives"]
+    md = " ".join(m.value for m in at.markdown)
+    assert "Tools worth knowing" in md and "Make your work easier" in md
+    assert "Explore & Discover" not in md
     # nada de LMS na home
-    md = " ".join(m.value for m in at.markdown).lower()
-    assert "progresso" not in md and "quiz" not in md and "trilha" not in md
+    low = md.lower()
+    assert "progresso" not in low and "quiz" not in low and "trilha" not in low
+
+
+def test_cards_have_two_distinct_actions(monkeypatch):
+    _offline(monkeypatch)
+    at = _run(page="library")
+    links = at.get("link_button")
+    assert links and all(b.proto.label == "Open resource ↗" for b in links)
+    more = [b for b in at.button if b.key and b.key.startswith("more-lib-")]
+    assert len(more) == len(links) and all(b.label == "Saiba mais" for b in more)
+
+
+def test_home_main_block_has_no_long_courses(monkeypatch):
+    _offline(monkeypatch)
+    from services.catalog import load_catalog
+
+    cat = load_catalog()
+    prefixes = ("more-tools-worth-knowing-", "more-make-your-work-easier-")
+    for area in [None, "data-science", "ai-llms", "dev-backend"]:
+        at = _run(**({"page": "discover", "area": area} if area else {}))
+        keys = [b.key for b in at.button if b.key and b.key.startswith(prefixes)]
+        assert keys, area
+        for k in keys:
+            rid = next(p for p in prefixes if k.startswith(p))
+            rid = k[len(rid):]
+            assert cat.resources[rid].type not in {"course", "playlist", "video"}, (area, rid)
+
+
+def test_library_collection_filter(monkeypatch):
+    _offline(monkeypatch)
+    from services.catalog import load_catalog
+
+    cat = load_catalog()
+    at = _run(page="library", collection="deep-dives")
+    urls = [b.proto.url for b in at.get("link_button")]
+    expected = [cat.resources[i.id].url for i in cat.collections["deep-dives"].items if i.id in cat.resources]
+    assert urls == expected
 
 
 def test_every_card_links_directly_to_source(monkeypatch):
@@ -134,7 +173,7 @@ def test_area_without_resources_still_has_content(monkeypatch):
     _offline(monkeypatch)
     at = _run(page="discover", area="market-research")
     subs = [s.value for s in at.subheader]
-    assert "Quick Knowledge" in subs
+    assert "Quick knowledge" in subs
     assert not at.exception
 
 
