@@ -1,0 +1,106 @@
+# Colecoes editoriais da Academy.
+#
+# Colecoes NAO sao trilhas nem cursos: sao agrupamentos independentes e transversais.
+# Um mesmo item pode estar em varias colecoes. Itens podem ser recursos (resources.yaml)
+# ou notas (glossary.yaml / tips.yaml), com um comentario editorial opcional (`note`).
+#
+# layout: grid (cards em grade) | list (linhas compactas) | feature (cards com comentario)
+#         | notes (blocos curtos de leitura) | shelf (prateleira compacta e discreta)
+# home:   main (bloco central "Tools & Resources") | section (secao propria na home) | hidden
+# A ordem do arquivo e a ordem na home. Quando um chip de area esta ativo, cada colecao
+# mostra apenas itens daquela area e some se ficar vazia.
+
+- id: tools-worth-knowing
+  title: Tools worth knowing
+  tagline: Ferramentas e bibliotecas para usar direto no trabalho.
+  layout: grid
+  home: main
+  home_limit: 6
+  items:
+    - manim
+    - duckdb
+    - dair-prompt-engineering-guide
+    - pytest
+    - grill-me
+    - motion
+    - pre-commit
+    - lottie-web
+    - grill-with-docs
+    - manim-explicacoes
+
+- id: make-your-work-easier
+  title: Make your work easier
+  tagline: Atalhos, templates e hábitos que poupam retrabalho.
+  layout: list
+  home: main
+  home_limit: 6
+  items:
+    - mattpocock-skills
+    - sdd-emersonmendes
+    - pre-commit
+    - commits-pequenos
+    - fonte-e-data-de-cada-numero
+    - baseline-primeiro
+    - grill-with-docs
+    - prs-pequenos
+    - reproduzir-antes-de-corrigir
+
+- id: interesting-discoveries
+  title: Interesting discoveries
+  tagline: Achados da curadoria, com o motivo de cada um.
+  layout: feature
+  home: section
+  home_limit: 4
+  items:
+    - id: grill-me
+      note: Uma ideia simples que muda a forma de trabalhar com agentes de código, alinhando antes de executar.
+    - id: train-llm-from-scratch
+      note: É raro ver o ciclo completo de um modelo de linguagem em código legível, do dado ao modelo.
+    - id: all-agentic-architectures
+      note: Compara padrões de agentes lado a lado, em vez de defender um só.
+    - id: dair-ml-papers-explained
+      note: Um atalho para entender os papers que todo mundo cita.
+    - id: llms-por-dentro
+      note: Uma explicação visual de LLMs em português, pensada para quem não é da área.
+    - id: stanford-ee292r
+      note: IA aplicada à ciência, um bom contraponto ao foco em chatbots.
+
+- id: quick-knowledge
+  title: Quick knowledge
+  tagline: Conceitos explicados em um ou dois minutos.
+  layout: notes
+  home: section
+  home_limit: 8
+  items:
+    - forecast-backtesting
+    - data-leakage
+    - data-lineage
+    - data-contract
+    - rag
+    - api
+    - product-discovery
+    - entity-resolution
+    - sampling-bias
+    - ab-testing
+
+- id: deep-dives
+  title: Deep dives
+  tagline: Cursos e referências para estudar com calma, quando fizer sentido.
+  layout: shelf
+  home: section
+  home_limit: 8
+  items:
+    - stanford-cs229-2026
+    - production-agentic-rag-course
+    - stanford-online-playlists
+    - fsdl-llm-bootcamp-2023
+    - stanford-cme295-2025
+    - stanford-cs336-2026
+    - stanford-cs230-2025
+    - stanford-cs221-2025
+    - dlai-evaluating-debugging-genai
+    - stanford-cs329a
+    - dair-ai
+    - dair-ml-youtube-courses
+    - dair-transformers-recipe
+    - train-llm-from-scratch

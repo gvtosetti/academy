@@ -10,15 +10,20 @@ import math
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 import yaml
 
-from services.models import Area, Category, Concept, HomeEditorial, Resource, Tip
+from services.curator import CuratedDraft
+from services.ingest.base import Extraction
+from services.models import TAGLINE_MAX, Area, Category, Collection, CollectionItem, Concept, Resource, Tip
+from services.publishing import draft_to_resource, parse_created_at
+from services.repository import get_repository
 
 log = logging.getLogger("academy.catalog")
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DYN_RESOURCE_ID = "imported-resources"
 
 
 class CatalogError(ValueError):
@@ -91,7 +96,7 @@ class Catalog:
     categories: dict[str, Category]
     areas: dict[str, Area] = field(default_factory=dict)
     tips: dict[str, Tip] = field(default_factory=dict)
-    home: HomeEditorial = field(default_factory=HomeEditorial)
+    collections: dict[str, Collection] = field(default_factory=dict)
     notes: dict[str, Note] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
@@ -136,6 +141,19 @@ class Catalog:
     def tag_counts(self) -> list[tuple[str, int]]:
         c = Counter(t for r in self.resources.values() for t in set(r.tags))
         return sorted(c.items(), key=lambda x: (-x[1], x[0]))
+
+    def item(self, item_id: str) -> Optional[Union[Resource, Note]]:
+        """Resolve um id de colecao (recurso ou nota)."""
+        return self.resources.get(item_id) or self.notes.get(item_id)
+
+    def collection_items(self, cid: str) -> list[tuple[Union[Resource, Note], Optional[str]]]:
+        col = self.collections.get(cid)
+        if not col:
+            return []
+        return [(self.item(i.id), i.note) for i in col.items if self.item(i.id) is not None]
+
+    def collections_of(self, item_id: str) -> list[Collection]:
+        return [c for c in self.collections.values() if any(i.id == item_id for i in c.items)]
 
     def recent(self, n: int = 6) -> list[Resource]:
         return sorted(self.resources.values(), key=lambda r: (r.added_on, -r.sequence), reverse=True)[:n]
@@ -207,7 +225,9 @@ def validate_references(cat: Catalog) -> list[str]:
             if x not in A:
                 errs.append(f"{r.id}: area inexistente '{x}'")
         if len(r.blurb) > 260:
-            errs.append(f"{r.id}: blurb longo demais para card ({len(r.blurb)} > 260)")
+            errs.append(f"{r.id}: blurb longo demais ({len(r.blurb)} > 260)")
+        if len(r.tagline) > TAGLINE_MAX:
+            errs.append(f"{r.id}: tagline do card longa demais ({len(r.tagline)} > {TAGLINE_MAX})")
         if r.type == "github" and not r.github_repo:
             errs.append(f"{r.id}: tipo github sem github_repo")
         if r.metadata_status != "verified" and not r.metadata_notes:
@@ -229,15 +249,57 @@ def validate_references(cat: Catalog) -> list[str]:
         if cnt < 2:
             errs.append(f"area '{a}' tem {cnt} item(ns); minimo 2")
 
-    h = cat.home
-    for sec, ids in (("explore", h.explore), ("tools", h.tools), ("worth_checking_out", [w.id for w in h.worth_checking_out])):
-        for x in ids:
-            if x not in R:
-                errs.append(f"home.{sec}: recurso inexistente '{x}'")
-    for x in h.quick_knowledge:
-        if x not in N:
-            errs.append(f"home.quick_knowledge: nota inexistente '{x}'")
+    for x in set(R) & set(N):
+        errs.append(f"id '{x}' existe como recurso e como nota (ambiguo nas colecoes)")
+    for col in cat.collections.values():
+        seen: set[str] = set()
+        for it in col.items:
+            if it.id not in R and it.id not in N:
+                errs.append(f"colecao {col.id}: item inexistente '{it.id}'")
+            if it.id in seen:
+                errs.append(f"colecao {col.id}: item repetido '{it.id}'")
+            seen.add(it.id)
     return errs
+
+
+def _overlay_published(cat: Catalog) -> Catalog:
+    """Soma recursos publicados persistidos ao catalogo YAML sem quebrar o modo read-only.
+
+    Recursos importados entram/atualizam `cat.resources`. Se trouxerem colecoes novas,
+    elas sao acrescentadas ao fim; se trouxerem colecoes existentes, o item e anexado
+    se ainda nao estiver la. Nenhuma falha aqui derruba o app.
+    """
+    try:
+        repo = get_repository()
+        rows = repo.list_resources("published") if hasattr(repo, "list_resources") else []
+    except Exception as exc:
+        log.info("published overlay unavailable: %s", type(exc).__name__)
+        return cat
+    from services.ingest.base import canonical_url
+
+    yaml_urls = {canonical_url(r.url): r.id for r in cat.resources.values()}
+    for row in rows:
+        try:
+            r = draft_to_resource(row.id, CuratedDraft(**row.data), Extraction(**row.extraction),
+                                  added_on=parse_created_at(row.created_at), valid_categories=set(cat.categories))
+        except Exception as exc:
+            log.warning("invalid persisted resource %s: %s", row.id, type(exc).__name__)
+            continue
+        owner = yaml_urls.get(canonical_url(r.url))
+        if owner and owner != r.id:  # duplicata de recurso legado: nao quebra o catalogo
+            log.warning("persisted resource %s duplicates %s; skipped", r.id, owner)
+            continue
+        r.areas = [a for a in r.areas if a in cat.areas] or [next(iter(cat.areas))]
+        cat.resources[r.id] = r
+        # "featured" = primeiro lugar nas colecoes editoriais escolhidas (sem campo LMS no Resource)
+        featured = bool(row.data.get("featured"))
+        for cid in row.data.get("editorial_collections", []) or []:
+            col = cat.collections.get(cid)
+            if not col or any(i.id == r.id for i in col.items):
+                continue
+            item = CollectionItem(id=r.id, note=row.data.get("editorial_note"))
+            col.items.insert(0, item) if featured else col.items.append(item)
+    return cat
 
 
 def load_catalog(data_dir: Path | str = DATA_DIR, strict: bool = True) -> Catalog:
@@ -248,8 +310,9 @@ def load_catalog(data_dir: Path | str = DATA_DIR, strict: bool = True) -> Catalo
         categories=_index([Category(**x) for x in _read_yaml(d / "categories.yaml")], "categories"),
         areas=_index([Area(**x) for x in _read_yaml(d / "areas.yaml")], "areas"),
         tips=_index([Tip(**x) for x in _read_yaml(d / "tips.yaml")], "tips"),
-        home=HomeEditorial(**_read_yaml(d / "home.yaml", dict)),
+        collections=_index([Collection(**x) for x in _read_yaml(d / "collections.yaml")], "collections"),
     )
+    cat = _overlay_published(cat)
     errs = validate_references(cat)
     if errs:
         for e in errs:

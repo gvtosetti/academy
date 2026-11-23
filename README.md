@@ -22,11 +22,11 @@ Sem token, o app usa a API pública do GitHub (limite de requisições baixo) e 
 
 ## Seções
 
-- **Discover** (`?page=discover`): hero, busca global, chips de área (filtram a própria página) e as seções editoriais Explore & Discover, Worth Checking Out, Quick Knowledge e Tools & Resources. Seções sem conteúdo para a área escolhida não aparecem.
-- **Library** (`?page=library&q=...&area=...`): todos os recursos (GitHub, cursos, playlists, ferramentas, coleções) num só catálogo, com busca sem acento e filtros opcionais por área, tipo, nível, idioma e tags.
+- **Discover** (`?page=discover`): vitrine editorial. Hero compacto com busca global, chips de área (filtros transversais da própria página) e, como bloco central, **Tools & Resources** (coleções *Tools worth knowing* e *Make your work easier*). Depois vêm *Interesting discoveries*, *Quick knowledge* e, por último e de forma discreta, *Deep dives* (cursos e referências longas). Seções sem conteúdo para a área escolhida não aparecem, e um item aparece no máximo uma vez na home.
+- **Library** (`?page=library&q=...&area=...&collection=...`): todos os recursos num só catálogo, com ferramentas e repositórios antes de cursos. Busca sem acento e filtros opcionais por coleção, área, tipo, nível, idioma e tags.
 - **Tips & Insights** (`?page=tips&kind=...`): notas curtas e independentes (Quick Explainers, Dev Tips, Tools Worth Knowing, Good Practices, Concepts in Practice). O tempo de leitura é calculado do texto (200 palavras/min).
 
-Cada card tem **Explorar** (abre a fonte original em um clique) e **Saiba mais** (`?page=resource&resource=<id>`), uma apresentação curta com: O que é? Por que é útil? Para quem faz sentido? O que vou encontrar? Acessar material. Detalhes técnicos ficam em expansores opcionais. Notas abrem em `?page=note&note=<id>`.
+Cada card mostra área, formato, título (até 3 linhas) e uma frase curta (até \~120 caracteres), com duas ações: **Open resource ↗** (abre a fonte original em um clique) e **Saiba mais** (`?page=resource&resource=<id>`), uma apresentação curta com: O que é? Por que é útil? Para quem faz sentido? O que vou encontrar? Acessar material. Detalhes técnicos ficam em expansores opcionais. Notas abrem em `?page=note&note=<id>`.
 
 Links antigos (`?page=explore`, `paths`, `videos`, `github`, `knowledge&concept=...`, `my_learning`, `about`) são redirecionados para as novas seções.
 
@@ -44,17 +44,17 @@ data/
   areas.yaml        # áreas/disciplinas e ordem dos chips
   glossary.yaml     # Quick Explainers (conceitos em camadas)
   tips.yaml         # Dev Tips, Tools, Good Practices, Concepts in Practice
-  home.yaml         # seleção editorial da Discover
+  collections.yaml  # coleções editoriais (transversais; definem a home)
   categories.yaml   # temas amplos (exibidos no detalhe e usados em recomendações)
 tests/              # catálogo, busca, notas e smoke test com interações reais
 ```
 
 ## Como adicionar um recurso
 
-1. Adicione o item em `data/resources.yaml` (o schema está em `services/models.py`). Campos essenciais: `id` (estável, usado na URL), `title`, `url` (https), `type`, `areas` (uma ou mais; a primeira é a principal) e `blurb` (1–2 frases: o que é e por que me interessa, até 260 caracteres).
+1. Adicione o item em `data/resources.yaml` (o schema está em `services/models.py`). Campos essenciais: `id` (estável, usado na URL), `title`, `url` (https), `type`, `areas` (uma ou mais; a primeira é a principal), `tagline` (frase do card, até 125 caracteres) e `blurb` (abertura do Saiba mais, até 260 caracteres).
 2. Use apenas ids de conceitos existentes em `data/glossary.yaml` em `key_concepts`.
 3. Se algo não foi conferido na fonte, use `metadata_status: partial` ou `pending` e explique em `metadata_notes`.
-4. Opcional: destaque o recurso na home em `data/home.yaml`.
+4. Opcional: inclua o id em uma ou mais coleções de `data/collections.yaml` (com `note` opcional). Coleções não são trilhas: não têm ordem obrigatória nem progresso.
 5. Rode `pytest`: os testes falham se houver referência quebrada ou área com menos de 2 itens.
 
 ## Como adicionar uma nota (Tips & Insights)

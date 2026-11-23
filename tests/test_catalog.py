@@ -27,9 +27,31 @@ def test_no_lms_structures_left(cat):
     assert not hasattr(cat, "tracks") and not hasattr(cat, "quizzes")
 
 
-def test_cards_have_short_blurbs(cat):
+def test_cards_have_short_descriptions(cat):
     for r in cat.resources.values():
-        assert 40 <= len(r.blurb) <= 260, r.id
+        assert 30 <= len(r.tagline) <= 125, (r.id, len(r.tagline))
+        assert 40 <= len(r.blurb) <= 260, r.id  # texto de abertura do Saiba mais
+
+
+EDITORIAL = ["Tools worth knowing", "Make your work easier", "Interesting discoveries", "Quick knowledge", "Deep dives"]
+
+
+def test_editorial_collections(cat):
+    assert [c.title for c in cat.collections.values()] == EDITORIAL
+    # transversais: o mesmo item pode estar em mais de uma colecao
+    from collections import Counter
+
+    counts = Counter(i.id for c in cat.collections.values() for i in c.items)
+    assert any(n > 1 for n in counts.values())
+    # nenhum recurso fica de fora da curadoria
+    assert set(cat.resources) <= set(counts)
+
+
+def test_main_collections_are_tools_not_courses(cat):
+    for c in cat.collections.values():
+        if c.home == "main":
+            for obj, _ in cat.collection_items(c.id):
+                assert getattr(obj, "type", "note") not in {"course", "playlist", "video"}, (c.id, obj.id)
 
 
 def test_areas_are_multidimensional_and_populated(cat):
@@ -41,9 +63,10 @@ def test_areas_are_multidimensional_and_populated(cat):
         assert cat.areas[a].chip
 
 
-def test_home_editorial_references_exist(cat):
-    h = cat.home
-    assert h.explore and h.worth_checking_out and h.quick_knowledge and h.tools
+def test_collection_notes_preserved(cat):
+    notes = {i.id: i.note for i in cat.collections["interesting-discoveries"].items}
+    assert notes["grill-me"].startswith("Uma ideia simples")
+    assert notes["dair-ml-papers-explained"] == "Um atalho para entender os papers que todo mundo cita."
 
 
 def test_all_urls_are_https(cat):
