@@ -23,6 +23,22 @@
   name: Software Engineering & AI-Assisted Development
   icon: ":material/code:"
   description: Fluxos de trabalho estruturados com assistentes de código — skills, especificações, revisão e alinhamento antes de construir.
+- id: data-platforms
+  name: Data Platforms, Governance & MLOps
+  icon: ":material/database:"
+  description: Plataformas de dados e IA, orquestração, governança e ciclo de vida de modelos.
+- id: learning-platforms
+  name: Learning Platforms
+  icon: ":material/account_balance:"
+  description: Plataformas com catálogos de cursos mantidos por empresas e instituições.
+- id: research-literature
+  name: Research & Scientific Literature
+  icon: ":material/science:"
+  description: Repositórios e buscadores de artigos científicos e preprints.
+- id: statistics
+  name: Statistics & Data Analysis
+  icon: ":material/query_stats:"
+  description: Estatística, inferência, regressão e análise exploratória de dados.
 - id: creative-coding
   name: Creative Coding & Visualization
   icon: ":material/animation:"

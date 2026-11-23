@@ -11,7 +11,7 @@ import streamlit as st
 from components.cards import COURSE_TYPES, LANG_LABEL, LEVEL_LABEL, TYPE_LABEL, note_grid, resource_grid
 from components.layout import go, param, section_title
 from services.catalog import Catalog
-from services.search import Filters, LocalSearch, search_notes
+from services.search import Filters, LocalSearch, search_notes, search_playbooks
 
 MAX_TAGS = 40
 
@@ -28,11 +28,17 @@ def _multi(label: str, options: list[str], fmt, key: str, default: list[str] | N
 def render(cat: Catalog) -> None:
     q0 = param("q") or ""
     area0 = param("area") if param("area") in cat.areas else None
+    section0 = param("section")
     col0 = param("collection") if param("collection") in cat.collections else None
     res_cols = [c for c in cat.collections.values() if any(i.id in cat.resources for i in c.items)]
 
     st.title("Library", anchor=False)
     st.caption("Ferramentas, repositórios, referências e cursos em um só catálogo.")
+
+    # Hint de busca por problema
+    if not q0 and not section0:
+        st.info("Dica: busque pelo que precisa fazer, como \"automatizar relatório\" ou \"validar dados de entrada\".",
+                icon=":material/tips_and_updates:")
 
     c1, c2 = st.columns([4, 1], vertical_alignment="bottom")
     q = c1.text_input(
@@ -47,6 +53,11 @@ def render(cat: Catalog) -> None:
 
     sfx = f"{area0 or 'all'}-{col0 or 'all'}"
     with c2.popover("Filtros", icon=":material/tune:"):
+        sec_opts = [(s.id, s.title) for s in cat.taxonomy.sections]
+        sections = _multi("Seção", [s[0] for s in sec_opts], lambda s: dict(sec_opts).get(s, s), f"f-sec-{sfx}",
+                          [section0] if section0 else None)
+        sub_opts = [(s.id, s.title) for sec in cat.taxonomy.sections for s in sec.subcategories]
+        subcats = _multi("Subcategoria", [s[0] for s in sub_opts], lambda s: dict(sub_opts).get(s, s), f"f-sub-{sfx}")
         cols_sel = _multi("Coleção", [c.id for c in res_cols], lambda c: cat.collections[c].title, f"f-col-{sfx}",
                           [col0] if col0 else None)
         areas = _multi("Área", list(cat.areas), lambda a: cat.areas[a].name, f"f-area-{sfx}", [area0] if area0 else None)
@@ -56,7 +67,8 @@ def render(cat: Catalog) -> None:
         langs = _multi("Idioma", sorted({r.language for r in cat.resources.values()}), LANG_LABEL.get, f"f-lang-{sfx}")
         tags = _multi("Tags", [t for t, _ in cat.tag_counts()[:MAX_TAGS]], str, f"f-tags-{sfx}")
 
-    f = Filters(areas=areas, types=types, difficulties=levels, languages=langs, tags=tags)
+    f = Filters(areas=areas, types=types, difficulties=levels, languages=langs, tags=tags,
+                sections=sections, subcategories=subcats)
     engine = _engine(cat, id(cat))
     results = [r for r, _ in engine.search(q, f, sort="relevance" if q else "diverse")]
     if cols_sel:

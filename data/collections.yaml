@@ -11,8 +11,7 @@
 # mostra apenas itens daquela area e some se ficar vazia.
 
 - id: tools-worth-knowing
-  title: Tools worth knowing
-  tagline: Ferramentas e bibliotecas para usar direto no trabalho.
+  title: Tools & Libraries
   layout: grid
   home: main
   home_limit: 6
@@ -28,46 +27,36 @@
     - grill-with-docs
     - manim-explicacoes
 
+# IDs das colecoes sao mantidos (links ?collection= continuam validos); so os titulos mudaram.
+# Itens nao levam comentario editorial: a curadoria esta na selecao e na classificacao.
 - id: make-your-work-easier
-  title: Make your work easier
-  tagline: Atalhos, templates e hábitos que poupam retrabalho.
+  title: Repositories & Projects
   layout: list
   home: main
   home_limit: 6
   items:
     - mattpocock-skills
     - sdd-emersonmendes
-    - pre-commit
-    - commits-pequenos
-    - fonte-e-data-de-cada-numero
-    - baseline-primeiro
     - grill-with-docs
-    - prs-pequenos
-    - reproduzir-antes-de-corrigir
+    - train-llm-from-scratch
+    - all-agentic-architectures
+    - llms-por-dentro
 
 - id: interesting-discoveries
-  title: Interesting discoveries
-  tagline: Achados da curadoria, com o motivo de cada um.
-  layout: feature
+  title: References
+  layout: grid
   home: section
-  home_limit: 4
+  home_limit: 6
   items:
-    - id: grill-me
-      note: Uma ideia simples que muda a forma de trabalhar com agentes de código, alinhando antes de executar.
-    - id: train-llm-from-scratch
-      note: É raro ver o ciclo completo de um modelo de linguagem em código legível, do dado ao modelo.
-    - id: all-agentic-architectures
-      note: Compara padrões de agentes lado a lado, em vez de defender um só.
-    - id: dair-ml-papers-explained
-      note: Um atalho para entender os papers que todo mundo cita.
-    - id: llms-por-dentro
-      note: Uma explicação visual de LLMs em português, pensada para quem não é da área.
-    - id: stanford-ee292r
-      note: IA aplicada à ciência, um bom contraponto ao foco em chatbots.
+    - dair-prompt-engineering-guide
+    - dair-ml-papers-explained
+    - dair-transformers-recipe
+    - dair-ml-youtube-courses
+    - dair-ai
+    - stanford-online-playlists
 
 - id: quick-knowledge
-  title: Quick knowledge
-  tagline: Conceitos explicados em um ou dois minutos.
+  title: Quick Knowledge
   layout: notes
   home: section
   home_limit: 8
@@ -82,17 +71,20 @@
     - entity-resolution
     - sampling-bias
     - ab-testing
+    - commits-pequenos
+    - prs-pequenos
+    - reproduzir-antes-de-corrigir
+    - baseline-primeiro
+    - fonte-e-data-de-cada-numero
 
 - id: deep-dives
-  title: Deep dives
-  tagline: Cursos e referências para estudar com calma, quando fizer sentido.
+  title: Courses & Lectures
   layout: shelf
   home: section
   home_limit: 8
   items:
     - stanford-cs229-2026
     - production-agentic-rag-course
-    - stanford-online-playlists
     - fsdl-llm-bootcamp-2023
     - stanford-cme295-2025
     - stanford-cs336-2026
@@ -100,7 +92,4 @@
     - stanford-cs221-2025
     - dlai-evaluating-debugging-genai
     - stanford-cs329a
-    - dair-ai
-    - dair-ml-youtube-courses
-    - dair-transformers-recipe
-    - train-llm-from-scratch
+    - stanford-ee292r

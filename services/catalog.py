@@ -16,9 +16,12 @@ import yaml
 
 from services.curator import CuratedDraft
 from services.ingest.base import Extraction
-from services.models import TAGLINE_MAX, Area, Category, Collection, CollectionItem, Concept, Resource, Tip
+from services.models import (
+    TAGLINE_MAX, Area, Category, Collection, CollectionItem, Concept, PracticalPlaybook, Resource, Tip, TopicCollection,
+)
 from services.publishing import draft_to_resource, parse_created_at
 from services.repository import get_repository
+from services.taxonomy import Taxonomy, load_taxonomy
 
 log = logging.getLogger("academy.catalog")
 
@@ -35,7 +38,7 @@ WORDS_PER_MINUTE = 200
 NOTE_KINDS = {
     "explainer": "Quick Explainer",
     "dev-tip": "Dev Tip",
-    "tool": "Tool Worth Knowing",
+    "tool": "Tool",
     "practice": "Good Practice",
     "in-practice": "Concept in Practice",
 }
@@ -98,6 +101,9 @@ class Catalog:
     tips: dict[str, Tip] = field(default_factory=dict)
     collections: dict[str, Collection] = field(default_factory=dict)
     notes: dict[str, Note] = field(default_factory=dict)
+    playbooks: dict[str, PracticalPlaybook] = field(default_factory=dict)
+    topics: dict[str, TopicCollection] = field(default_factory=dict)
+    taxonomy: Optional[Taxonomy] = None
 
     def __post_init__(self) -> None:
         if not self.notes:
@@ -105,6 +111,46 @@ class Catalog:
             for t in self.tips.values():
                 if t.id not in self.notes:  # colisao e reportada em validate_references
                     self.notes[t.id] = _note_from_tip(t)
+        if self.taxonomy is None:
+            self.taxonomy = load_taxonomy()
+        self.derive_sections()
+
+    def derive_sections(self) -> None:
+        """editorial_section vem sempre da subcategoria (fonte unica)."""
+        for r in self.resources.values():
+            if r.editorial_subcategory:
+                r.editorial_section = self.taxonomy.section_of(r.editorial_subcategory)
+
+    # ---- arquitetura editorial -----------------------------------------
+    def resources_in_subcategory(self, sub_id: str) -> list[Resource]:
+        return sorted((r for r in self.resources.values() if r.editorial_subcategory == sub_id),
+                      key=lambda r: (r.parent is not None, r.sequence, r.title))
+
+    def resources_in_section(self, section_id: str) -> list[Resource]:
+        return [r for r in self.resources.values() if r.editorial_section == section_id]
+
+    def items_for_use_case(self, uid: str) -> tuple[list[Resource], list[Note], list[PracticalPlaybook]]:
+        res = sorted((r for r in self.resources.values() if uid in r.use_cases), key=lambda r: (r.sequence, r.title))
+        pbs = [p for p in self.playbooks.values() if uid in p.use_cases]
+        note_ids = {i for t in self.topics.values() if uid in t.use_cases for i in t.items}
+        notes = [self.notes[i] for i in note_ids if i in self.notes]
+        return res, sorted(notes, key=lambda n: n.title), pbs
+
+    def topic_items(self, tid: str) -> list[Union[Note, PracticalPlaybook]]:
+        t = self.topics.get(tid)
+        if not t:
+            return []
+        return [x for x in (self.notes.get(i) or self.playbooks.get(i) for i in t.items) if x is not None]
+
+    def topics_of(self, item_id: str) -> list[TopicCollection]:
+        return [t for t in self.topics.values() if item_id in t.items]
+
+    def resources_for_topic(self, tid: str) -> list[Resource]:
+        """Recursos ligados ao compilado (related_collections ou citados pelas notas/playbooks)."""
+        ids = [r.id for r in self.resources.values() if tid in r.related_collections]
+        for x in self.topic_items(tid):
+            ids += [i for i in x.related_resources if i not in ids]
+        return [self.resources[i] for i in dict.fromkeys(ids) if i in self.resources]
 
     # ---- consultas auxiliares -------------------------------------------
     def children_of(self, resource_id: str) -> list[Resource]:
@@ -251,6 +297,56 @@ def validate_references(cat: Catalog) -> list[str]:
 
     for x in set(R) & set(N):
         errs.append(f"id '{x}' existe como recurso e como nota (ambiguo nas colecoes)")
+
+    # ---- arquitetura editorial (taxonomy.yaml) ----------------------------
+    T, P, TC = cat.taxonomy, cat.playbooks, cat.topics
+    ucs, subs = set(T.use_case_ids), set(T.subcategory_ids)
+    for r in R.values():
+        if r.curation_status == "published" and not r.editorial_subcategory:
+            errs.append(f"{r.id}: sem editorial_subcategory (todo recurso publicado precisa de secao na Home)")
+        if r.editorial_subcategory and r.editorial_subcategory not in subs:
+            errs.append(f"{r.id}: subcategoria inexistente '{r.editorial_subcategory}'")
+        for u in r.use_cases:
+            if u not in ucs:
+                errs.append(f"{r.id}: use_case inexistente '{u}'")
+        if r.supported_technologies and not r.source_evidence:
+            errs.append(f"{r.id}: supported_technologies exige source_evidence")
+        for t in r.supported_technologies:
+            if T.technology(t) is None:
+                errs.append(f"{r.id}: tecnologia desconhecida '{t}'")
+        for t in r.related_collections:
+            if t not in TC:
+                errs.append(f"{r.id}: topic collection inexistente '{t}'")
+    for x in set(P) & (set(R) | set(N)):
+        errs.append(f"id '{x}' usado por playbook e por recurso/nota")
+    for p in P.values():
+        for u in p.use_cases:
+            if u not in ucs:
+                errs.append(f"playbook {p.id}: use_case inexistente '{u}'")
+        for x in p.areas:
+            if x not in A:
+                errs.append(f"playbook {p.id}: area inexistente '{x}'")
+        for x in p.related_notes:
+            if x not in N:
+                errs.append(f"playbook {p.id}: nota inexistente '{x}'")
+        for x in p.related_resources:
+            if x not in R:
+                errs.append(f"playbook {p.id}: recurso inexistente '{x}'")
+        if not any(s.human_checkpoint for s in p.steps):
+            errs.append(f"playbook {p.id}: precisa de ao menos uma etapa com revisao humana")
+    for t in TC.values():
+        for i in t.items:
+            if i not in N and i not in P:
+                errs.append(f"topic {t.id}: item inexistente '{i}'")
+        if len(set(t.items)) != len(t.items):
+            errs.append(f"topic {t.id}: item repetido")
+        for u in t.use_cases:
+            if u not in ucs:
+                errs.append(f"topic {t.id}: use_case inexistente '{u}'")
+    for s in T.sections:
+        for sub in s.subcategories:
+            if not cat.resources_in_subcategory(sub.id):
+                errs.append(f"subcategoria '{sub.id}' sem recursos (secao vazia na Home)")
     for col in cat.collections.values():
         seen: set[str] = set()
         for it in col.items:
@@ -290,6 +386,13 @@ def _overlay_published(cat: Catalog) -> Catalog:
             log.warning("persisted resource %s duplicates %s; skipped", r.id, owner)
             continue
         r.areas = [a for a in r.areas if a in cat.areas] or [next(iter(cat.areas))]
+        tax = cat.taxonomy
+        if r.editorial_subcategory not in tax.subcategory_ids:
+            r.editorial_subcategory = "tools-libraries"
+        r.use_cases = [u for u in r.use_cases if u in tax.use_case_ids]
+        r.related_collections = [t for t in r.related_collections if t in cat.topics]
+        if not r.source_evidence:
+            r.supported_technologies = []
         cat.resources[r.id] = r
         # "featured" = primeiro lugar nas colecoes editoriais escolhidas (sem campo LMS no Resource)
         featured = bool(row.data.get("featured"))
@@ -312,7 +415,14 @@ def load_catalog(data_dir: Path | str = DATA_DIR, strict: bool = True) -> Catalo
         tips=_index([Tip(**x) for x in _read_yaml(d / "tips.yaml")], "tips"),
         collections=_index([Collection(**x) for x in _read_yaml(d / "collections.yaml")], "collections"),
     )
+    if (d / "playbooks.yaml").exists():
+        cat.playbooks = _index([PracticalPlaybook(**x) for x in _read_yaml(d / "playbooks.yaml")], "playbooks")
+    if (d / "topic_collections.yaml").exists():
+        cat.topics = _index([TopicCollection(**x) for x in _read_yaml(d / "topic_collections.yaml")], "topics")
+    if (d / "taxonomy.yaml").exists():
+        cat.taxonomy = load_taxonomy(d / "taxonomy.yaml")
     cat = _overlay_published(cat)
+    cat.derive_sections()
     errs = validate_references(cat)
     if errs:
         for e in errs:

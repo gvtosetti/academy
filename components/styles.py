@@ -15,7 +15,8 @@ _CSS = """
 }
 
 /* ---------- moldura ---------- */
-.block-container {max-width: 1160px; padding-top: 1rem; padding-bottom: 3.5rem;}
+.block-container {max-width: 1160px; padding-bottom: 3.5rem;}
+/* padding-top herdado do Streamlit (6rem) garante que o conteudo nao sobreponha o header absoluto */
 #MainMenu, footer, [data-testid="stDecoration"] {visibility: hidden;}
 h1, h2, h3 {letter-spacing: -0.02em; color: var(--ac-ink);}
 h3 {font-size: 1.55rem; font-weight: 600;}
@@ -34,6 +35,8 @@ h3 {font-size: 1.55rem; font-weight: 600;}
 .st-key-hero h1 {font-size: 1.95rem; line-height: 1.15; font-weight: 700; padding: 0;}
 .st-key-hero [data-testid="stMarkdownContainer"] p {font-size: 1rem; color: var(--ac-ink-2); margin: 0;}
 .st-key-hero [data-testid="stForm"] {padding: 0; margin-top: .2rem;}
+/* botao de busca: texto branco sobre fundo violeta (nao herda cor do hero) */
+.st-key-hero [data-testid="stFormSubmitButton"] button p {color: #FFFFFF !important;}
 
 /* ---------- cabecalhos de secao ---------- */
 .ac-eyebrow {font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;

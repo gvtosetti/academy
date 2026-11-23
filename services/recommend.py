@@ -44,11 +44,14 @@ def recommend(cat: Catalog, resource_id: str, k: int = 4) -> list[Recommendation
         if common:
             score += len(common)
             why.append("Areas em comum: " + ", ".join(sorted(cat.areas[a].name for a in common if a in cat.areas)))
-        gap = DIFFICULTY_ORDER[r.difficulty] - DIFFICULTY_ORDER[base.difficulty]
-        if gap in (0, 1):
-            score += 1
-        elif abs(gap) >= 2:
-            score -= 2
+        d_r = DIFFICULTY_ORDER.get(r.difficulty)
+        d_b = DIFFICULTY_ORDER.get(base.difficulty)
+        if d_r is not None and d_b is not None:
+            gap = d_r - d_b
+            if gap in (0, 1):
+                score += 1
+            elif abs(gap) >= 2:
+                score -= 2
         if r.parent == base.id or base.parent == r.id:
             score -= 1  # pai/filho ja aparecem em outra secao
         if score >= 3 and why:

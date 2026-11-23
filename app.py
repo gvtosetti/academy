@@ -24,9 +24,13 @@ st.set_page_config(
 from components import layout  # noqa: E402
 from components.styles import inject_css  # noqa: E402
 from services.catalog import CatalogError, load_catalog  # noqa: E402
-from views import admin, discover, library, note, resource, tips  # noqa: E402
+from views import admin, discover, library, note, playbook, resource, tips, topic  # noqa: E402
 
-VIEWS = {"discover": discover, "library": library, "tips": tips, "resource": resource, "note": note, "admin": admin}
+VIEWS = {
+    "discover": discover, "library": library, "tips": tips,
+    "resource": resource, "note": note, "admin": admin,
+    "playbook": playbook, "topic": topic,
+}
 
 
 def _content_version() -> str:

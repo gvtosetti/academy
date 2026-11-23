@@ -25,7 +25,7 @@
 - id: reproduzir-antes-de-corrigir
   kind: dev-tip
   title: "Debugging: reproduza antes de corrigir"
-  summary: Um bug que você consegue reproduzir sempre está meio resolvido. Um palpite corrigido às cegas, não.
+  summary: Reproduzir o erro de forma confiável antes de alterar o código permite confirmar a causa e verificar a correção.
   areas: [dev-backend, data-science]
   tags: [debugging, testes]
   level: beginner
@@ -107,7 +107,7 @@
 - id: pytest
   kind: tool
   title: pytest
-  summary: O framework de testes mais usado em Python, com testes que são funções simples e asserts nativos.
+  summary: Framework de testes para Python em que os testes são funções simples com asserts nativos, fixtures e plugins.
   areas: [dev-backend, data-science]
   tags: [python, testes]
   level: beginner
@@ -133,7 +133,7 @@
   body: |
     O pre-commit executa *hooks* antes de cada commit: formatação, lint, detecção de chaves privadas, arquivos grandes, YAML inválido. A configuração fica no arquivo `.pre-commit-config.yaml`, versionado com o código, então todo o time usa as mesmas regras.
 
-    **Por que vale a pena**
+    **Benefícios**
     - Problemas triviais são corrigidos na máquina de quem escreveu, não na revisão.
     - Ajuda a evitar que credenciais cheguem ao repositório.
     - Os mesmos hooks podem rodar no CI com `pre-commit run --all-files`.
@@ -143,7 +143,7 @@
 - id: duckdb
   kind: tool
   title: DuckDB
-  summary: Banco analítico que roda dentro do seu processo e consulta CSV, Parquet e DataFrames com SQL, sem servidor.
+  summary: Banco analítico embutido no processo da aplicação que consulta CSV, Parquet e DataFrames com SQL, sem servidor.
   areas: [data-science, analytics, data-engineering]
   tags: [sql, parquet, analise local]
   level: beginner

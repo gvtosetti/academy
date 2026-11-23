@@ -30,6 +30,11 @@ TYPE_LABEL = {
     "collection": ("Coleção", ":material/folder_special:"),
     "roadmap": ("Roadmap", ":material/route:"),
     "article": ("Artigo", ":material/article:"),
+    "platform": ("Plataforma", ":material/account_balance:"),
+    "library": ("Biblioteca", ":material/widgets:"),
+    "service": ("Serviço", ":material/cloud:"),
+    "framework": ("Framework", ":material/view_quilt:"),
+    "book": ("Livro", ":material/menu_book:"),
 }
 COURSE_TYPES = {"course", "playlist", "video"}
 LEVEL_LABEL = {"beginner": "Iniciante", "intermediate": "Intermediário", "advanced": "Avançado"}
@@ -59,7 +64,7 @@ AREA_COLOR = {
     "market-research": "red", "ai-llms": "violet", "creative-tech": "orange",
     "data-engineering": "blue", "analytics": "green",
 }
-DESC_MAX = 120
+DESC_MAX = 160
 _OWNER_RE = re.compile(r"^[A-Za-z0-9-]{1,39}$")
 _STOP = {"the", "a", "o", "de", "of"}
 
@@ -107,7 +112,7 @@ def _monogram(provider: str) -> str:
 def _logo(r: Resource) -> str:
     """Avatar real do dono do repositorio no GitHub; senao, monograma do provedor."""
     fg, bg = _tint(r.areas[0])
-    owner = (r.github_repo or "").split("/")[0]
+    owner = r.icon_org or (r.github_repo or "").split("/")[0]
     mono = f'<span class="ac-mono">{esc(_monogram(r.provider))}</span>'
     if owner and _OWNER_RE.match(owner):
         img = f'<img src="https://github.com/{owner}.png?size=96" alt="" loading="lazy" referrerpolicy="no-referrer">'
@@ -139,7 +144,7 @@ def _actions(key: str, url: Optional[str], on_more: Callable[[], None], more_lab
 def resource_card(r: Resource, cat: Catalog, key: str, note: Optional[str] = None, variant: str = "grid") -> None:
     """variant: grid | row | feature | shelf."""
     fmt = TYPE_LABEL[r.type][0]
-    if variant == "shelf":
+    if variant == "shelf" and r.difficulty:
         fmt = f"{fmt} · {LEVEL_LABEL[r.difficulty]}"
     head = f'<div class="ac-head">{_logo(r)}{_kicker(cat, r.areas[0], fmt)}</div>'
     title = f'<div class="ac-title">{esc(r.title)}</div>'
@@ -176,6 +181,26 @@ def note_card(n: Note, cat: Catalog, key: str, variant: str = "grid", note: Opti
 
 def _note_glyph(n: Note) -> str:
     return {"explainer": "Aa", "dev-tip": "</>", "tool": "⚒", "practice": "✓", "in-practice": "▸"}[n.kind]
+
+
+def playbook_card(p, cat: Catalog, key: str) -> None:
+    """Practical Playbook: problema + numero de etapas."""
+    fg, bg = _tint(p.areas[0])
+    glyph = f'<span class="ac-logo ac-glyph" style="--fg:{fg};--bg:{bg}"><span class="ac-mono">▤</span></span>'
+    kick = f'<span class="ac-kicker"><b style="color:{fg}">Playbook</b><i>·</i>{len(p.steps)} etapas</span>'
+    with st.container(border=True, key=f"card-pb-{key}-{p.id}"):
+        _html(f'<div class="ac-head">{glyph}{kick}</div><div class="ac-title">{esc(p.title)}</div>'
+              f'<div class="ac-desc">{esc(clip(p.summary))}</div>')
+        _actions(f"{key}-{p.id}", None, lambda: go("playbook", playbook=p.id), more_label="Ler playbook →")
+
+
+def topic_card(t, cat: Catalog, key: str) -> None:
+    """Topic Collection do Quick Knowledge: titulo, assuntos e quantidade de itens."""
+    n = len(cat.topic_items(t.id))
+    with st.container(border=True, key=f"card-topic-{key}-{t.id}"):
+        if st.button(t.title, key=f"topic-{key}-{t.id}", icon=t.icon, type="tertiary"):
+            go("topic", topic=t.id)
+        _html(f'<div class="ac-desc">{esc(t.scope)} · {n} itens</div>')
 
 
 def item_card(item: Item, cat: Catalog, key: str, note: Optional[str] = None, variant: str = "grid") -> None:

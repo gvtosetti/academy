@@ -18,13 +18,16 @@ from utils.safe import is_safe_url
 
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 
+# Tipos distinguem a natureza do recurso: ferramenta, plataforma, biblioteca, servico,
+# framework, repositorio (github) e documentacao sao categorias diferentes.
 ResourceType = Literal["github", "course", "video", "playlist", "documentation", "tool", "collection",
-                       "roadmap", "article"]
+                       "roadmap", "article", "platform", "library", "service", "framework", "book"]
+CurationStatus = Literal["published", "needs_review", "draft"]
 Difficulty = Literal["beginner", "intermediate", "advanced"]
 MetadataStatus = Literal["verified", "partial", "pending"]
 TipKind = Literal["dev-tip", "tool", "practice", "in-practice"]
 CollectionLayout = Literal["grid", "list", "feature", "notes", "shelf"]
-TAGLINE_MAX = 125
+TAGLINE_MAX = 160  # descricao do card: 100-160 caracteres, ate 3 linhas
 
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
@@ -86,17 +89,29 @@ class Resource(_Strict):
     provider: str
     type: ResourceType
     category: str
-    difficulty: Difficulty
+    difficulty: Optional[Difficulty] = Field(default=None, description="Nivel sugerido; None para plataformas e documentacao")
     language: Literal["pt", "en", "multi"]
-    areas: list[str] = Field(min_length=1, description="Areas/disciplinas (multidimensional); a primeira e a principal")
-    tagline: str = Field(description="Frase curta do card (ate ~120 caracteres): para que serve")
+    areas: list[str] = Field(min_length=1, description="Dominio principal (primeiro) e dominios secundarios")
+    tagline: str = Field(description="Descricao objetiva do card (100-160 caracteres): o que e / o que faz")
     blurb: str = Field(description="1-2 frases de abertura da pagina Saiba mais")
     short_description: str
-    plain_language_explanation: str
-    technical_explanation: str
-    why_it_matters: str
-    learning_outcomes: list[str] = Field(min_length=1)
-    audience: list[str] = Field(min_length=1)
+    # Secoes explicativas: opcionais. Vazias nao sao exibidas (sem texto de preenchimento).
+    plain_language_explanation: str = ""
+    technical_explanation: str = ""
+    why_it_matters: str = ""
+    learning_outcomes: list[str] = Field(default_factory=list)
+    audience: list[str] = Field(default_factory=list)
+    # ---- classificacao editorial orientada a uso (taxonomy.yaml) -------------
+    editorial_subcategory: Optional[str] = Field(default=None, description="Subcategoria da Home; define a secao")
+    editorial_section: Optional[str] = Field(default=None, description="Derivada da subcategoria se omitida")
+    use_cases: list[str] = Field(default_factory=list, description="Problemas que o recurso ajuda a resolver")
+    supported_technologies: list[str] = Field(default_factory=list,
+                                              description="Integracoes documentadas na fonte (exige source_evidence)")
+    source_evidence: list[Link] = Field(default_factory=list, description="Paginas da fonte que sustentam a classificacao")
+    considerations: list[str] = Field(default_factory=list, description="Pre-requisitos ou restricoes relevantes")
+    related_collections: list[str] = Field(default_factory=list, description="Topic collections do Quick Knowledge")
+    icon_org: Optional[str] = Field(default=None, description="Organizacao oficial no GitHub usada como icone")
+    curation_status: CurationStatus = "published"
     prerequisites: Prerequisites = Field(default_factory=Prerequisites)
     key_concepts: list[str] = Field(default_factory=list)
     practical_applications: list[str] = Field(default_factory=list)
@@ -128,6 +143,27 @@ class Resource(_Strict):
         if v is not None and not re.match(r"^[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)?$", v):
             raise ValueError(f"github_repo invalido: {v!r}")
         return v
+
+    @field_validator("icon_org")
+    @classmethod
+    def v_org(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None and not re.match(r"^[A-Za-z0-9-]{1,39}$", v):
+            raise ValueError(f"icon_org invalido: {v!r}")
+        return v
+
+    @property
+    def canonical_url(self) -> str:
+        from services.ingest.base import canonical_url
+
+        return canonical_url(self.url)
+
+    @property
+    def primary_domain(self) -> str:
+        return self.areas[0]
+
+    @property
+    def secondary_domains(self) -> list[str]:
+        return self.areas[1:]
 
 
 class Concept(_Strict):
@@ -168,6 +204,51 @@ class Tip(_Strict):
         return _check_id(v)
 
 
+class PlaybookStep(_Strict):
+    title: str
+    detail: str
+    human_checkpoint: bool = Field(default=False, description="Etapa que exige julgamento, autorizacao ou revisao humana")
+
+
+class PracticalPlaybook(_Strict):
+    """Abordagem pratica e generica para um tipo de problema (nao e trilha de aprendizagem)."""
+
+    id: str
+    title: str
+    summary: str
+    when_to_use: str
+    steps: list[PlaybookStep] = Field(min_length=3)
+    considerations: list[str] = Field(default_factory=list)
+    use_cases: list[str] = Field(min_length=1)
+    areas: list[str] = Field(min_length=1)
+    tags: list[str] = Field(default_factory=list)
+    related_notes: list[str] = Field(default_factory=list)
+    related_resources: list[str] = Field(default_factory=list)
+    references: list[Link] = Field(default_factory=list)
+
+    @field_validator("id")
+    @classmethod
+    def v_id(cls, v: str) -> str:
+        return _check_id(v)
+
+
+class TopicCollection(_Strict):
+    """Compilado do Quick Knowledge: por tecnologia/assunto ou por finalidade pratica."""
+
+    id: str
+    title: str
+    kind: Literal["technology", "practical"]
+    scope: str = Field(description="Assuntos cobertos, em poucas palavras (sem slogan)")
+    icon: str = ":material/folder:"
+    items: list[str] = Field(min_length=2, description="IDs de notas tecnicas ou playbooks")
+    use_cases: list[str] = Field(default_factory=list)
+
+    @field_validator("id")
+    @classmethod
+    def v_id(cls, v: str) -> str:
+        return _check_id(v)
+
+
 class Area(_Strict):
     id: str
     name: str
@@ -196,7 +277,7 @@ class Collection(_Strict):
 
     id: str
     title: str
-    tagline: str
+    tagline: Optional[str] = None
     layout: CollectionLayout = "grid"
     home: Literal["main", "section", "hidden"] = "section"
     home_limit: int = Field(default=6, ge=1, le=12)

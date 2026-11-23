@@ -8,7 +8,9 @@
 # CATEGORIA A — AI Foundations & Understanding LLMs
 # =====================================================================
 - id: llms-por-dentro
-  tagline: "Como um LLM transforma texto em resposta, explicado em português e sem matemática pesada."
+  editorial_subcategory: guides-roadmaps
+  use_cases: [develop_ai_application]
+  tagline: "Repositório em português que explica, sem formalismo matemático, como um LLM processa texto e gera respostas."
   areas: [ai-llms, data-science]
   blurb: "Série em português que explica, sem matemática pesada, como um LLM transforma texto em tokens e gera respostas. Bom ponto de partida para quem usa IA e quer entender o que acontece por dentro."
   title: LLMs por Dentro
@@ -87,7 +89,9 @@
   metadata_notes: "Segundo o README (nov/2026), apenas o episódio 01 tem apresentação e roteiro prontos; 02–04 têm plano de aula definido."
 
 - id: train-llm-from-scratch
-  tagline: "Código passo a passo para treinar um pequeno modelo de linguagem do zero, do dataset ao modelo."
+  editorial_subcategory: guides-roadmaps
+  use_cases: [develop_ai_application]
+  tagline: "Código passo a passo para treinar um modelo de linguagem pequeno do zero, da preparação do dataset ao treinamento."
   areas: [ai-llms, data-science]
   blurb: "Código passo a passo para treinar um pequeno modelo de linguagem do zero, do dataset ao modelo final. Para quem quer entender LLMs construindo um; ajuda ter Python e noções de deep learning."
   title: Train LLM From Scratch
@@ -171,7 +175,9 @@
   metadata_status: verified
 
 - id: stanford-online-playlists
-  tagline: "Cursos completos de Stanford sobre IA, machine learning e LLMs, gratuitos no YouTube."
+  editorial_subcategory: courses-lectures
+  use_cases: [develop_ai_application, analyze_information]
+  tagline: "Coleção de cursos completos de Stanford sobre IA, machine learning e LLMs, publicados gratuitamente no YouTube."
   areas: [data-science, ai-llms]
   blurb: "Cursos completos de Stanford no YouTube sobre IA, machine learning e LLMs. Aulas de nível universitário, gratuitas, para assistir no seu ritmo."
   title: Stanford Online — Playlists
@@ -227,7 +233,9 @@
   metadata_notes: "Coleção: o conjunto de playlists do canal muda com o tempo; apenas as playlists listadas como itens filhos foram verificadas individualmente."
 
 - id: stanford-cs221-2025
-  tagline: "Fundamentos da IA: busca, raciocínio, probabilidade e aprendizado."
+  editorial_subcategory: courses-lectures
+  use_cases: [analyze_information]
+  tagline: "Curso de Stanford sobre fundamentos de IA: busca, raciocínio, modelos probabilísticos e aprendizado de máquina."
   areas: [data-science, ai-llms]
   blurb: "Curso de Stanford sobre os fundamentos da IA: busca, raciocínio, probabilidade e aprendizado. A base conceitual por trás das ferramentas de IA atuais."
   title: "Stanford CS221: Artificial Intelligence: Principles and Techniques | Autumn 2025"
@@ -309,7 +317,9 @@
   metadata_status: verified
 
 - id: stanford-cs229-2026
-  tagline: "O curso clássico de machine learning de Stanford, base para quem faz Data Science."
+  editorial_subcategory: courses-lectures
+  use_cases: [analyze_information]
+  tagline: "Curso de machine learning de Stanford: aprendizado supervisionado e não supervisionado, com fundamentos teóricos e métodos."
   areas: [data-science]
   blurb: "O curso clássico de machine learning de Stanford. Para quem quer entender de verdade os algoritmos usados no dia a dia de Data Science."
   title: "Stanford CS229 Machine Learning | Spring 2026"
@@ -389,7 +399,9 @@
   metadata_notes: "Os títulos das aulas 18 e 20 aparecem na playlist exatamente como 'GMM (EM), PCA' (iguais à aula 10)."
 
 - id: stanford-cs230-2025
-  tagline: "Deep learning na prática: redes neurais, treinamento e boas práticas de projeto."
+  editorial_subcategory: courses-lectures
+  use_cases: [develop_ai_application]
+  tagline: "Curso de deep learning de Stanford: redes neurais, técnicas de treinamento e estruturação de projetos."
   areas: [data-science, ai-llms]
   blurb: "Curso de deep learning de Stanford: redes neurais, treinamento e boas práticas de projeto. Útil para ir além do modelo que só funciona no notebook."
   title: "Stanford CS230: Deep Learning I Autumn 2025"
@@ -457,7 +469,9 @@
   metadata_status: verified
 
 - id: stanford-cme295-2025
-  tagline: "Transformers e LLMs, da arquitetura às aplicações."
+  editorial_subcategory: courses-lectures
+  use_cases: [develop_ai_application]
+  tagline: "Curso de Stanford sobre Transformers e LLMs, cobrindo arquitetura, treinamento e aplicações."
   areas: [ai-llms, data-science]
   blurb: "Curso de Stanford dedicado a Transformers e LLMs, da arquitetura às aplicações. Um caminho direto para entender a tecnologia por trás dos assistentes de IA."
   title: "Stanford CME295: Transformers and Large Language Models I Autumn 2025"
@@ -528,7 +542,9 @@
   metadata_status: verified
 
 - id: stanford-cs336-2026
-  tagline: "Construa um modelo de linguagem do zero: dados, treino e eficiência. Profundo e avançado."
+  editorial_subcategory: courses-lectures
+  use_cases: [develop_ai_application]
+  tagline: "Curso avançado de Stanford sobre construção de modelos de linguagem do zero: dados, treinamento e eficiência computacional."
   areas: [ai-llms, data-science]
   blurb: "Curso avançado de Stanford em que se constrói um modelo de linguagem do zero: dados, treino e eficiência. Para quem quer profundidade técnica real."
   title: "Stanford CS336: Language Modeling from Scratch | Spring 2026"
@@ -609,7 +625,9 @@
   metadata_status: verified
 
 - id: stanford-cs329a
-  tagline: "Seminário sobre agentes que se aprimoram: verificação, uso de ferramentas e planejamento."
+  editorial_subcategory: courses-lectures
+  use_cases: [develop_ai_application]
+  tagline: "Seminário de Stanford sobre agentes autoaprimoráveis: verificação, uso de ferramentas e planejamento."
   areas: [ai-llms]
   blurb: "Seminário de Stanford sobre agentes de IA que se aprimoram: verificação, uso de ferramentas e planejamento. Uma visão de pesquisa sobre para onde os agentes estão indo."
   title: CS329A Self-Improving AI Agents
@@ -680,7 +698,9 @@
   metadata_status: verified
 
 - id: stanford-ee292r
-  tagline: "Palestras sobre IA aplicada à ciência, longe do mundo dos chatbots."
+  editorial_subcategory: courses-lectures
+  use_cases: [analyze_information]
+  tagline: "Série de palestras de Stanford sobre aplicações de IA em pesquisa científica."
   areas: [data-science, ai-llms]
   blurb: "Palestras de Stanford sobre IA aplicada à ciência. Bom para ver aplicações de IA fora do mundo dos chatbots."
   title: Stanford EE292R AI and Data for Science
@@ -741,7 +761,9 @@
 # CATEGORIA B — LLM Engineering & Production
 # =====================================================================
 - id: fsdl-llm-bootcamp-2023
-  tagline: "Do protótipo à produção com LLMs: prompting, RAG, UX e operação. Edição de 2023."
+  editorial_subcategory: guides-roadmaps
+  use_cases: [develop_ai_application, evaluate_model_outputs]
+  tagline: "Bootcamp de 2023 sobre aplicações com LLMs, do protótipo à produção: prompting, RAG, UX e operação."
   areas: [ai-llms, product, dev-backend]
   blurb: "Bootcamp sobre como levar aplicações com LLMs do protótipo à produção: prompting, RAG, UX e operação. É de 2023; os princípios seguem úteis, algumas ferramentas mudaram."
   title: LLM Bootcamp - Spring 2023
@@ -807,7 +829,10 @@
   metadata_notes: "Conteúdo de 2023: ferramentas citadas (ex.: Modal, Gantry, LangChain da época) podem ter mudado. Duração não informada pela fonte."
 
 - id: dlai-evaluating-debugging-genai
-  tagline: "Como avaliar e depurar aplicações de IA generativa."
+  editorial_subcategory: courses-lectures
+  use_cases: [evaluate_model_outputs, monitor_operations]
+  related_collections: [mlops-observability]
+  tagline: "Curso curto sobre métodos de avaliação e depuração de aplicações de IA generativa."
   areas: [ai-llms, data-science]
   blurb: "Curso da DeepLearning.AI sobre avaliar e depurar aplicações de IA generativa. Detalhes do currículo ainda em validação na fonte."
   title: Evaluating and Debugging Generative AI
@@ -860,7 +885,10 @@
   metadata_notes: "Pending verification: deeplearning.ai retornou HTTP 403 (proteção anti-bot) em 19/11/2026. Currículo, lições, duração, instrutores e ferramentas não verificados."
 
 - id: production-agentic-rag-course
-  tagline: "Construa, semana a semana, um assistente de pesquisa com RAG agêntico em produção."
+  editorial_subcategory: courses-lectures
+  use_cases: [develop_ai_application]
+  related_collections: [rag-retrieval]
+  tagline: "Curso em repositório que constrói, em etapas semanais, um assistente de pesquisa com RAG agêntico para produção."
   areas: [ai-llms, dev-backend, data-engineering]
   blurb: "Curso prático para construir, semana a semana, um assistente de pesquisa sobre papers: da ingestão e busca ao RAG agêntico monitorado. Mostra como RAG é feito em produção."
   title: "The Mother of AI Project — Phase 1 RAG Systems: arXiv Paper Curator"
@@ -943,7 +971,9 @@
 # CATEGORIA C — Agentic AI & Architectures
 # =====================================================================
 - id: all-agentic-architectures
-  tagline: "Dezenas de arquiteturas de agentes em notebooks comparáveis, para escolher o padrão certo."
+  editorial_subcategory: guides-roadmaps
+  use_cases: [develop_ai_application]
+  tagline: "Notebooks que implementam dezenas de arquiteturas de agentes de IA em formato comparável."
   areas: [ai-llms, dev-backend]
   blurb: "Catálogo executável de dezenas de arquiteturas de agentes, com notebooks comparáveis. Referência para escolher o padrão certo em vez de seguir a moda."
   title: Agentic Architectures (all-agentic-architectures)
@@ -1023,7 +1053,9 @@
   metadata_notes: "O README cita 36 arquiteturas e a descrição do GitHub cita 35 (nov/2026)."
 
 - id: dair-ai
-  tagline: "Guias e listas curadas sobre IA: prompting, papers explicados e cursos."
+  editorial_subcategory: research-resources
+  use_cases: [develop_ai_application, analyze_information]
+  tagline: "Organização com guias e listas de referência sobre IA: engenharia de prompts, papers explicados e cursos."
   areas: [ai-llms, data-science]
   blurb: "Organização com guias e listas curadas sobre IA: prompting, papers explicados e cursos. Uma fonte de referências confiáveis para continuar explorando."
   title: DAIR.AI
@@ -1073,7 +1105,9 @@
   metadata_notes: "Coleção: apenas os repositórios listados como itens filhos foram verificados individualmente."
 
 - id: dair-prompt-engineering-guide
-  tagline: "O guia aberto de prompt engineering, com técnicas e exemplos para o dia a dia."
+  editorial_subcategory: ai-assisted-work
+  use_cases: [develop_ai_application]
+  tagline: "Repositório com técnicas, exemplos e referências sobre engenharia de prompts para modelos de linguagem."
   areas: [ai-llms, product]
   blurb: "Guia aberto e abrangente de prompt engineering, com técnicas, exemplos e tópicos como RAG e agentes. Útil para qualquer pessoa que escreve prompts no trabalho."
   title: Prompt-Engineering-Guide
@@ -1131,7 +1165,8 @@
   metadata_notes: "Verificados: descrição e linguagem via API da organização. README não analisado em detalhe; licença não conferida."
 
 - id: dair-ml-youtube-courses
-  tagline: "Índice curado de cursos gratuitos de ML e IA no YouTube."
+  editorial_subcategory: courses-lectures
+  tagline: "Índice de cursos gratuitos de machine learning e IA disponíveis no YouTube."
   areas: [data-science]
   blurb: "Lista curada de cursos gratuitos de ML e IA no YouTube. Um índice para encontrar boas aulas sem perder tempo procurando."
   title: ML-YouTube-Courses
@@ -1179,7 +1214,9 @@
   metadata_notes: "Verificada apenas a descrição via API; README não analisado em detalhe; licença não conferida."
 
 - id: dair-ml-papers-explained
-  tagline: "Papers importantes de machine learning explicados de forma acessível."
+  editorial_subcategory: research-resources
+  use_cases: [analyze_information]
+  tagline: "Repositório com resumos e explicações de papers de machine learning."
   areas: [data-science, ai-llms]
   blurb: "Explicações acessíveis de papers importantes de machine learning. Ajuda a entender de onde vêm os conceitos que você usa."
   title: ML-Papers-Explained
@@ -1227,7 +1264,9 @@
   metadata_notes: "Verificada apenas a descrição via API; conteúdo e licença não conferidos."
 
 - id: dair-transformers-recipe
-  tagline: "Roteiro de leituras para entender Transformers sem se perder."
+  editorial_subcategory: guides-roadmaps
+  use_cases: [develop_ai_application]
+  tagline: "Roteiro de leituras e materiais de estudo sobre a arquitetura Transformer."
   areas: [ai-llms]
   blurb: "Roteiro de leituras para entender Transformers, a arquitetura por trás dos LLMs. Indica o que ler para estudar o tema sem se perder."
   title: Transformers-Recipe
@@ -1277,7 +1316,12 @@
 # CATEGORIA D — AI-Assisted Software Engineering
 # =====================================================================
 - id: mattpocock-skills
-  tagline: "Skills que dão processo de engenharia ao assistente de código: alinhar antes de codar e revisar."
+  editorial_subcategory: ai-assisted-work
+  use_cases: [review_code, manage_requirements]
+  related_collections: [working-with-claude]
+  considerations:
+    - "Assistentes de IA externos recebem o código e o contexto enviados; confirme quais serviços são autorizados antes de usá-los com dados ou código da organização."
+  tagline: "Conjunto de skills para assistentes de código com etapas de alinhamento de requisitos, implementação e revisão."
   areas: [dev-backend, product]
   blurb: "Coleção de skills para assistentes de código que trazem processos de engenharia, como alinhamento antes de codar e revisão. Ajuda o agente de IA a construir a coisa certa."
   title: Skills For Real Engineers (mattpocock/skills)
@@ -1352,7 +1396,12 @@
   metadata_status: verified
 
 - id: grill-with-docs
-  tagline: "Revise decisões técnicas com IA, confrontando o plano com a documentação do projeto."
+  editorial_subcategory: ai-assisted-work
+  use_cases: [review_code, manage_requirements, document_process]
+  related_collections: [working-with-claude, technical-documentation]
+  considerations:
+    - "Assistentes de IA externos recebem o código e o contexto enviados; confirme quais serviços são autorizados antes de usá-los com dados ou código da organização."
+  tagline: "Skill que revisa decisões técnicas com IA, confrontando o plano com a documentação do projeto."
   areas: [dev-backend, product]
   blurb: "Um workflow de IA para revisar decisões e ideias técnicas com apoio de documentação. O plano é confrontado com o vocabulário e as decisões já registradas do projeto."
   title: grill-with-docs
@@ -1420,7 +1469,12 @@
   metadata_status: verified
 
 - id: grill-me
-  tagline: "Faça o assistente de IA entrevistar você antes de agir e evite construir a coisa errada."
+  editorial_subcategory: ai-assisted-work
+  use_cases: [manage_requirements]
+  related_collections: [working-with-claude]
+  considerations:
+    - "Assistentes de IA externos recebem o código e o contexto enviados; confirme quais serviços são autorizados antes de usá-los com dados ou código da organização."
+  tagline: "Skill que faz o assistente de IA entrevistar o usuário sobre requisitos antes de executar uma tarefa."
   areas: [dev-backend, product]
   blurb: "Skill que faz o assistente de IA entrevistar você antes de agir, testando seu plano com perguntas. Simples de usar e evita que o agente construa a coisa errada."
   title: grill-me
@@ -1482,7 +1536,10 @@
   metadata_status: verified
 
 - id: sdd-emersonmendes
-  tagline: "Template em português para desenvolver com IA guiado por especificação."
+  editorial_subcategory: templates-standards
+  use_cases: [manage_requirements, document_process]
+  related_collections: [technical-documentation]
+  tagline: "Template em português para desenvolvimento assistido por IA guiado por especificação (spec-driven development)."
   areas: [dev-backend, product]
   blurb: "Template em português para desenvolver com assistente de IA guiado por especificação: spec, tarefas, código e revisão. Para projetos que precisam de previsibilidade."
   title: "sdd — Template de Spec-Driven Development para Claude Code"
@@ -1560,13 +1617,14 @@
 # CATEGORIA E — Creative Coding & Visualization (ferramentas, nao cursos)
 # =====================================================================
 - id: motion
-  tagline: "Animação para interfaces web: microinterações e transições que deixam produtos mais claros."
+  editorial_subcategory: tools-libraries
+  tagline: "Biblioteca de animação para interfaces web, voltada a microinterações e transições."
   areas: [creative-tech, dev-backend]
   blurb: "Biblioteca de animação para interfaces web. Útil para criar microinterações e transições que deixam produtos mais claros e agradáveis."
   title: Motion
   url: https://github.com/motiondivision/motion
   provider: Motion Division
-  type: tool
+  type: library
   category: creative-coding
   difficulty: intermediate
   language: en
@@ -1630,13 +1688,15 @@
   metadata_status: verified
 
 - id: manim
-  tagline: "Animações matemáticas em Python para explicar algoritmos e conceitos estatísticos."
+  editorial_subcategory: tools-libraries
+  tagline: "Biblioteca Python para animações matemáticas, usada na explicação de algoritmos e conceitos estatísticos."
   areas: [creative-tech, data-science]
   blurb: "Uma biblioteca Python para criar animações matemáticas. Útil para visualizar algoritmos, conceitos estatísticos e explicações técnicas."
   title: Manim (Community Edition)
   url: https://github.com/ManimCommunity/manim
   provider: Manim Community
-  type: tool
+  type: framework
+  icon_org: ManimCommunity
   category: creative-coding
   difficulty: intermediate
   language: en
@@ -1700,13 +1760,14 @@
   metadata_status: verified
 
 - id: lottie-web
-  tagline: "Use na web animações do After Effects exportadas como JSON, sem recriá-las em código."
+  editorial_subcategory: tools-libraries
+  tagline: "Biblioteca que renderiza na web animações do After Effects exportadas em JSON, sem recriá-las em código."
   areas: [creative-tech]
   blurb: "Biblioteca que reproduz na web animações criadas no After Effects e exportadas como JSON. Permite usar animações de designers sem recriá-las em código."
   title: lottie-web
   url: https://github.com/airbnb/lottie-web
   provider: Airbnb
-  type: tool
+  type: library
   category: creative-coding
   difficulty: intermediate
   language: en
@@ -1765,3 +1826,690 @@
     primary_language: JavaScript
     source_description: "Render After Effects animations natively on Web, Android and iOS, and React Native."
   metadata_status: verified
+
+# =====================================================================
+# Recursos adicionados na reorganização da Resource Library (2026-11-23).
+# Cada URL foi acessada e conferida nessa data. Afirmações sobre gratuidade,
+# certificação ou integrações só aparecem quando constam na página oficial.
+# =====================================================================
+
+# ---- Deep Dives & Courses · Learning Platforms ------------------------
+- id: databricks-academy
+  editorial_subcategory: learning-platforms
+  title: Databricks Academy
+  url: https://customer-academy.databricks.com/learn
+  provider: Databricks
+  type: platform
+  icon_org: databricks
+  category: learning-platforms
+  language: en
+  areas: [data-engineering, data-science, ai-llms]
+  sequence: 10
+  added_on: 2026-11-23
+  tags: [databricks, lakehouse, spark, cursos, plataforma de cursos]
+  tagline: "Plataforma de treinamento da Databricks com cursos sobre engenharia de dados, ML e IA generativa."
+  blurb: "Portal de cursos da Databricks para clientes. Os cursos em andamento ficam em My courses; o catálogo completo fica na página Learn."
+  short_description: "Plataforma oficial de treinamento da Databricks. O acesso ao catálogo e aos cursos exige login com a conta da organização."
+  links:
+    - {label: Meus cursos, url: "https://customer-academy.databricks.com/learn/mycourses"}
+    - {label: Catálogo, url: "https://customer-academy.databricks.com/learn"}
+  considerations:
+    - "Os cursos disponíveis dependem do tipo de conta e do contrato da organização com a Databricks."
+  verified: {verified_on: 2026-11-23, source_title: Databricks Academy}
+  metadata_status: partial
+  metadata_notes: "A página exige login para listar cursos; gratuidade e certificação não foram verificadas."
+
+- id: claude-academy
+  editorial_subcategory: learning-platforms
+  title: Claude Academy (Anthropic)
+  url: https://academy.claude.com/
+  provider: Anthropic
+  type: platform
+  icon_org: anthropics
+  category: learning-platforms
+  language: en
+  areas: [ai-llms, dev-backend]
+  sequence: 20
+  added_on: 2026-11-23
+  tags: [claude, anthropic, api, claude code, cursos]
+  tagline: "Plataforma de cursos da Anthropic sobre uso do Claude, desenvolvimento com a API e Claude Code."
+  blurb: "Catálogo de cursos mantido pela Anthropic. O endereço anthropic.com/learn redireciona para esta plataforma."
+  short_description: "Cursos sobre uso do Claude, construção de aplicações com a API da Anthropic e Claude Code."
+  verified: {verified_on: 2026-11-23, source_title: "Claude Academy · Learn to work and build with Claude"}
+  metadata_status: partial
+  metadata_notes: "Certificação não verificada; condições de acesso podem variar por curso."
+
+- id: google-skills
+  editorial_subcategory: learning-platforms
+  title: Google Skills
+  url: https://www.skills.google/
+  provider: Google
+  type: platform
+  icon_org: google
+  category: learning-platforms
+  language: multi
+  areas: [ai-llms, data-engineering]
+  sequence: 30
+  added_on: 2026-11-23
+  tags: [google cloud, ia, dados, laboratorios, badges]
+  tagline: "Plataforma de cursos da Google sobre Google Cloud, dados e IA, com laboratórios práticos e badges."
+  blurb: "Plataforma que substitui o antigo Cloud Skills Boost (o endereço anterior redireciona para cá)."
+  short_description: "Cursos e laboratórios práticos sobre Google Cloud, dados e IA, com credenciais digitais."
+  verified: {verified_on: 2026-11-23, source_title: Google Skills}
+  metadata_status: partial
+  metadata_notes: "Gratuidade varia por curso e laboratório; não verificada."
+
+- id: microsoft-learn
+  editorial_subcategory: learning-platforms
+  title: Microsoft Learn
+  url: https://learn.microsoft.com/en-us/training/
+  provider: Microsoft
+  type: platform
+  icon_org: microsoft
+  category: learning-platforms
+  language: multi
+  areas: [dev-backend, data-engineering, ai-llms]
+  sequence: 40
+  added_on: 2026-11-23
+  tags: [azure, microsoft, learning paths, modulos]
+  tagline: "Plataforma de treinamento da Microsoft com módulos e learning paths sobre Azure, dados, IA e ferramentas de desenvolvimento."
+  blurb: "Catálogo de treinamentos da Microsoft organizado em módulos e learning paths."
+  short_description: "Módulos curtos e learning paths sobre produtos e serviços da Microsoft."
+  verified: {verified_on: 2026-11-23, source_title: "Training - Courses, Learning Paths, Modules | Microsoft Learn"}
+  metadata_status: partial
+  metadata_notes: "Gratuidade e certificação não verificadas na página de treinamento."
+
+- id: openai-academy
+  editorial_subcategory: learning-platforms
+  title: OpenAI Academy
+  url: https://academy.openai.com/
+  provider: OpenAI
+  type: platform
+  icon_org: openai
+  category: learning-platforms
+  language: en
+  areas: [ai-llms, product]
+  sequence: 50
+  added_on: 2026-11-23
+  tags: [openai, chatgpt, cursos, eventos]
+  tagline: "Plataforma da OpenAI com cursos, vídeos e eventos sobre uso do ChatGPT e aplicações de IA."
+  blurb: "Conteúdo educacional da OpenAI organizado em cursos, vídeos e eventos."
+  short_description: "Cursos, vídeos e eventos sobre o uso do ChatGPT e de modelos da OpenAI."
+  verified: {verified_on: 2026-11-23, source_title: OpenAI Academy}
+  metadata_status: partial
+  metadata_notes: "Condições de gratuidade e certificação variam por conteúdo; não verificadas item a item."
+
+- id: ibm-skillsbuild
+  editorial_subcategory: learning-platforms
+  title: IBM SkillsBuild
+  url: https://skillsbuild.org/
+  provider: IBM
+  type: platform
+  icon_org: IBM
+  category: learning-platforms
+  language: multi
+  areas: [data-science, ai-llms]
+  sequence: 60
+  added_on: 2026-11-23
+  tags: [ibm, ia, dados, credenciais]
+  tagline: "Plataforma de cursos da IBM sobre IA, dados e cibersegurança, com credenciais digitais."
+  blurb: "Programa educacional da IBM com cursos e credenciais digitais."
+  short_description: "Cursos sobre IA, ciência de dados e cibersegurança, com emissão de credenciais digitais."
+  verified: {verified_on: 2026-11-23, source_title: IBM SkillsBuild}
+  metadata_status: verified
+
+- id: aws-skill-builder
+  editorial_subcategory: learning-platforms
+  title: AWS Skill Builder
+  url: https://skillbuilder.aws/
+  provider: Amazon Web Services
+  type: platform
+  icon_org: aws
+  category: learning-platforms
+  language: multi
+  areas: [data-engineering, dev-backend]
+  sequence: 70
+  added_on: 2026-11-23
+  tags: [aws, cloud, cursos]
+  tagline: "Plataforma de treinamento da AWS com cursos sobre serviços de nuvem, dados e IA da Amazon Web Services."
+  blurb: "Plataforma oficial de treinamento da Amazon Web Services."
+  short_description: "Cursos sobre os serviços da Amazon Web Services."
+  verified: {verified_on: 2026-11-23, source_title: AWS Skill Builder}
+  metadata_status: partial
+  metadata_notes: "A página carrega o conteúdo via JavaScript; catálogo, gratuidade e certificação não foram verificados."
+
+- id: deeplearning-ai
+  editorial_subcategory: learning-platforms
+  title: DeepLearning.AI
+  url: https://www.deeplearning.ai/courses/
+  provider: DeepLearning.AI
+  type: platform
+  icon_org: https-deeplearning-ai
+  category: learning-platforms
+  language: en
+  areas: [ai-llms, data-science]
+  sequence: 80
+  added_on: 2026-11-23
+  tags: [deep learning, llm, cursos curtos]
+  tagline: "Catálogo de cursos da DeepLearning.AI sobre machine learning, deep learning e aplicações com modelos de linguagem."
+  blurb: "Catálogo de cursos da DeepLearning.AI, incluindo cursos curtos produzidos com empresas de tecnologia."
+  short_description: "Cursos sobre machine learning, deep learning e IA generativa."
+  related_resources: [dlai-evaluating-debugging-genai]
+  verified: {verified_on: 2026-11-23}
+  metadata_status: partial
+  metadata_notes: "A página bloqueia acesso automatizado (HTTP 403); título e catálogo não foram conferidos automaticamente."
+
+- id: huggingface-learn
+  editorial_subcategory: learning-platforms
+  title: Hugging Face Learn
+  url: https://huggingface.co/learn
+  provider: Hugging Face
+  type: platform
+  icon_org: huggingface
+  category: learning-platforms
+  language: en
+  areas: [ai-llms, data-science]
+  sequence: 90
+  added_on: 2026-11-23
+  tags: [hugging face, llm, agentes, diffusion, transformers]
+  tagline: "Cursos da Hugging Face sobre LLMs, agentes, modelos de difusão e uso das bibliotecas do ecossistema Hugging Face."
+  blurb: "Página que reúne os cursos publicados pela Hugging Face."
+  short_description: "Cursos sobre LLMs, agentes e modelos de difusão."
+  verified: {verified_on: 2026-11-23, source_title: "Hugging Face - Learn"}
+  metadata_status: partial
+  metadata_notes: "Certificação não verificada."
+
+# ---- Deep Dives & Courses · Courses / Guides ---------------------------
+- id: cibele-russo-usp
+  editorial_subcategory: courses-lectures
+  use_cases: [analyze_information]
+  title: Cibele Russo — USP
+  url: https://www.youtube.com/@CibeleRussoUSP/playlists
+  provider: Cibele Russo (USP)
+  type: collection
+  category: statistics
+  difficulty: intermediate
+  language: pt
+  areas: [data-science, analytics]
+  sequence: 30
+  added_on: 2026-11-23
+  tags: [estatistica, inferencia, regressao, analise multivariada, visualizacao, usp, portugues]
+  tagline: "Aulas gravadas de disciplinas de estatística e ciência de dados da USP: inferência, regressão e análise multivariada."
+  blurb: "Playlists de disciplinas de graduação e pós-graduação ministradas na USP, publicadas no YouTube."
+  short_description: "Aulas em português organizadas por disciplina: estatística, inferência, modelos de regressão, análise multivariada, visualização e fundamentos de ciência de dados."
+  verified:
+    verified_on: 2026-11-23
+    source_title: Cibele Russo
+    source_description: "Neste canal compartilho vídeo-aulas sobre Estatística e Ciência de Dados, Visualização e Exploração de Dados, Introdução à Inferência Estatística, Análise Multivariada e Aprendizado Não-Supervisionado, Fundamentos em Ciências de Dados e outros cursos de graduação oferecidos para alunos da USP."
+    episodes:
+      - SME0221 Introdução à Inferência Estatística (24 vídeos)
+      - SME0803 Visualização e Exploração de Dados (35 vídeos)
+      - EST5507 Modelos de Regressão (25 vídeos)
+      - SME0123 Estatística I (21 vídeos)
+      - 5500004 Fundamentos em Ciências de Dados (19 vídeos)
+      - SME0822 Análise Multivariada e Aprendizado Não-Supervisionado
+      - SME0829 Aprendizado de Máquina Estatístico
+  metadata_status: partial
+  metadata_notes: "Lista baseada nas 14 playlists exibidas na página pública do canal; pode haver outras."
+
+- id: ai-engineering-roadmap-2026
+  editorial_subcategory: guides-roadmaps
+  use_cases: [develop_ai_application, evaluate_model_outputs]
+  title: AI Engineering Roadmap 2026
+  url: https://ai-engineer-roadmap-2026.vercel.app/
+  provider: CampusX
+  type: roadmap
+  category: llm-engineering
+  difficulty: intermediate
+  language: en
+  areas: [ai-llms, dev-backend]
+  sequence: 20
+  added_on: 2026-11-23
+  tags: [roadmap, ai engineering, rag, agentes, evals, llmops, system design]
+  tagline: "Roteiro em 16 níveis para engenharia de IA: fundamentos de software, LLMs, RAG, agentes, avaliação, segurança e LLMOps."
+  blurb: "Roteiro visual organizado em 7 fases e 16 níveis, com módulos e um projeto na maioria dos níveis."
+  short_description: "Roteiro de estudo externo, não uma trilha obrigatória. Cada nível lista pré-requisitos, módulos e um projeto."
+  considerations:
+    - "Os módulos apontam para conteúdos hospedados na plataforma CampusX One."
+  verified:
+    verified_on: 2026-11-23
+    source_title: "AI Engineering Roadmap — 16 levels from fundamentals to production"
+    source_description: "A visual 16-level path into AI engineering: software fundamentals, LLMs, RAG, agents, evals, security, system design and LLMOps — 165 modules, 286 sessions, and a project in 13 of the 16 levels."
+  metadata_status: verified
+
+# ---- Make Your Work Easier ---------------------------------------------
+- id: databricks-lakeflow-jobs
+  editorial_subcategory: automation-workflows
+  use_cases: [automate_repetitive_tasks, orchestrate_workflow, monitor_operations]
+  title: Lakeflow Jobs (Databricks)
+  url: https://docs.databricks.com/aws/en/jobs/
+  provider: Databricks
+  type: documentation
+  icon_org: databricks
+  category: data-platforms
+  difficulty: intermediate
+  language: en
+  areas: [data-engineering, data-science]
+  sequence: 10
+  added_on: 2026-11-23
+  tags: [databricks, jobs, lakeflow, orquestracao, agendamento, workflow]
+  tagline: "Documentação do Lakeflow Jobs, orquestrador da Databricks para agendar e encadear tarefas de dados e pipelines."
+  blurb: "Documentação da Databricks sobre criação, agendamento, disparo e monitoramento de jobs com múltiplas tarefas."
+  short_description: "Jobs combinam tarefas (notebooks, scripts Python, pipelines e outras) com dependências, gatilhos, agendamento e notificações."
+  related_collections: [workflow-orchestration, data-process-automation]
+  supported_technologies: [python]
+  source_evidence:
+    - {label: Lakeflow Jobs, url: "https://docs.databricks.com/aws/en/jobs/"}
+  considerations:
+    - "Tipos de compute, gatilhos e permissões disponíveis dependem do workspace e do plano; confirme com a administração da plataforma."
+    - "O link aponta para a documentação AWS; há versões equivalentes para Azure e GCP."
+  verified: {verified_on: 2026-11-23, source_title: "Lakeflow Jobs | Databricks on AWS"}
+  metadata_status: verified
+
+- id: automate-the-boring-stuff
+  editorial_subcategory: automation-workflows
+  use_cases: [automate_repetitive_tasks]
+  title: Automate the Boring Stuff with Python
+  url: https://automatetheboringstuff.com/
+  provider: Al Sweigart
+  type: book
+  category: software-engineering
+  difficulty: beginner
+  language: en
+  areas: [dev-backend, analytics]
+  sequence: 20
+  added_on: 2026-11-23
+  tags: [python, automacao, planilhas, pdf, email, scripts]
+  tagline: "Livro online sobre automação de tarefas com Python: arquivos, planilhas, PDFs, e-mails e extração de dados da web."
+  blurb: "Livro introdutório de Python orientado a automação de tarefas de escritório, disponível online sob licença Creative Commons."
+  short_description: "Capítulos sobre manipulação de arquivos, Excel, PDF, e-mail e web scraping com Python, sem pressupor experiência prévia em programação."
+  related_collections: [from-manual-to-automated]
+  supported_technologies: [python]
+  source_evidence:
+    - {label: Página do livro, url: "https://automatetheboringstuff.com/"}
+  verified: {verified_on: 2026-11-23, source_title: Automate the Boring Stuff with Python}
+  metadata_status: verified
+
+- id: claude-code-docs
+  editorial_subcategory: ai-assisted-work
+  use_cases: [review_code, document_process, automate_repetitive_tasks]
+  title: Claude Code — documentação
+  url: https://code.claude.com/docs/en/overview
+  provider: Anthropic
+  type: documentation
+  icon_org: anthropics
+  category: software-engineering
+  difficulty: intermediate
+  language: en
+  areas: [dev-backend, ai-llms]
+  sequence: 30
+  added_on: 2026-11-23
+  tags: [claude, claude code, assistente de codigo, terminal, ide]
+  tagline: "Documentação do Claude Code, assistente de programação da Anthropic que opera no terminal e em IDEs sobre repositórios."
+  blurb: "Guia oficial de instalação, configuração e uso do Claude Code."
+  short_description: "Cobre instalação, fluxos de trabalho comuns, configuração, permissões e integrações com editores."
+  related_resources: [mattpocock-skills, claude-agent-skills-docs]
+  related_collections: [working-with-claude]
+  supported_technologies: [vscode, git]
+  source_evidence:
+    - {label: Claude Code overview, url: "https://code.claude.com/docs/en/overview"}
+  considerations:
+    - "O código e o contexto do repositório são enviados ao serviço; confirme a política da organização antes de usar com código ou dados internos."
+    - "Requer conta ou credenciais autorizadas; não há integração configurada por padrão neste ambiente."
+  verified: {verified_on: 2026-11-23, source_title: "Overview - Claude Code Docs"}
+  metadata_status: verified
+
+- id: claude-agent-skills-docs
+  editorial_subcategory: ai-assisted-work
+  use_cases: [automate_repetitive_tasks, document_process, develop_ai_application]
+  title: Agent Skills — documentação
+  url: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
+  provider: Anthropic
+  type: documentation
+  icon_org: anthropics
+  category: agents
+  difficulty: intermediate
+  language: en
+  areas: [ai-llms, dev-backend]
+  sequence: 40
+  added_on: 2026-11-23
+  tags: [claude, agent skills, skill.md, instrucoes, scripts]
+  tagline: "Agent Skills: pacotes com instruções, scripts e recursos que o Claude carrega para executar tarefas específicas."
+  blurb: "Explica a estrutura de uma skill (arquivo SKILL.md e recursos), onde ela pode ser usada e as considerações de segurança."
+  short_description: "Define o formato de uma skill, o carregamento sob demanda e o uso na API, no Claude Code e em outros produtos."
+  related_resources: [mattpocock-skills, grill-me, grill-with-docs]
+  related_collections: [working-with-claude]
+  considerations:
+    - "Skills podem executar scripts; use apenas skills de origem confiável e revise o conteúdo antes de instalar."
+  verified: {verified_on: 2026-11-23, source_title: "Agent Skills - Claude Platform Docs"}
+  metadata_status: verified
+
+- id: conventional-commits
+  editorial_subcategory: templates-standards
+  use_cases: [document_process, review_code]
+  title: Conventional Commits
+  url: https://www.conventionalcommits.org/en/v1.0.0/
+  provider: Conventional Commits
+  type: documentation
+  icon_org: conventional-commits
+  category: software-engineering
+  difficulty: beginner
+  language: multi
+  areas: [dev-backend]
+  sequence: 50
+  added_on: 2026-11-23
+  tags: [git, commits, versionamento, semver, changelog]
+  tagline: "Especificação de formato para mensagens de commit, compatível com versionamento semântico e geração automática de changelog."
+  blurb: "Convenção leve para mensagens de commit (feat, fix, BREAKING CHANGE) que torna o histórico legível por pessoas e ferramentas."
+  short_description: "Define tipos, escopo opcional e rodapés de mensagens de commit para automatizar versionamento e changelog."
+  supported_technologies: [git]
+  source_evidence:
+    - {label: Especificação v1.0.0, url: "https://www.conventionalcommits.org/en/v1.0.0/"}
+  verified: {verified_on: 2026-11-23, source_title: Conventional Commits 1.0.0}
+  metadata_status: verified
+
+- id: openapi-specification
+  editorial_subcategory: templates-standards
+  use_cases: [document_process, integrate_systems]
+  title: OpenAPI Specification
+  url: https://spec.openapis.org/oas/latest.html
+  provider: OpenAPI Initiative
+  type: documentation
+  icon_org: OAI
+  category: software-engineering
+  difficulty: intermediate
+  language: en
+  areas: [dev-backend, data-engineering]
+  sequence: 60
+  added_on: 2026-11-23
+  tags: [api, rest, http, contrato, documentacao, yaml, json]
+  tagline: "Especificação padrão para descrever APIs HTTP em JSON ou YAML, usada para documentação e geração de código."
+  blurb: "Padrão mantido pela OpenAPI Initiative para descrever endpoints, parâmetros, esquemas e autenticação de APIs HTTP."
+  short_description: "Um documento OpenAPI descreve a API de forma legível por máquinas, servindo de contrato entre quem publica e quem consome."
+  related_collections: [data-contracts-handoffs, technical-documentation]
+  verified: {verified_on: 2026-11-23, source_title: OpenAPI Specification v3.2.1}
+  metadata_status: verified
+
+- id: pytest-docs
+  editorial_subcategory: validation-quality
+  use_cases: [validate_data]
+  title: pytest — documentação
+  url: https://docs.pytest.org/en/stable/
+  provider: pytest-dev
+  type: framework
+  icon_org: pytest-dev
+  category: software-engineering
+  difficulty: beginner
+  language: en
+  areas: [dev-backend, data-science]
+  sequence: 70
+  added_on: 2026-11-23
+  tags: [testes, python, fixtures, plugins, assert]
+  tagline: "Documentação do pytest, framework de testes automatizados para Python com fixtures, asserts nativos e sistema de plugins."
+  blurb: "Referência oficial do pytest: escrita de testes, fixtures, parametrização e plugins."
+  short_description: "Testes são funções Python com assert; fixtures e parametrização evitam repetição de configuração."
+  related_collections: [validation-quality]
+  supported_technologies: [python]
+  source_evidence:
+    - {label: pytest documentation, url: "https://docs.pytest.org/en/stable/"}
+  verified: {verified_on: 2026-11-23, source_title: pytest documentation}
+  metadata_status: verified
+
+- id: pandera
+  editorial_subcategory: validation-quality
+  use_cases: [validate_data, improve_data_quality]
+  title: Pandera
+  url: https://pandera.readthedocs.io/en/stable/
+  provider: Union.ai (open source)
+  type: library
+  icon_org: unionai-oss
+  category: data-platforms
+  difficulty: intermediate
+  language: en
+  areas: [data-science, data-engineering, data-governance]
+  sequence: 80
+  added_on: 2026-11-23
+  tags: [validacao, schema, dataframe, pandas, polars, pyspark, qualidade de dados]
+  tagline: "Biblioteca Python para validar DataFrames com schemas declarativos: tipos, intervalos, unicidade e regras personalizadas."
+  blurb: "Validação de dados tabulares em código, com suporte a pandas, Polars e PySpark."
+  short_description: "Schemas descrevem colunas e checks; a validação falha com relatório dos registros que violam as regras."
+  related_collections: [data-quality, validation-quality]
+  supported_technologies: [python, pandas, spark]
+  source_evidence:
+    - {label: pandera documentation, url: "https://pandera.readthedocs.io/en/stable/"}
+  verified: {verified_on: 2026-11-23, source_title: pandera documentation}
+  metadata_status: verified
+
+# ---- Tools & Resources ----------------------------------------------------
+- id: duckdb-org
+  editorial_subcategory: tools-libraries
+  use_cases: [analyze_information]
+  title: DuckDB
+  url: https://duckdb.org/
+  provider: DuckDB Foundation
+  type: tool
+  icon_org: duckdb
+  category: data-platforms
+  difficulty: beginner
+  language: en
+  areas: [data-science, analytics, data-engineering]
+  sequence: 10
+  added_on: 2026-11-23
+  tags: [sql, parquet, csv, analise local, banco analitico]
+  tagline: "Banco de dados analítico in-process que executa SQL sobre arquivos CSV e Parquet sem servidor dedicado."
+  blurb: "Sistema de banco de dados analítico que roda dentro da aplicação, com clientes para Python e outras linguagens."
+  short_description: "Consulta arquivos locais ou remotos com SQL, sem instalar ou administrar um servidor."
+  related_collections: [data-process-automation]
+  supported_technologies: [python, sql]
+  source_evidence:
+    - {label: duckdb.org, url: "https://duckdb.org/"}
+  verified: {verified_on: 2026-11-23, source_title: DuckDB}
+  metadata_status: verified
+
+- id: pre-commit-framework
+  editorial_subcategory: developer-tools
+  use_cases: [review_code, automate_repetitive_tasks]
+  title: pre-commit
+  url: https://pre-commit.com/
+  provider: pre-commit
+  type: framework
+  icon_org: pre-commit
+  category: software-engineering
+  difficulty: beginner
+  language: en
+  areas: [dev-backend, data-engineering]
+  sequence: 20
+  added_on: 2026-11-23
+  tags: [git, hooks, lint, formatacao, automacao]
+  tagline: "Framework para gerenciar git hooks multilinguagem que executam formatação, lint e verificações antes de cada commit."
+  blurb: "Ferramenta que instala e executa hooks definidos em um arquivo versionado, com a mesma configuração para todo o time."
+  short_description: "Hooks configurados em .pre-commit-config.yaml rodam localmente e podem ser repetidos no CI."
+  related_collections: [validation-quality]
+  supported_technologies: [git]
+  source_evidence:
+    - {label: pre-commit.com, url: "https://pre-commit.com/"}
+  verified: {verified_on: 2026-11-23, source_title: pre-commit}
+  metadata_status: verified
+
+- id: vscode-docs
+  editorial_subcategory: developer-tools
+  title: Visual Studio Code — documentação
+  url: https://code.visualstudio.com/docs
+  provider: Microsoft
+  type: tool
+  icon_org: microsoft
+  category: software-engineering
+  difficulty: beginner
+  language: multi
+  areas: [dev-backend, data-science]
+  sequence: 30
+  added_on: 2026-11-23
+  tags: [editor, ide, debug, extensoes, git, terminal]
+  tagline: "Documentação do Visual Studio Code: edição, depuração, terminal integrado, controle de versão e extensões."
+  blurb: "Referência oficial do editor de código da Microsoft."
+  short_description: "Guias de configuração, depuração, integração com Git e uso de extensões."
+  supported_technologies: [git]
+  source_evidence:
+    - {label: VS Code docs, url: "https://code.visualstudio.com/docs"}
+  verified: {verified_on: 2026-11-23, source_title: Documentation for Visual Studio Code}
+  metadata_status: verified
+
+- id: github-docs
+  editorial_subcategory: developer-tools
+  use_cases: [review_code, orchestrate_workflow]
+  title: GitHub Docs
+  url: https://docs.github.com/en
+  provider: GitHub
+  type: documentation
+  icon_org: github
+  category: software-engineering
+  difficulty: beginner
+  language: multi
+  areas: [dev-backend]
+  sequence: 40
+  added_on: 2026-11-23
+  tags: [github, git, pull requests, actions, repositorios]
+  tagline: "Documentação oficial do GitHub: repositórios, pull requests, revisão de código e automação com GitHub Actions."
+  blurb: "Referência oficial da plataforma GitHub."
+  short_description: "Cobre colaboração em repositórios, revisão via pull requests e workflows de CI com GitHub Actions."
+  verified: {verified_on: 2026-11-23, source_title: GitHub Docs}
+  metadata_status: verified
+
+- id: unity-catalog-docs
+  editorial_subcategory: ai-data-tools
+  use_cases: [improve_data_quality]
+  title: Unity Catalog (Databricks)
+  url: https://docs.databricks.com/aws/en/data-governance/unity-catalog/
+  provider: Databricks
+  type: documentation
+  icon_org: databricks
+  category: data-platforms
+  difficulty: intermediate
+  language: en
+  areas: [data-governance, data-engineering]
+  sequence: 10
+  added_on: 2026-11-23
+  tags: [databricks, governanca, controle de acesso, lineage, auditoria]
+  tagline: "Documentação do Unity Catalog, camada de governança da Databricks para controle de acesso e linhagem de dados."
+  blurb: "Explica o modelo de objetos (catálogo, schema, tabela), permissões, auditoria e linhagem no Unity Catalog."
+  short_description: "Governança centralizada de dados e ativos de IA, com permissões, linhagem e registros de auditoria."
+  related_collections: [data-governance]
+  considerations:
+    - "Recursos e permissões dependem da configuração do metastore e do workspace."
+  verified: {verified_on: 2026-11-23, source_title: "What is Unity Catalog? | Databricks on AWS"}
+  metadata_status: verified
+
+- id: mlflow-docs
+  editorial_subcategory: ai-data-tools
+  use_cases: [evaluate_model_outputs, monitor_operations, develop_ai_application]
+  title: MLflow
+  url: https://mlflow.org/docs/latest/
+  provider: MLflow (Linux Foundation)
+  type: framework
+  icon_org: mlflow
+  category: llmops
+  difficulty: intermediate
+  language: en
+  areas: [data-science, ai-llms]
+  sequence: 20
+  added_on: 2026-11-23
+  tags: [mlops, tracking, avaliacao, tracing, experimentos]
+  tagline: "Documentação do MLflow, plataforma open source para rastrear experimentos, avaliar modelos e registrar traces."
+  blurb: "Referência oficial do MLflow, incluindo tracking de experimentos, avaliação e tracing de aplicações com LLMs."
+  short_description: "Registra parâmetros, métricas e artefatos de experimentos e oferece ferramentas de avaliação e observabilidade."
+  related_collections: [mlops-observability]
+  verified: {verified_on: 2026-11-23, source_title: "MLflow Documentation | MLflow AI Platform"}
+  metadata_status: verified
+
+- id: claude-platform-docs
+  editorial_subcategory: ai-data-tools
+  use_cases: [develop_ai_application]
+  title: Claude Developer Platform — documentação
+  url: https://platform.claude.com/docs/en/home
+  provider: Anthropic
+  type: documentation
+  icon_org: anthropics
+  category: llm-engineering
+  difficulty: intermediate
+  language: en
+  areas: [ai-llms, dev-backend]
+  sequence: 30
+  added_on: 2026-11-23
+  tags: [claude, api, prompt, modelos, structured outputs]
+  tagline: "Documentação oficial da API do Claude: modelos, engenharia de prompts, tool use e construção de aplicações."
+  blurb: "Ponto de entrada da documentação para desenvolvedores da Anthropic."
+  short_description: "Guias e referência da API: modelos disponíveis, prompts, ferramentas e boas práticas de integração."
+  related_resources: [claude-tool-use-docs, claude-agent-skills-docs]
+  related_collections: [working-with-claude]
+  considerations:
+    - "Requer credenciais autorizadas; não presuma que modelos ou endpoints estejam habilitados no ambiente."
+    - "Confirme a política de dados da organização antes de enviar informações internas a serviços externos."
+  verified: {verified_on: 2026-11-23, source_title: "Documentation - Claude Platform Docs"}
+  metadata_status: verified
+
+- id: claude-tool-use-docs
+  editorial_subcategory: ai-data-tools
+  use_cases: [integrate_systems, develop_ai_application]
+  title: Tool use com Claude — documentação
+  url: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+  provider: Anthropic
+  type: documentation
+  icon_org: anthropics
+  category: agents
+  difficulty: intermediate
+  language: en
+  areas: [ai-llms, dev-backend]
+  sequence: 40
+  added_on: 2026-11-23
+  tags: [claude, tool use, function calling, agentes, api]
+  tagline: "Documentação de tool use da API do Claude: definição de ferramentas, ciclo tool_use/tool_result e ferramentas do servidor."
+  blurb: "Explica como declarar ferramentas e tratar as chamadas que o modelo solicita."
+  short_description: "O modelo devolve um bloco tool_use; a aplicação executa a ferramenta e responde com tool_result."
+  related_collections: [working-with-claude]
+  considerations:
+    - "A aplicação é responsável por validar parâmetros e autorizar cada ação executada a partir de uma chamada de ferramenta."
+  verified: {verified_on: 2026-11-23, source_title: "Tool use with Claude - Claude Platform Docs"}
+  metadata_status: verified
+
+- id: arxiv
+  editorial_subcategory: research-resources
+  use_cases: [analyze_information]
+  title: arXiv
+  url: https://arxiv.org/
+  provider: Cornell University
+  type: platform
+  icon_org: arXiv
+  category: research-literature
+  language: en
+  areas: [data-science, ai-llms, market-research]
+  sequence: 10
+  added_on: 2026-11-23
+  tags: [papers, preprints, pesquisa, estatistica, computer science]
+  tagline: "Repositório de acesso aberto de preprints científicos em ciência da computação, estatística, matemática e física."
+  blurb: "Repositório de preprints amplamente usado em machine learning e estatística."
+  short_description: "Artigos submetidos pelos autores antes ou depois da revisão por pares, organizados por área."
+  considerations:
+    - "Preprints podem não ter passado por revisão por pares."
+  verified: {verified_on: 2026-11-23, source_title: arXiv.org e-Print archive}
+  metadata_status: verified
+
+- id: google-scholar
+  editorial_subcategory: research-resources
+  use_cases: [analyze_information]
+  title: Google Scholar
+  url: https://scholar.google.com/
+  provider: Google
+  type: service
+  icon_org: google
+  category: research-literature
+  language: multi
+  areas: [market-research, data-science]
+  sequence: 20
+  added_on: 2026-11-23
+  tags: [papers, citacoes, pesquisa academica]
+  tagline: "Buscador de literatura acadêmica que indexa artigos, teses e livros, com contagem de citações por trabalho."
+  blurb: "Serviço de busca da Google voltado a publicações acadêmicas."
+  short_description: "Busca por autor, título ou tema, com links para versões disponíveis e trabalhos que citam cada artigo."
+  verified: {}
+  metadata_status: partial
+  metadata_notes: "O serviço bloqueia acesso automatizado (HTTP 403); a página não foi conferida automaticamente."

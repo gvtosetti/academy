@@ -9,6 +9,9 @@ STOPWORDS = {
     "a", "o", "as", "os", "de", "da", "do", "das", "dos", "e", "em", "no", "na",
     "nos", "nas", "um", "uma", "para", "por", "com", "como", "que", "se", "ao",
     "the", "of", "and", "to", "in", "for", "on", "with", "is", "an",
+    # formulacoes de problema ("como automatizar uma tarefa?", "how do I validate data")
+    "eu", "meu", "minha", "meus", "minhas", "quero", "preciso", "posso", "fazer", "qual", "quais",
+    "onde", "sobre", "mais", "how", "i", "my", "can", "what", "which",
 }
 
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
