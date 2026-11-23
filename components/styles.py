@@ -42,7 +42,7 @@ h3 {font-size: 1.55rem; font-weight: 600;}
 .ac-eyebrow {font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
   color: var(--ac-accent); margin: 1.1rem 0 -.6rem;}
 /* secoes da Home: titulo mais proximo do conteudo, menos respiro entre secoes */
-[data-testid="stHeading"] h3 {padding: .9rem 0 .15rem;}
+[data-testid="stHeading"] h3 {padding: .7rem 0 .1rem;}
 .ac-subhead {display: flex; align-items: baseline; gap: .75rem; flex-wrap: wrap; margin: .9rem 0 .1rem;}
 .ac-subhead b {font-size: 1.08rem; font-weight: 650; color: var(--ac-ink);}
 .ac-subhead span {font-size: .9rem; color: var(--ac-mute);}

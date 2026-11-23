@@ -1,4 +1,4 @@
-"""Carrega e valida o catalogo curado (fonte de verdade da Academy).
+"""Carrega e valida o catalogo curado (fonte de verdade da Resource Library).
 
 APIs externas (GitHub, YouTube) apenas ENRIQUECEM o catalogo; a experiencia
 funciona integralmente com estes arquivos locais.

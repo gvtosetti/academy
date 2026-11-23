@@ -1,4 +1,4 @@
-"""Schema tipado do conteudo da Academy (Pydantic v2).
+"""Schema tipado do conteudo da Resource Library (Pydantic v2).
 
 Separacao editorial:
 - `verified`: metadados conferidos na fonte original (titulo, licenca, contagem de videos...).
