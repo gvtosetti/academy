@@ -12,6 +12,38 @@ ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+_PKGS = ("components", "services", "utils", "views")
+
+
+def _purge_stale_modules() -> None:
+    """Deploy por git pull (ex.: Streamlit Community Cloud) mantem o servidor vivo: so app.py e
+    reexecutado e o Python reaproveita os modulos ja importados, entao mudancas em views/,
+    components/ etc. nao aparecem ate um reboot. Se o codigo desses pacotes mudou desde a ultima
+    execucao, descarta os modulos para que os imports abaixo carreguem a versao nova.
+
+    Um modulo esta desatualizado quando o arquivo-fonte e mais novo que o bytecode carregado
+    (ou que o primeiro carregamento, se nao houver .pyc). Sem mudanca, nada e descartado."""
+    import os
+    import time
+
+    first_seen = sys.__dict__.setdefault("_resource_library_first_seen", time.time())
+    loaded = [(n, m) for n, m in list(sys.modules.items()) if n.split(".")[0] in _PKGS]
+
+    def stale(mod) -> bool:
+        src = getattr(mod, "__file__", None)
+        if not src or not os.path.exists(src):
+            return False
+        cached = getattr(getattr(mod, "__spec__", None), "cached", None)
+        ref = os.path.getmtime(cached) if cached and os.path.exists(cached) else first_seen
+        return os.path.getmtime(src) > ref + 1
+
+    if any(stale(m) for _, m in loaded):
+        for name, _ in loaded:
+            sys.modules.pop(name, None)
+
+
+_purge_stale_modules()
+
 import streamlit as st  # noqa: E402
 
 st.set_page_config(
