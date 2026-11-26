@@ -67,6 +67,16 @@ def _run(**params):
     return at.run()
 
 
+def _md(at) -> str:
+    return " ".join(m.value for m in at.markdown)
+
+
+def _hrefs(md: str, classes: str) -> list[str]:
+    import re
+
+    return re.findall(rf'<a class="(?:{classes})" href="([^"]+)"', md)
+
+
 def _offline(monkeypatch):
     import requests
 
@@ -104,16 +114,20 @@ def test_home_is_a_compact_showcase(monkeypatch):
     from services.catalog import load_catalog
 
     cat = load_catalog()
-    links = at.get("link_button")
-    # vitrine: no maximo 6 recursos por secao de recursos (+3 novidades), nunca o catalogo inteiro
-    assert 3 <= len(links) <= 15 < len(cat.resources)
-    md = " ".join(m.value for m in at.markdown)
-    assert "**Documentation & Runbooks**" in md and "&amp;" not in " ".join(c.value for c in at.caption)
+    md = _md(at)
+    ext = _hrefs(md, "ac-trow|ac-plat|ac-course|ac-guide")
+    # vitrine: listas compactas, nunca o catalogo inteiro; nenhum card grande de recurso na Home
+    assert 3 <= len(ext) < len(cat.resources)
+    assert not at.get("link_button") and not [b for b in at.button if b.label == "Saiba mais"]
+    # Tools & Resources: no maximo 3 linhas por grupo
+    tools = md.split('data-block="tools"')[1].split("</div></div></div>")[0]
+    assert all(g.count('class="ac-trow"') <= 3 for g in tools.split('class="ac-group"')[1:])
+    # Deep Dives: tres apresentacoes distintas
+    assert 'class="ac-plat"' in md and 'class="ac-course"' in md and 'class="ac-guide"' in md
     # Databricks em destaque no Quick Knowledge: as 4 colecoes prioritarias + as 2 seguintes na ordem do arquivo
-    labels = [b.label for b in at.button]
-    for t in ("Databricks Fundamentals", "Databricks Jobs & Workflows", "Unity Catalog & Governance"):
-        assert t in labels, t
-    qk = [b.key.removeprefix("topic-qk-") for b in at.button if b.key and b.key.startswith("topic-qk-")]
+    for t in ("Databricks Fundamentals", "Databricks Jobs &amp; Workflows", "Unity Catalog &amp; Governance"):
+        assert t in md, t
+    qk = [h.split("topic=")[1] for h in _hrefs(md, "ac-coll")]
     prio = ["databricks-fundamentals", "databricks-jobs-workflows", "unity-catalog-governance", "mlflow-experiment-tracking"]
     expected = (prio + [t for t in cat.topics if t not in prio])[:6]
     assert sorted(qk) == sorted(expected), qk
@@ -128,16 +142,15 @@ def test_home_documentation_runbooks_subcategory_card(monkeypatch):
     from services.catalog import load_catalog
 
     cat = load_catalog()
-    # 5 subcategorias de Make Your Work Easier como cards-resumo (sem resource cards dessa secao)
-    subs = [b for b in at.button if b.key and b.key.startswith("go-")]
-    assert [b.key for b in subs] == [f"go-{s.id}" for s in cat.taxonomy.section("make-your-work-easier").subcategories]
-    assert all(b.label == "Explorar" for b in subs)
-    assert not [b for b in at.button if b.key and b.key.startswith("more-home-make-your-work-easier-")]
-    n = len(cat.resources_in_subcategory("documentation-runbooks"))
-    caps = " ".join(c.value for c in at.caption)
-    assert f"{n} recursos" in caps or f"{n} recurso" in caps
-    at = next(b for b in subs if b.key == "go-documentation-runbooks").click().run()
-    assert dict(at.query_params) == {"page": "library", "subcategory": "documentation-runbooks"}
+    # 5 categorias como cards inteiramente clicaveis (o <a> e o card), sem "Explorar" e sem contagem
+    md = _md(at)
+    subs = cat.taxonomy.section("make-your-work-easier").subcategories
+    assert _hrefs(md, "ac-cat") == [f"?page=library&amp;subcategory={s.id}" for s in subs]
+    assert "Documentation &amp; Runbooks" in md
+    assert not [b for b in at.button if b.label == "Explorar"]
+    mwe = md.split('data-block="mwe"')[1].split("</div></div>")[0]
+    assert "recurso" not in mwe
+    at = _run(page="library", subcategory="documentation-runbooks")
     urls = {b.proto.url for b in at.get("link_button")}
     assert urls == {r.url for r in cat.resources_in_subcategory("documentation-runbooks")}
 
@@ -187,9 +200,10 @@ def test_cards_have_two_distinct_actions(monkeypatch):
 def test_home_sections_render_cards(monkeypatch):
     _offline(monkeypatch)
     at = _run()
-    # deve ter cards (containers com link_button)
-    links = at.get("link_button")
-    assert len(links) >= 3  # pelo menos 3 recursos aparecem na home
+    # linhas de recurso abrem a fonte direto, em nova aba
+    md = _md(at)
+    assert len(_hrefs(md, "ac-trow")) >= 3
+    assert md.count('target="_blank" rel="noopener noreferrer"') >= 3
 
 
 def test_library_section_filter(monkeypatch):
@@ -240,7 +254,7 @@ def test_chip_click_filters_home(monkeypatch):
     chips = next(g for g in at.get("button_group") if g.key == "chips-all")
     at = chips.set_value("creative-tech").run()
     assert dict(at.query_params) == {"page": "discover", "area": "creative-tech"}
-    urls = {b.proto.url for b in at.get("link_button")}
+    urls = set(_hrefs(_md(at), "ac-trow|ac-plat|ac-course|ac-guide"))
     assert urls and urls <= {"https://github.com/ManimCommunity/manim", "https://github.com/motiondivision/motion",
                              "https://github.com/airbnb/lottie-web"}
 
