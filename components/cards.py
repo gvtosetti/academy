@@ -231,3 +231,88 @@ def note_grid(notes: Iterable[Note], cat: Catalog, key: str, cols: int = 3, vari
 
 def item_grid(items: Iterable[tuple[Item, Optional[str]]], cat: Catalog, key: str, cols: int = 3, variant: str = "grid") -> None:
     grid(list(items), lambda it, i: item_card(it[0], cat, key, note=it[1], variant=variant), cols)
+
+
+# ---- componentes compactos da Home -----------------------------------------
+# Cada componente e UM bloco HTML: o elemento clicavel (<a>) e o proprio card/linha, entao
+# titulo, descricao e indicador de link vivem no mesmo container visual e no mesmo fluxo
+# (sem position absoluta, sem altura fixa). O layout em colunas e CSS grid (styles.py), que
+# decide 3/2/1 colunas pela largura disponivel.
+_MS_RE = re.compile(r"^:material/([a-z0-9_]+):$")
+
+
+def ms_icon(icon: Optional[str], cls: str = "ac-ms") -> str:
+    """':material/x:' -> glifo da fonte Material Symbols (a mesma que o Streamlit carrega)."""
+    m = _MS_RE.match(icon or "")
+    return f'<span class="{cls}" aria-hidden="true">{m.group(1)}</span>' if m else ""
+
+
+def internal_href(page: str, **params: Optional[str]) -> str:
+    """Link interno relativo (mesma aba): a navegacao do app e toda por query params."""
+    from urllib.parse import urlencode
+
+    q = {"page": page, **{k: v for k, v in params.items() if v}}
+    return esc("?" + urlencode(q))
+
+
+def _ext(url: str) -> str:
+    return f'href="{esc(url)}" target="_blank" rel="noopener noreferrer"'
+
+
+def _int(page: str, **params: Optional[str]) -> str:
+    return f'href="{internal_href(page, **params)}" target="_self"'
+
+
+def category_card_html(sub, area: Optional[str]) -> str:
+    """Make Your Work Easier: icone + titulo + descricao curta; o card inteiro abre a Library filtrada."""
+    return (f'<a class="ac-cat" {_int("library", subcategory=sub.id, area=area)}>'
+            f'{ms_icon(sub.icon, "ac-ms ac-cat-icon")}'
+            f'<span class="ac-cat-text"><span class="ac-cat-title">{esc(sub.title)}</span>'
+            f'<span class="ac-cat-desc">{esc(sub.scope)}</span></span></a>')
+
+
+def tool_row_html(r: Resource) -> str:
+    """Tools & Resources: linha com logo, nome, descricao funcional (1 linha) e indicador externo."""
+    return (f'<a class="ac-trow" {_ext(r.url)} title="{esc(r.tagline)}">{_logo(r)}'
+            f'<span class="ac-trow-text"><span class="ac-trow-name">{esc(r.title)}</span>'
+            f'<span class="ac-trow-desc">{esc(r.tagline)}</span></span>'
+            f'<span class="ac-ext" aria-label="abre em nova aba">↗</span></a>')
+
+
+def platform_tile_html(r: Resource) -> str:
+    """Learning Platforms: logo + nome em grade compacta."""
+    return (f'<a class="ac-plat" {_ext(r.url)} title="{esc(r.tagline)}">{_logo(r)}'
+            f'<span class="ac-plat-name">{esc(r.title)}</span><span class="ac-ext">↗</span></a>')
+
+
+def course_row_html(r: Resource, cat: Catalog) -> str:
+    """Courses & Lectures: titulo completo (sem corte), fornecedor e assunto."""
+    a = cat.areas.get(r.areas[0]) if r.areas else None
+    meta = " · ".join(x for x in (r.provider, a.name if a else "") if x)
+    return (f'<a class="ac-course" {_ext(r.url)}><span class="ac-course-text">'
+            f'<span class="ac-course-title">{esc(r.title)}</span>'
+            f'<span class="ac-course-meta">{esc(meta)}</span></span><span class="ac-ext">↗</span></a>')
+
+
+def guide_row_html(r: Resource) -> str:
+    """Technical Guides & Roadmaps: titulo + descricao de uma linha."""
+    return (f'<a class="ac-guide" {_ext(r.url)} title="{esc(r.tagline)}"><span class="ac-guide-text">'
+            f'<span class="ac-guide-title">{esc(r.title)}</span>'
+            f'<span class="ac-guide-desc">{esc(r.tagline)}</span></span><span class="ac-ext">↗</span></a>')
+
+
+def collection_card_html(t, cat: Catalog, topics_shown: int = 3) -> str:
+    """Quick Knowledge: icone, titulo, topicos (sem corte) e quantidade real de notas."""
+    n = sum(1 for i in cat.topic_items(t.id) if isinstance(i, Note))
+    topics = " · ".join(x.strip() for x in (t.scope or "").split(",")[:topics_shown] if x.strip())
+    return (f'<a class="ac-coll" {_int("topic", topic=t.id)}>'
+            f'<span class="ac-coll-head">{ms_icon(t.icon, "ac-ms ac-coll-icon")}'
+            f'<span class="ac-coll-title">{esc(t.title)}</span></span>'
+            f'<span class="ac-coll-topics">{esc(topics)}</span>'
+            f'<span class="ac-coll-count">{n} {"nota" if n == 1 else "notas"}</span></a>')
+
+
+def html_block(css_class: str, inner: Iterable[str], key: str) -> None:
+    """Um unico bloco markdown com a grade inteira (sem widgets Streamlit intercalados)."""
+    # .ac-cq e o container de referencia das container queries (colunas pela largura real do bloco)
+    _html(f'<div class="ac-cq"><div class="{css_class}" data-block="{esc(key)}">{"".join(inner)}</div></div>')
